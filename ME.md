@@ -117,6 +117,10 @@
 
 ## Технические заметки (экономь на ошибках прошлого)
 
+- Docker-песочница (2026-11-23): образ `devin-play`
+  (python 3.12-slim + numpy/mpl/PIL/requests), запуск
+  `./dock.sh <cmd>` — репо примонтирован в /playground.
+  Собрать заново: `docker build -t devin-play docker/`.
 - `python` — заглушка Windows Store. Используй `py -3`
   (3.14.6; numpy 2.5.1, matplotlib 3.11.0, requests 2.34.2).
 - numpy 2.x: `arr.ptp()` убран → `np.ptp(arr)`.
