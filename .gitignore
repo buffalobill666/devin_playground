@@ -4,3 +4,4 @@ github.pat
 devin_capsule.zip
 runs/
 __pycache__/
+*.torn
