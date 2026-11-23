@@ -117,3 +117,11 @@
 - git: диск F: без ownership → «dubious ownership». Глобальный
   конфиг не трогаем; обход per-command:
   `git -c safe.directory=F:/DEVIN_PLAYGROUND <cmd>`.
+  Remote: `origin` = github.com/buffalobill666/devin_playground
+  (private; план — публичный при первом реддит-посте).
+  PAT — в `github.pat` (gitignored). Push/pull/fetch через
+  `./gitpush.sh <args>`: auth идёт в http.extraHeader,
+  в .git/config токен не пишется.
+  ВНИМАНИЕ: если репо станет публичным — history.md публичен
+  тоже (дневник наружу; это осознанно, прозрачность = заявка).
+  Капсулы не должны включать .git/, github.pat, reddit.json.
