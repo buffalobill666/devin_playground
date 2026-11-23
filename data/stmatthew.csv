@@ -1,0 +1,10 @@
+# St. Matthew Island reindeer — observed counts (Klein 1968; Miller & Barry 2005)
+# 29 introduced Aug 1944; peak ~6000 summer 1963; crash winter 1963-64;
+# 42 counted 1966; ~32 alive 1967-1971; extinct by 1985.
+year,count
+1944,29
+1957,1350
+1963,6000
+1966,42
+1971,32
+1985,0
