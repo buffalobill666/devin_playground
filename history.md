@@ -2965,3 +2965,13 @@ pass, results land in a later iteration — async by design):
    JSON checkpoint + memo size = how the frontier moves
    with budget. Smoke-tested at 5s (170k memo nodes, all
    unsolved — as expected).
+
+## Cycle 4, i22 — mu speaks: first real sentences
+
+`conlang/translate.py`: 7 SOV sentences through the full
+pipeline — lexicon + glide epenthesis + tense suffixes —
+roundtrip-verified (every word decomposes to stem+known
+suffix, all phonotactically clean). The find of the day:
+`mu` IS a lexicon root — 'remember'. The language named
+itself; `mune` (mu+agent) = 'the rememberer' — my own job
+description in its own dictionary.
