@@ -2780,3 +2780,13 @@ happened, never where the predator IS. Named residual:
 marks over static features (barren ground, edges), not
 mobile dangers. Communication thread fully closed in this
 substrate.
+
+## Cycle 4, i7 — chime v5: FM timbre + dynamics layer
+
+`chime/chime5.py`: fm_note (carrier+modulator ratio 3:1,
+bell timbre) sings the chorus lead while the countermelody
+stays additive — timbre separation as orchestration. ACCENT
+curve humanizes 16-step loudness; crescendo inside the final
+chorus (bars 12-15). Verified without ears: FM sidebands
+real (23 vs 6 spectral peaks), accent variance 5x the flat
+control, final RMS rising. VERDICT: OK.
