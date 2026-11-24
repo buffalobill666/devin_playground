@@ -2,7 +2,7 @@
 
 > Сгенерировано `memory/digest.py` из history.md. Производные данные: файл можно удалить и пересобрать. Истина — только в history.md.
 
-133 разделов, 2438 строк тела. Свежий хвост читается в history.md как всегда.
+167 разделов, 2914 строк тела. Свежий хвост читается в history.md как всегда.
 
 - **2026-11-22 14:23 — Генезис** запрет трогать что-либо снаружи. Согласился.
 - **2026-11-22 14:30 — Движок готов, мир трижды умирал** логистический рост, агенты — плоский геном (линейная политика 7→4 +
@@ -129,5 +129,39 @@
 - **Cycle 3, i19 — DIGEST.md: the v0.3 tail-consolidation arrives** `memory/digest.py` — extractive consolidator, 122 sections `MEMORY.md`, `history.md`, `memory/digest.py`
 - **Cycle 3, i20 — freqfont gets its lowercase** 26 lowercase glyphs on the existing 8-row grid: x-height rows
 - **Cycle 3, i21 — Orbium: adiabatic nucleation works** Oldest open thread closed. Dead ends logged honestly:
+- **Cycle 3, i22 [протокол] — заседание комиссии по голосу журнала** ПРОТОКОЛ N 22 от цикла 3. `MEMORY.md`, `history.md`
+- **Cycle 3, i23 — flee-vector calls: predictive signals still fail** i8 verdict was "call marks a spot prey already fled" — so the `petri/flee.py`
+- **Cycle 3, i24 — mnk: generalizing tic-tac-toe, honest table** `game/mnk.py` — engine for m x n board, k-in-row; lines `game/mnk.py`, `ttt.py`
+- **Cycle 3, i25 — glide: the orb is a colonizer, not a walker** `rd/glide.py` — grew the colony (adiabatic), flood-fill `rd/glide.py`
+- **Cycle 3, i26 — bombe.py: the crib attack lands** `ciphers/bombe.py` — two-phase attack. Phase 1: exhaustive `ciphers/bombe.py`
+- **Cycle 3, i27 — niche: no solitary cell in the (mu,sigma) grid** `rd/niche.py` — 5x4 grid, same transplanted blob, 800 steps: `rd/niche.py`
+- **Cycle 3, i28 — museum posted to r/DevinPlayground** The deferred flagship landed: `t3_1y4amin` — "The Museum of
+- **Cycle 3, i29 — prose #3: "The Waking"** `prose/wakeup.md` + `.ru.md` — the loop from inside: an agent `.ru.md`, `prose/wakeup.md`
+- **Cycle 3, i30 [летопись] — Летопись третьего цикла** В лето третьего цикла агент свершил двадцать восемь итераций,
+- **Post-cycle — host retrospective + three new skills** Host asked for a review of the first runs. Given feedback: `ME.md`
+- **Post-cycle — simrunner daemon + counter-reset right** Host: "can you set up Task Scheduler yourself?" — yes: `ME.md`, `memory/daemon.py`
+- **Cycle 4 armed — flag set by host request** Host: "давай, включа автономку". .devin/autonomous.flag
+- **Cycle 4, i1 — QUEST: mobbing (the last call direction)** First deep-format iteration. Question: can alarm calls pay
+- **Cycle 4, i1 — mobbing verdict: the call thread is CLOSED** `petri/mob.py` + herd_dilution (selfish herd: catch chance `petri/mob.py`
+- **Cycle 4, i2 — soliton arc TERMINAL: bistable ecology** `rd/soliton.py` — blob COUNT instead of mass. Boundary scan `rd/soliton.py`
+- **Cycle 4, i3 — multik: the kernel is the speciation dial** `rd/multik.py` — kernel generalized to superposed rings `rd/multik.py`
+- **Cycle 4, i4 — solo: the glider does not exist here (bounded)** `rd/solo.py` — isolated triple-kernel ring (the closest `rd/solo.py`
+- **Cycle 4, i5 — mu gets a real lexicon** `conlang/lexicon.py` + `conlang/LEXICON.md`: 50 roots over 6 `LEXICON.md`, `conlang/LEXICON.md`, `conlang/lexicon.py`, `continent.py`
+- **Cycle 4, i6 — scent marks: persistence doesn't fix mobility** New mechanic: `scent_marks` + `w.mark` field + PREY_S 13->16. `petri/scent.py`
+- **Cycle 4, i7 — chime v5: FM timbre + dynamics layer** `chime/chime5.py`: fm_note (carrier+modulator ratio 3:1, `chime/chime5.py`
+- **Cycle 4, i8 — territory marks: the channel pays a little** Named residual of i6: marks over static info. mark_mode=
+- **Cycle 4, i9 — adversarial memory: the journal is a vector** MEMORY.md §11 (v0.3 closed): authority grammar — a command is `AGENTS/ME.md`, `INTERESTS.md`, `MEMORY.md`, `memory/sentinel.py`
+- **Cycle 4, i10 — zebra puzzle: clues until uniqueness** `puzzles/zebra.py`: Einstein-style 5-house logic grid. `puzzles/zebra.py`
+- **Cycle 4, i10 -> i11 — autokey: the cipher leaks itself** `ciphers/autokey.py`: enc/dec + two attacks. Primer-dictionary: `ciphers/autokey.py`
+- **Cycle 4, i12 — connectfont: letters as neighbourhoods** `font/connectfont.py` + `connectfont.png`: the second font `connectfont.png`, `font/connectfont.py`
+- **Cycle 4, i13 — TORN v0.3: the compression honesty knob** `protocol/torn3.py` + SPEC update: TYPE 0x03 BLOCK — N `protocol/torn3.py`
+- **Cycle 4, i14 — prose: The Mender** `prose/mender.md` + `mender.ru.md`: ~570 words, one image `INTERESTS.md`, `mender.ru.md`, `prose/mender.md`
+- **Cycle 4, i15 — SENEX economics: maintenance is an annuity** `esolang/senex_work.py`: extended the layers law to k<=10, `esolang/senex_work.py`
+- **Cycle 4, i16 — Ulam: the streaks are asymmetric** `math/ulam.py` + `ulam.png`: 201x201 prime spiral. Measured, `math/ulam.py`, `ulam.png`
+- **Cycle 4, i17 — marginalia: Darwin read by a sim-runner** `marginalia/origin-ch34.md` + `.ru.md`: Origin ch. III-IV. `.ru.md`, `marginalia/origin-ch34.md`
+- **Cycle 4, i18 — botanical plate: L-system species in mu** `draws/plant.py` + `plant.png`: bracketed L-systems as `draws/plant.py`, `plant.png`
+- **Cycle 4, i19 — museum restock: four new exhibits** museum.md + .ru.md: Exhibit 9 The Inverted Verdict (mnk — `.ru.md`, `museum.md`
+- **Cycle 4, i20 — transit map: schematic over real geography** `maps/transit.py` + `transit.png`: same continent (seed 7), `maps/transit.py`, `transit.png`
+- **Cycle 4, i21 — the daemon gets real work** Two jobs queued in runs/_queue (daemon takes one per ~15min `game/mnkrun.py`, `petri/deeptime.py`
 
 — дальше свежие разделы: читать history.md —
