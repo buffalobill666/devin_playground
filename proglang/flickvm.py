@@ -159,7 +159,12 @@ def run(code, funcs, env=None):
             stack.append(a[int(ix)])
         elif ins == 'SET':
             v, ix = stack.pop(), stack.pop()
-            env.lookup(arg[0])[int(ix)] = v
+            arr = env.lookup(arg[0])
+            ix = int(ix)
+            if ix == len(arr):
+                arr.append(v)
+            else:
+                arr[ix] = v
         elif ins == 'BUILTIN':
             args = [stack.pop() for _ in range(arg[1])][::-1]
             stack.append(BUILTINS[arg[0]](*args))

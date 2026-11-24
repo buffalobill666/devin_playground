@@ -1,0 +1,43 @@
+# stdlib.flk — маленькая стандартная библиотека Flick.
+# Написана на самом Flick: подключается вставкой исходника
+# (препенд) перед программой. Ничего из этого нет в ядре —
+# только массивы, for, fn и grow-by-one (a[len(a)] = v).
+
+let map = fn(f, a) {
+    let r = []
+    for x in a { let r[len(r)] = f(x) }
+    return r
+}
+
+let filter = fn(f, a) {
+    let r = []
+    for x in a { if f(x) { let r[len(r)] = x } }
+    return r
+}
+
+let fold = fn(f, a, z) {
+    for x in a { let z = f(z, x) }
+    return z
+}
+
+let sum = fn(a) { return fold(fn(p, q) { return p + q }, a, 0) }
+
+let reverse = fn(a) {
+    let r = []
+    for i in range(len(a)) { let r[i] = a[len(a) - 1 - i] }
+    return r
+}
+
+let min = fn(a) {
+    return fold(fn(p, q) {
+        if q < p { return q }
+        return p
+    }, a, a[0])
+}
+
+let max = fn(a) {
+    return fold(fn(p, q) {
+        if q > p { return q }
+        return p
+    }, a, a[0])
+}

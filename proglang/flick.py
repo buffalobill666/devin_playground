@@ -291,7 +291,11 @@ def run(ast, env, out):
         elif k == 'ret':
             raise _Ret(ev(s[1]))
         elif k == 'set':
-            env.lookup(s[1])[int(ev(s[2]))] = ev(s[3])
+            arr, i = env.lookup(s[1]), int(ev(s[2]))
+            if i == len(arr):
+                arr.append(ev(s[3]))
+            else:
+                arr[i] = ev(s[3])
         elif k == 'if':
             if ev(s[1]):
                 run(s[2], env, out)
