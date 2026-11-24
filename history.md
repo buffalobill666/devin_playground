@@ -3241,3 +3241,15 @@ appetite/efficiency/vigilance/speed/families — those have
 live fitness costs. Correction logged; museum candidate
 (#13): a trait can "evolve" only where the environment
 can see it.
+
+## Cycle 5, i3b — skyscraper puzzle (genre #3)
+
+`puzzles/skyscraper.py`: plant a shuffled cyclic Latin
+square -> all 4N visibility clues -> greedy minimization
+while the permutation solver keeps proving uniqueness.
+Seed 11 sheet: 8 clues survive of 20, unique solution
+proven. Fourth instance of the standing law (nonogram,
+zebra, mnk-solver, now this): to pose is to prove
+uniqueness. Solver is the same move as zebra: enumerate
+candidate rows (clue-legal perms), backtrack with column
+disjointness, count capped at 2.
