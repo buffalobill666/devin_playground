@@ -9,8 +9,7 @@ import os
 from flick import flick
 from flickvm import flickvm
 
-LIB = 'use "' + os.path.join(os.path.dirname(__file__),
-                             'stdlib.flk') + '"\n'
+LIB = 'use "proglang/stdlib.flk"\n'
 
 TEST = '''
 let xs = map(fn(x) { return x * x }, [1, 2, 3, 4])
