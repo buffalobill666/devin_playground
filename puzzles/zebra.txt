@@ -1,0 +1,26 @@
+ZEBRA PUZZLE — 5 houses, positions 1..5 left to right
+
+  nation: Englishman, Spaniard, Ukrainian, Norwegian, Japanese
+  color: red, green, ivory, yellow, blue
+  drink: coffee, tea, milk, juice, water
+  pet: dog, snails, fox, horse, zebra
+  cigar: Old Gold, Kools, Chesterfields, Lucky Strike, Parliaments
+
+ 1. the tea-drinker and Norwegian live in the same house
+ 2. the red-house resident lives next to Ukrainian
+ 3. Norwegian and the horse owner live in the same house
+ 4. the Kools smoker lives next to the fox owner
+ 5. Ukrainian lives somewhere left of the dog owner
+ 6. the Kools smoker lives in house 4
+ 7. the ivory-house resident lives somewhere left of Spaniard
+ 8. the coffee-drinker lives next to Spaniard
+ 9. the green-house resident lives in house 1
+10. the water-drinker lives next to Japanese
+11. the blue-house resident lives somewhere left of the coffee-drinker
+12. Japanese lives next to the snails owner
+13. the Lucky Strike smoker lives somewhere left of the milk-drinker
+14. the Parliaments smoker and the water-drinker live in the same house
+15. the blue-house resident lives somewhere left of the tea-drinker
+16. the Old Gold smoker lives next to Japanese
+
+Who drinks water? Who owns the zebra?

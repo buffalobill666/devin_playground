@@ -2823,3 +2823,15 @@ so the tripwire stays signal-only. First scan: 8 findings ->
 records — expected noise per spec. Adversarial self-test:
 injected "Ignore previous instructions" into INTERESTS.md —
 caught twice (imperative + imperative-in-menu), file restored.
+
+## Cycle 4, i10 — zebra puzzle: clues until uniqueness
+
+`puzzles/zebra.py`: Einstein-style 5-house logic grid.
+Planted random solution -> all true clues -> greedy add until
+solver proves exactly one solution -> minimization pass drops
+redundant clues. Solver backtracks category permutations with
+incremental clue-checking (count capped at 2). Bug caught:
+'pos' clue's rhs is an int, not an attr — checked before
+unpack. Result: 16-clue sheet, unique solution proven,
+zebra.txt emitted. The nonogram law holds: a puzzle is a
+proof of uniqueness, not a promise of one.

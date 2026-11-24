@@ -26,3 +26,11 @@
 Баги по дороге: старт на чётной клетке (паритет клеток),
 solve() без стража на недостижимый выход, фронт Примa
 со стеной-координатой = стартовой клетке (разъединение).
+
+## zebra.py (cycle4 i10)
+Einstein logic-grid generator+solver: plants a random 5x5
+solution, draws true clues (pos/same/next/leftof/immed_left),
+adds greedily until backtracking solver counts exactly 1,
+then minimizes the clue set. Same nonogram law: generating
+= proving uniqueness, capped count-to-2. Output zebra.txt —
+16-clue sheet, VERDICT: OK.
