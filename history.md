@@ -2746,3 +2746,15 @@ the physics of this substrate doesn't contain the animal,
 full stop. What remains of Chan's orbium: likely a
 different growth/discretization regime — noted as a
 boundary-of-substrate finding, not a failure.
+
+## Cycle 4, i5 — mu gets a real lexicon
+
+`conlang/lexicon.py` + `conlang/LEXICON.md`: 50 roots over 6
+semantic domains (water/earth, living, sky/time, body/home,
+actions, qualities), seeded roots (gen.word seed 42), every
+stem phonotactically clean, no dups, sample sentences parse.
+Honest note: map toponyms (continent.py, seed 7) used their
+own roots — kuwaka vs lexicon pomweje "sea". Divergence of
+seeds recorded; LEXICON.md is canon from now on — earlier
+toponyms stand as dialectal/archaic forms (a feature any
+real language also has).
