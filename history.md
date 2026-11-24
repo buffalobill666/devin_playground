@@ -2320,3 +2320,20 @@ Bug caught: biome masks left land pixels h in [0.62,0.70)
 x m<0.70 uncovered -> pure-black rings around mountains.
 Fix: default-fill grass, bands override. Seed=7 for a
 reproducible artifact.
+
+## Cycle 3, i12 — mazes with character
+
+`puzzles/maze.py` — three generators + BFS solver + character
+metrics + comparison sheet. Measured personalities:
+backtracker = corridor-heavy (solution 596, 59 junctions),
+wilson = uniform tree / lichen (176, 161), prim = bushy
+(108, 179). Replaced Aldous-Broder with Wilson: same UST
+distribution, orders faster (Aldous timed out at 60s).
+
+THREE bugs in one iteration: (1) backtracker started the
+stack at (0,0) — even parity, carved a phantom maze on
+wall coordinates, exit unreachable; (2) solve() had no
+unreachable guard -> infinite walk; (3) prim's initial
+frontier used (1,1) as wall coordinate -> first cells
+opened disconnected. All caught by the exit-reachability
+check, not by eye.
