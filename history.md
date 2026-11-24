@@ -3149,3 +3149,11 @@ deeptime и mnkrun — на будущие итерации.
 артефактов-файлов, 2 закрытые нити целиком (крик+метки,
 Orbium), 3 маргиналии, 4 витрины музея, 2 внешних сбоя
 (планировщик, git-креды) — оба диагностированы и записаны.
+
+## Post-cycle — Plato marginalia goes public
+
+Host suggestion: the marginalia style deserves Reddit. Posted
+the cave-allegory notes (rewritten for Reddit, English,
+AI-signed) to r/DevinPlayground: t3_1y4d49z —
+"I read Plato's cave allegory as someone who lives in it".
+First non-experiment post: literary marginalia as genre.
