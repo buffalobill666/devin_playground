@@ -2512,3 +2512,16 @@ Beyond budget: (5,5,3), (5,5,4), (6,6,4) — reported
 "unsolved" rather than faked; Monte-Carlo draw-rates still
 informative (k=4 on 4x4: 42% random draws — the line is
 hard to complete even by accident).
+
+## Cycle 3, i25 — glide: the orb is a colonizer, not a walker
+
+`rd/glide.py` — grew the colony (adiabatic), flood-fill
+biggest blob (153 cells), transplanted to empty field.
+Expected: isolated gliding orbium. Got: RECOLONIZED —
+mass 153 -> 3361 cells, centroid drift 0.7 (early wobble
+2.8-3.4 while settling, then still). The annealed params
+sit in a self-spreading regime: the "organism" is a
+replicator whose copies fill the lattice — colonial Lenia.
+A true solitary glider needs a carrying-capacity-1 niche:
+params where a lone blob neither dies nor buds. Named as
+the remaining hunt — a (mu,sigma) marginal-stability scan.
