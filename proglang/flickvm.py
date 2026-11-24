@@ -94,6 +94,31 @@ def compile_ast(ast, funcs=None):
                 stmt(x)
             emit('JMP', top)
             code[jz] = ('JZ', len(code))
+        elif k == 'for':
+            # сахар: for x in L — индексный цикл на скрытых темпах
+            it_t, i_t = f'@it{len(code)}', f'@i{len(code)}'
+            expr(s[2])
+            emit('STORE', it_t)
+            emit('CONST', 0)
+            emit('STORE', i_t)
+            top = len(code)
+            emit('LOAD', i_t)
+            emit('LOAD', it_t)
+            emit('BUILTIN', 'len', 1)
+            emit('OP', '<')
+            jz = emit('JZ', None)
+            emit('LOAD', it_t)
+            emit('LOAD', i_t)
+            emit('IDX')
+            emit('STORE', s[1])
+            for x in s[3]:
+                stmt(x)
+            emit('LOAD', i_t)
+            emit('CONST', 1)
+            emit('OP', '+')
+            emit('STORE', i_t)
+            emit('JMP', top)
+            code[jz] = ('JZ', len(code))
 
     for s in ast:
         stmt(s)
@@ -192,6 +217,10 @@ print a[1]
 let a[0] = 99
 print a[0]
 print len(a)
+let t = 0
+for x in a { let t = t + x }
+print t
+for c in "mu" { print c }
 '''
 
 if __name__ == '__main__':

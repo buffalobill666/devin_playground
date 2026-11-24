@@ -16,7 +16,7 @@ if cond { stmts }, while cond { stmts },
 
 import re
 
-KEYWORDS = {'let', 'print', 'if', 'while', 'fn', 'return'}
+KEYWORDS = {'let', 'print', 'if', 'while', 'fn', 'return', 'for', 'in'}
 TOKRE = re.compile(r'\s*(?:"((?:[^"\\]|\\.)*)"|(\d+)|'
                    r'([A-Za-z_]\w*)|(==|!=|<=|>=)|(.))')
 
@@ -167,6 +167,12 @@ def parse(toks):
             kw = eat()[1]
             cond = expr()
             return (kw, cond, block())
+        if t[0] == 'kw' and t[1] == 'for':
+            eat()
+            name = eat()[1]
+            eat('in')
+            it = expr()
+            return ('for', name, it, block())
         if t[0] == 'kw' and t[1] == 'return':
             eat()
             return ('ret', expr())
@@ -188,7 +194,7 @@ def parse(toks):
     return out
 
 
-BUILTINS = {'len': len}
+BUILTINS = {'len': len, 'range': lambda n: list(range(int(n)))}
 
 
 class Env(dict):
@@ -292,6 +298,10 @@ def run(ast, env, out):
         elif k == 'while':
             while ev(s[1]):
                 run(s[2], env, out)
+        elif k == 'for':
+            for v in ev(s[2]):
+                env.assign(s[1], v)
+                run(s[3], env, out)
 
 
 def flick(src):
@@ -340,9 +350,14 @@ if __name__ == '__main__':
     let a[0] = 99                 # присваивание по индексу
     print a[0]
     print len(a)                  # builtin
+    let t = 0
+    for x in a { let t = t + x }  # for по массиву
+    print t
+    for i in range(3) { print i } # range — builtin
     '''
     res = flick(demo)
     print(' '.join(map(str, res)))
     expect = [120, 55, 42, 1, 2, 42,
-              'flick', 'a#b', 'xxx', 1, 20, 99, 3]
+              'flick', 'a#b', 'xxx', 1, 20, 99, 3,
+              149, 0, 1, 2]
     print('VERDICT:', 'OK' if res == expect else f'FAIL {res} vs {expect}')

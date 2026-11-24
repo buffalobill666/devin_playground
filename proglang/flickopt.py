@@ -10,7 +10,7 @@ run, not just code size — dead code removal shrinks the file,
 folding shrinks the trace.
 """
 
-from flick import tokenize, parse
+from flick import tokenize, parse, BUILTINS
 from flickvm import compile_ast, BIN, Env
 
 
@@ -102,6 +102,16 @@ def run_counted(code, funcs, env=None):
         elif ins == 'NEG': stack.append(-stack.pop())
         elif ins == 'OP':
             b, a = stack.pop(), stack.pop(); stack.append(BIN[arg[0]](a, b))
+        elif ins == 'ARR':
+            stack.append([stack.pop() for _ in range(arg[0])][::-1])
+        elif ins == 'IDX':
+            ix, a = stack.pop(), stack.pop(); stack.append(a[int(ix)])
+        elif ins == 'SET':
+            v, ix = stack.pop(), stack.pop()
+            env.lookup(arg[0])[int(ix)] = v
+        elif ins == 'BUILTIN':
+            args = [stack.pop() for _ in range(arg[1])][::-1]
+            stack.append(BUILTINS[arg[0]](*args))
         elif ins == 'PRINT': out.append(stack.pop())
         elif ins == 'JMP': ip = arg[0]
         elif ins == 'JZ':
