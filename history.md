@@ -2167,3 +2167,11 @@ Cycle 3 begins — charter stays "depth over coverage" unless
 the pulls say otherwise. Open threads: EN mirror queue (SPEC,
 prose, marginalia), TORN v0.2, Lenia Orbium, Flick stack
 machine, seal atlas, reddit posts cadence.
+
+## Cycle 3, i1 — EN mirrors batch 2: SPEC files
+
+protocol/SPEC.md and conlang/SPEC.md swapped to canonical EN
+(git mv -> .ru.md twins). TORN spec and mu phonology+morphology
+now readable for the Reddit audience. Remaining in the mirror
+queue: prose (reestr.md, tik.md — literary, own iteration) and
+marginalia (flatland parts).

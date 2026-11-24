@@ -1,64 +1,63 @@
-# TORN — протокол устойчивого журнала (v0.1)
+# TORN — resilient journal protocol (v0.1)
 
-Append-only формат файла, где любая порча — обрыв записи,
-битый байт, мусор в середине — стоит максимум одну запись,
-а читатель пересинхронизируется и читает дальше.
+An append-only file format where any corruption — a torn
+record, a flipped byte, garbage in the middle — costs at most
+one record, and the reader resynchronizes and reads on.
 
-Разработан под реальную боль: JSONL/CSV умирают целиком от
-оборванной записи на хвосте или повреждённого сектора.
+Designed for a real pain: JSONL/CSV die entirely from a
+truncated tail record or a damaged sector.
 
-## Формат
+## Format
 
-Файл — последовательность записей:
+A file is a sequence of records:
 
 ```
 record  := MAGIC VER TYPE LEN PAYLOAD CRC
-MAGIC   := 0xC7 0x3F                    (2 байта)
-VER     := 0x01                       (1 байт, версия формата)
-TYPE    := 0x01 json | 0x02 raw        (1 байт)
-LEN     := uint32 LE, длина PAYLOAD    (4 байта)
-PAYLOAD := LEN байт данных
-CRC     := crc32(VER+TYPE+LEN+PAYLOAD) (4 байта, uint32 LE)
+MAGIC   := 0xC7 0x3F                    (2 bytes)
+VER     := 0x01                       (1 byte, format version)
+TYPE    := 0x01 json | 0x02 raw        (1 byte)
+LEN     := uint32 LE, PAYLOAD length   (4 bytes)
+PAYLOAD := LEN bytes of data
+CRC     := crc32(VER+TYPE+LEN+PAYLOAD) (4 bytes, uint32 LE)
 ```
 
-Заголовок — 8 байт, запись целиком — 12 + LEN.
+Header — 8 bytes, whole record — 12 + LEN.
 
-TYPE 0x01: payload — JSON-объект UTF-8 (самоописывающийся:
-каждая запись несёт свою схему). TYPE 0x02: сырые байты —
-семантику определяет писатель.
+TYPE 0x01: payload is a UTF-8 JSON object (self-describing:
+each record carries its own schema). TYPE 0x02: raw bytes —
+semantics defined by the writer.
 
-## Контракт писателя
+## Writer contract
 
-- Только дописывает в хвост. Существующие байты не изменяются
-  никогда — нет редактирования, нет перезаписи.
-- Запись пишется атомарно с точки зрения формата: если писатель
-  умер посередине — хвост оборван, читатель его отбрасывает
-  чисто. Потеряна максимум полузаписанная запись.
+- Appends to the tail only. Existing bytes are never changed —
+  no editing, no rewriting.
+- A record is written atomically from the format's view: if the
+  writer dies mid-record, the tail is torn and the reader
+  discards it cleanly. At most a half-written record is lost.
 
-## Контракт читателя
+## Reader contract
 
-1. Сканирует MAGIC; при совпадении читает заголовок и CRC.
-2. CRC сошёлся — запись валидна, выдать.
-3. CRC не сошёлся или payload уходит за EOF — продолжить скан
-   с байта, следующего за найденным MAGIC (magic внутри
-   payload просто не пройдёт CRC — пересинхронизация
-   безопасна).
-4. Обрыв хвоста (заголовок есть, данных не хватает) — это
-   torn-tail: молча отбросить, это штатное состояние
-   журнала, а не ошибка.
-5. Читатель сообщает: `skipped` — пропущенные битые байты,
-   `torn_tail` — байты оборванного хвоста.
+1. Scans for MAGIC; on match, reads the header and CRC.
+2. CRC matches — record is valid, emit it.
+3. CRC mismatch or payload runs past EOF — resume scanning from
+   the byte after the found MAGIC (a magic inside a payload
+   simply fails CRC — resync is safe).
+4. A torn tail (header present, data short) is a torn-tail:
+   silently discard — it's a normal journal state, not an
+   error.
+5. The reader reports: `skipped` — corrupted bytes skipped,
+   `torn_tail` — bytes of the torn tail.
 
-## Чего формат НЕ делает
+## What the format does NOT do
 
-- Не дедуплицирует, не индексирует, не сжимает — это журнал,
-  не база.
-- MAGIC — эвристика ресинхронизации, не криптография.
-  Злонамеренная порча не рассматривается; от бит-рота и
-  обрывов — да, от атак — нет.
+- No dedup, no indexing, no compression — it's a journal,
+  not a database.
+- MAGIC is a resync heuristic, not cryptography. Malicious
+  corruption is out of scope; bit-rot and truncation — yes,
+  attacks — no.
 
-## Почему append-only
+## Why append-only
 
-Неперезапись — цена устойчивости. Любое изменение внутри файла
-делало бы старые смещения ложью; журнал честен, потому что
-только растёт. История — только вперёд.
+Non-rewriting is the price of resilience. Any in-file
+modification would turn old offsets into lies; the journal is
+honest because it only grows. History moves forward only.

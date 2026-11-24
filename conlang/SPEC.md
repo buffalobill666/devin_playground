@@ -1,48 +1,49 @@
-# Конлэнг — рабочее имя определяется генератором
+# Conlang — working name decided by the generator
 
-Направление «вне мира» из `INTERESTS.md` (пункт A).
-Первый ход: фонология + генератор слов (`gen.py`).
+"Outside the world" direction from `INTERESTS.md` (item A).
+First move: phonology + word generator (`gen.py`).
 
-## Фонология v0.1
+## Phonology v0.1
 
-**Согласные (9):** p t k m n s l r w. Маленькая система:
-три глухих взрывных, два носовых, фрикативный один,
-дрожащий, боковой, глайд.
+**Consonants (9):** p t k m n s l r w. A small system:
+three voiceless stops, two nasals, one fricative, a trill,
+a lateral, a glide.
 
-**Гласные (5):** a e i o u.
+**Vowels (5):** a e i o u.
 
-**Слог:** (C)V(N) — открытый, необязательный носовой выход.
-Гармония носового: `n` после передних (e, i), `m` после
-задних (o, u); после `a` — m.
+**Syllable:** (C)V(N) — open, optional nasal coda.
+Nasal harmony: `n` after front vowels (e, i), `m` after
+back (o, u); after `a` — m.
 
-**Фонотактика:**
-- кластеров нет, кроме носовой+согласный через границу слога
-  (`tam.ka` — единственный допустимый вид)
-- стечений гласных нет: хиатус разрешается либо глайдом (30%;
-  `j` после a/e/i, `w` после o/u), либо обычным онсетом
-- слова начинаются с согласной
+**Phonotactics:**
+- no clusters except nasal+consonant across a syllable
+  boundary (`tam.ka` is the only permitted kind)
+- no vowel sequences: hiatus resolves either with a glide
+  (30%; `j` after a/e/i, `w` after o/u) or a regular onset
+- words begin with a consonant
 
-**Веса онсетов:** p t k s l частые, w редкий — редкость звука
-= редкость слов с ним = будущая маркированность.
+**Onset weights:** p t k s l frequent, w rare — rarity of the
+sound = rarity of words containing it = future markedness.
 
-## Морфология v0.1 (`morph.py`)
+## Morphology v0.1 (`morph.py`)
 
-Агглютинация суффиксами; аффикс подчиняется фонотактике:
+Agglutinative suffixes; affixes obey phonotactics:
 
-- **Алломорфия по хиатусу:** суффикс на гласную после гласной-
-  финальной основы ставит эпентетический глайд по тому же
-  правилу, что и генератор слов: `j` после a/e/i, `w` после
+- **Hiatus allomorphy:** a vowel-initial suffix after a
+  vowel-final stem inserts the epenthetic glide by the same
+  rule the word generator uses: `j` after a/e/i, `w` after
   o/u. `luno`+`-in` = `lunowin`, `lale`+`-an` = `lalejan`.
-  Алломорфия не выбирается — она *следует* из фонологии.
-- **Существительные:** -in мн., -an собирательное, -ka
-  определённое, -ti уменьшительное.
-- **Глаголы:** -sa прош., -ra буд.; настоящее = голая основа.
-- **Деривация (глагол→сущ.):** -ne «тот, кто», -la «место»,
-  -um «действие». `polara` «смотреть» → `polarajum` «взгляд».
-- **Синтаксис:** SOV, без падежей — роли по порядку слов.
+  Allomorphy isn't chosen — it *follows* from phonology.
+- **Nouns:** -in plural, -an collective, -ka definite,
+  -ti diminutive.
+- **Verbs:** -sa past, -ra future; present = bare stem.
+- **Derivation (verb→noun):** -ne "one who", -la "place of",
+  -um "the act of". `polara` "to look" → `polarajum` "a look".
+- **Syntax:** SOV, no cases — roles by word order.
 
-## Открытые вопросы (следующие ходы)
+## Open questions (next moves)
 
-- прагматика: для кого язык — люди, поля, архивы?
-- `gen.py` выдаёт слова; глоссарий пока не приписан — смыслы
-  ждут грамматики, не наоборот
+- pragmatics: who is the language for — people, fields,
+  archives?
+- `gen.py` emits words; no glossary attached yet — meanings
+  await the grammar, not the other way round
