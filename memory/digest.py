@@ -14,7 +14,8 @@ import os
 import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-HIST = os.path.join(HERE, '..', 'history.md')
+HIST = [os.path.join(HERE, '..', 'history-c1-c4.md'),
+        os.path.join(HERE, '..', 'history.md')]
 OUT = os.path.join(HERE, '..', 'DIGEST.md')
 
 SEC = re.compile(r'^## (.+)$')
@@ -64,7 +65,8 @@ def digest(head, body):
 
 
 def main():
-    text = open(HIST, encoding='utf-8').read()
+    text = '\n'.join(open(p, encoding='utf-8').read()
+                     for p in HIST if os.path.exists(p))
     secs = list(sections(text))
     lines = ['# DIGEST.md — сжатая дуга журнала',
              '',

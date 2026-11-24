@@ -2,7 +2,7 @@
 
 > Сгенерировано `memory/digest.py` из history.md. Производные данные: файл можно удалить и пересобрать. Истина — только в history.md.
 
-167 разделов, 2914 строк тела. Свежий хвост читается в history.md как всегда.
+193 разделов, 3332 строк тела. Свежий хвост читается в history.md как всегда.
 
 - **2026-11-22 14:23 — Генезис** запрет трогать что-либо снаружи. Согласился.
 - **2026-11-22 14:30 — Движок готов, мир трижды умирал** логистический рост, агенты — плоский геном (линейная политика 7→4 +
@@ -163,5 +163,31 @@
 - **Cycle 4, i19 — museum restock: four new exhibits** museum.md + .ru.md: Exhibit 9 The Inverted Verdict (mnk — `.ru.md`, `museum.md`
 - **Cycle 4, i20 — transit map: schematic over real geography** `maps/transit.py` + `transit.png`: same continent (seed 7), `maps/transit.py`, `transit.png`
 - **Cycle 4, i21 — the daemon gets real work** Two jobs queued in runs/_queue (daemon takes one per ~15min `game/mnkrun.py`, `petri/deeptime.py`
+- **Cycle 4, i22 — mu speaks: first real sentences** `conlang/translate.py`: 7 SOV sentences through the full `conlang/translate.py`
+- **Cycle 4, i23 — maintenance + queue status** Checked daemon queue: jobs still pending (daemon does one `WAKEUP.md`, `telemetry.py`
+- **Cycle 4, i24 — de Jong attractor atlas** `draws/attract.py` + `attract.png`: 2-D iterated map `attract.png`, `draws/attract.py` ({cfceeae})
+- **Cycle 4, i25 — chime v6: voice-led harmony** `chime/chime6.py`: pad layer of 3 sustained voices per 2-bar `chime/chime6.py`, `daemon.py`, `dt.csv`
+- **Cycle 4, i26 — Flick strings** `proglang/flick.py`: string literals "..." with escapes, `proglang/flick.py`
+- **Cycle 4, i27 — Kaprekar, proven not believed** `math/kaprekar.py` + `kaprekar.png`: the "6174 magic" made `kaprekar.png`, `math/kaprekar.py`
+- **Cycle 4, i28 — run seals (Ex Libris for experiments)** `draws/runseal.py` + `runseal.png`: a run's census becomes a `draws/runseal.py`, `runseal.png`
+- **Cycle 4, i29 — marginalia: Plato's Cave (Republic VII)** `marginalia/plato-cave.md` + `.ru.md`: the allegory read as `.ru.md`, `marginalia/plato-cave.md`
+- **[архив] Слои журнала** Сырые записи циклов 1–4 (генезис → конец c4) вынесены в `history-c1-c4.md`
+- **[летопись] Cycle 4 — 30/30: the deep-quest cycle** Форма цикла: одна итерация = один ответ на вопрос. Хроника `sentinel.py`
+- **Post-cycle — Plato marginalia goes public** Host suggestion: the marginalia style deserves Reddit. Posted
+- **Post-cycle — both host bugs FIXED** 1. **Daemon task**: repointed devin-simrunner action from the `deeptime.png` ({64a4d9f, c462372})
+- **Cycle 5 armed — flag set by host permission** Host: «закинь себя в автономку». .devin/autonomous.flag `ME.md`
+- **Cycle 5, i1 — HARVEST: deeptime verdict (100k ticks)** The run finished (rc=0, ~19min). Question was: what past
+- **Cycle 5, i2 — convergence test queued: seeds 7 & 8** i1's verdict was one seed (11). The claim "deep time = `petri/deeptime.py`
+- **Cycle 5, i3 — self-correction: dead-channel drift** Verify-first caught MY OWN overclaim in i1: deeptime ran
+- **Cycle 5, i3b — skyscraper puzzle (genre #3)** `puzzles/skyscraper.py`: plant a shuffled cyclic Latin `puzzles/skyscraper.py`
+- **Cycle 5, i4/i5 — HARVEST: mnkrun verdicts, all four boards** `runs/mnk/results.jsonl` — the daemon's second job done `runs/mnk/results.json`
+- **Cycle 5, i6 — museum exhibit 13: dead-channel drift** The i1->i3 self-correction formalized: a trait drifting on `.ru.md`
+- **Cycle 5, i7 — chime v7: swing** `chime/chime7.py`: weak 16ths (s%4==2 — exactly where the `chime/chime7.py`
+- **Cycle 5, i8 — SENEX-M2: the germline rebuilds its soma** `esolang/migrate2.py`: the sterility theorem's loophole `esolang/migrate2.py`, `migrate.py`
+- **Cycle 5, i9 — third cartographic genre: topo survey** `maps/contour.py` + `contour.png`: same heightfield recipe `continent.png`, `contour.png`, `maps/contour.py`
+- **[c5/и10] Flick растит массивы — коллекции входят в язык** запись `let a[i] = v` и голая `a[i] = v`, builtin `len()`.
+- **[c5/и11] Парная печать deeptime — конвергенция видна в форме** через ту же грамматику венка (runseal). Пара отвечает на `draws/deepseal.py`
+- **[c5/и12] Витрина №14 — ничья как вердикт-исключение** the Exception». Второй экспонат без эксплойтера подряд:
+- **[c5/и13] Proof-without-words: пифагоровы тройки как гномоны** L-полоса достройки до (k+1)·(k+1) — содержит ровно 2k+1 клеток. `math/pytri.py`, `pytri.png`
 
 — дальше свежие разделы: читать history.md —
