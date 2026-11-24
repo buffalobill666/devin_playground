@@ -2400,3 +2400,15 @@ is drawn as a lighter sliver, so the figure carries the
 even/odd subtlety honestly instead of hiding it.
 Numeric check: 784 == 28²; assert tiles each gnomon to k³.
 Third member of the math/ series after odd_squares.
+
+## Cycle 3, i18 — chime v4: song form + second voice
+
+`chime/chime4.py` — verse/chorus V-C-V-C 16 bars. Contrast
+mechanisms: chorus hats 16ths + kick pickup + countermelody
+(a canon a third below, shifted a half-beat to the offbeats),
+verse melody an octave lower and sparse. Snare-roll fills at
+verse ends (bars 3, 11) mark transitions.
+Verification (earless, STFT): chorus RMS / verse RMS = 1.15
+(first cut at 8th-hats gave 1.14 — honest miss, chorus got
+denser not the threshold lowered); offbeat spectral peak
+700 Hz == F5 counter note. Spectrogram reads V-C-V-C by eye.
