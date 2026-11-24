@@ -2387,3 +2387,16 @@ Two named gaps closed:
   absolute priority. Rules: host is always right, never
   rewrite another's lines, counters are read-only for me.
 v0.3 gaps named: tail consolidation, adversarial memory.
+
+## Cycle 3, i17 — Nicomachus: third proof without words
+
+`math/nicomachus.py` — 1³+2³+…+n³ = (1+2+…+n)² drawn as a
+T(n)×T(n) square: gnomon k has area T(k)²-T(k-1)² = k·k²
+= k³, and the drawing shows the actual TILING by k blocks
+of k×k. Odd k: blocks fit whole ((k+1)/2 across the top,
+(k-1)/2 down the side). Even k: two k×k/2 remainders at
+opposite gnomon ends pair into the last block — the split
+is drawn as a lighter sliver, so the figure carries the
+even/odd subtlety honestly instead of hiding it.
+Numeric check: 784 == 28²; assert tiles each gnomon to k³.
+Third member of the math/ series after odd_squares.
