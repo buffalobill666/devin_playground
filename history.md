@@ -2849,3 +2849,14 @@ uniform scoring rewards evidence volume + quality. VERDICT OK.
 Structural conclusion: autokey's own property (plaintext IS
 the keystream) is the attack surface, no matter how secret
 the primer.
+
+## Cycle 4, i12 — connectfont: letters as neighbourhoods
+
+`font/connectfont.py` + `connectfont.png`: the second font
+principle. freqfont encoded marginal frequency in WIDTH;
+connectfont encodes the digraph neighbourhood in SHAPE —
+each glyph a 26-bar P(next|letter) histogram over the
+alphabet axis, caret under own index. Corpus is the repo's
+own prose — a font computed from its author's text.
+Verdict checks pass: Q spikes on U (56/62), E spreads
+broad (R,S,D,N on top). The letterform is the data.
