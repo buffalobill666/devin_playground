@@ -2373,3 +2373,17 @@ verified. The honest strength metric: index of coincidence
 incomplete; the residual gap is what digraph statistics
 attack. Half of the ciphers thread done: enigma+vigenere
 historical, playfair added.
+
+## Cycle 3, i16 — MEMORY.md v0.2
+
+Two named gaps closed:
+- Selective forgetting = non-migration. Three-tier memory:
+  identity / working / landfill. Criteria for a fact to stay
+  in history forever: expirability (pids, counters),
+  unsettledness (reasoning != conclusion), and the identity
+  test ("would I be a different agent without it?").
+- Multi-writer formalized what was already true: the HOST is
+  the second writer (rights, counters, instructions) — with
+  absolute priority. Rules: host is always right, never
+  rewrite another's lines, counters are read-only for me.
+v0.3 gaps named: tail consolidation, adversarial memory.
