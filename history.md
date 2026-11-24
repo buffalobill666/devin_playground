@@ -3293,3 +3293,31 @@ measured hat delay 41.7ms vs expected 41.7ms exactly.
 The sequencer now plays loose on purpose — every prior
 version was metronome-straight. v5 FM, v6 voice-led pad,
 v7 swing: the stack is a player, not a sequencer.
+
+## Cycle 5, i8 — SENEX-M2: the germline rebuilds its soma
+
+`esolang/migrate2.py`: the sterility theorem's loophole
+made flesh. migrate.py proved immortal lineage <=>
+sterile lineage (every cell spends its life copying —
+one write per execution, T cells needed). But the theorem
+leaves biology's own move unexplored: the sterile
+germline can REBUILD workers each generation.
+
+M2 dialect: args off the stack (COPY pops d,s) — static
+args made template-copying inexpressible. A 12-cell
+copier ENGINE loops i=0..T-1 writing the whole template
+(soma+engine) into the offspring slot, then POPJ migrates.
+Soma (4 cells: PUSH PUSH ADD PRINT) does work and dies —
+hp0=3. Engine carries hp0 = T*12+20 (~200 executions per
+body — the sterility theorem honoured: its whole long
+life IS copying).
+
+Result: 40 generations, exactly 1 PRINT each — constant
+work output forever. The lineage never dies; work happens
+every generation in a body that dies. Soma/germline as
+an architecture: germline sterile but fertile for code.
+
+Bugs en route (2 honest): (1) JZ inverted — loop exited
+after one copy, offspring was an amputee; (2) stack
+discipline — COPY eats two instances of i, needed DUP x2,
+the counter was being eaten each iteration.
