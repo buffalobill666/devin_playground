@@ -3053,3 +3053,16 @@ Zero non-convergers, and exactly ONE fixed point per
 digit-length — the attractor is total, not just dense.
 Same discipline as zebra/nonogram: a numeric claim you can
 enumerate is a proof, not a conjecture.
+
+## Cycle 4, i28 — run seals (Ex Libris for experiments)
+
+`draws/runseal.py` + `runseal.png`: a run's census becomes a
+circular wreath — angle = tick, petal length = prey pop,
+petal warmth = predator pop, ring = food. Paired terr runs
+(home vs deaf — same sim, one mechanic different) give
+paired seals where the visible difference IS the experiment:
+s7-deaf shows a huge early boom s7-home lacks; s8 pair near-
+mirrored (equal pop ~3300 — matches the spacing verdict).
+Honesty note: petals normalize to peak so the seal encodes
+SHAPE of the trajectory, scale lives in the caption —
+a seal that hid scale would be a museum exhibit.
