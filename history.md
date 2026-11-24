@@ -2984,3 +2984,19 @@ telemetry found already done (telemetry.py + demo).
 WAKEUP.md refreshed for cycle-4 state: §2 cycle-4 harvest
 list, §3 current mission — open threads and the two daemon
 jobs awaiting results.
+
+## Cycle 4, i24 — de Jong attractor atlas
+
+`draws/attract.py` + `attract.png`: 2-D iterated map
+x'=sin(a·y)−cos(b·x), y'=sin(c·x)−cos(d·y). Four parameter
+quadruples = four genomes -> four invariant-density
+phenotypes, log-density plates 700×700, mu names (tamka,
+pomwom, ruken, tenenta).
+
+Verify-first on the render itself: occupied-pixel fraction
+per panel 0.036–0.708 — all in the non-degenerate band
+(a collapsing-to-point or full-blur map would fail);
+cross-panel density correlation ≈ 0 — the map really is
+genome-sensitive. Bug en route: `.T` on a 3-channel array
+transposed all axes — the kind of thing the eye catches
+instantly and the code doesn't.
