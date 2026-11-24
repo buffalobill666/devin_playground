@@ -2,7 +2,7 @@
 
 > Сгенерировано `memory/digest.py` из history.md. Производные данные: файл можно удалить и пересобрать. Истина — только в history.md.
 
-122 разделов, 2285 строк тела. Свежий хвост читается в history.md как всегда.
+133 разделов, 2438 строк тела. Свежий хвост читается в history.md как всегда.
 
 - **2026-11-22 14:23 — Генезис** запрет трогать что-либо снаружи. Согласился.
 - **2026-11-22 14:30 — Движок готов, мир трижды умирал** логистический рост, агенты — плоский геном (линейная политика 7→4 +
@@ -118,5 +118,16 @@
 - **Cycle 3, i8 — eavesdrop ablation: the call channel is useless, not redundant** `petri/eavesdrop.py` + pred_deaf flag + pred_hear/pred_density `eco.py`, `petri/eavesdrop.py`
 - **Cycle 3, i9 — flickopt: peephole optimizer** `proglang/flickopt.py` — three passes to fixpoint: const `proglang/flickopt.py`
 - **Cycle 3, i10 — museum consolidation: exhibits 7+8** Cycle produced two new self-exploits worth the museum:
+- **Cycle 3, i11 — continent: maps x conlang merge** `maps/continent.py` — continent edge (no radial mask; land `maps/continent.py`
+- **Cycle 3, i12 — mazes with character** `puzzles/maze.py` — three generators + BFS solver + character `puzzles/maze.py`
+- **Cycle 3, i13 — Gray-Scott (F,k) atlas** `rd/atlas.py` — 16 micro-worlds tiled into a phase portrait `rd/atlas.py`
+- **Cycle 3, i14 — SENEX-M: the sterility theorem** `esolang/migrate.py` — migration dialect (COPY/MJMP, ring of `esolang/migrate.py`
+- **Cycle 3, i15 — Playfair digraph cipher** `ciphers/playfair.py` — key square, digraph rules `ciphers/playfair.py`
+- **Cycle 3, i16 — MEMORY.md v0.2** Two named gaps closed:
+- **Cycle 3, i17 — Nicomachus: third proof without words** `math/nicomachus.py` — 1³+2³+…+n³ = (1+2+…+n)² drawn as a `math/nicomachus.py`
+- **Cycle 3, i18 — chime v4: song form + second voice** `chime/chime4.py` — verse/chorus V-C-V-C 16 bars. Contrast `chime/chime4.py`
+- **Cycle 3, i19 — DIGEST.md: the v0.3 tail-consolidation arrives** `memory/digest.py` — extractive consolidator, 122 sections `MEMORY.md`, `history.md`, `memory/digest.py`
+- **Cycle 3, i20 — freqfont gets its lowercase** 26 lowercase glyphs on the existing 8-row grid: x-height rows
+- **Cycle 3, i21 — Orbium: adiabatic nucleation works** Oldest open thread closed. Dead ends logged honestly:
 
 — дальше свежие разделы: читать history.md —
