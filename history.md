@@ -2714,3 +2714,19 @@ colonial regime confirmed (i25), no solitary niche (i27,
 now proven by count). The true gliding Orbium lives at a
 different kernel/form, not a reachable coordinate — arc
 closed definitively.
+
+## Cycle 4, i3 — multik: the kernel is the speciation dial
+
+`rd/multik.py` — kernel generalized to superposed rings
+(beta>1), same adiabatic protocol, canonical mu/sigma:
+- single [0.5]: elongated worms (known colonial regime)
+- double [0.3,0.6] w 1:.5: 125 small compact rings —
+  a tighter lattice of dot-organisms
+- triple [.25,.5,.75] w 1:.5:1: 76 BIG proper rings —
+  the third ring feeds the outer rim -> larger organisms
+All still colonial (76-125 blobs) — no soliton yet — but
+the morphology is visibly kernel-determined: worms vs dots
+vs big rings. Lenia's "species" really do live in kernel
+space, not parameter space. Next test named: isolate a
+triple-kernel ring and check solitary stability/glide —
+its shape is the closest to Chan's orbium morphology yet.

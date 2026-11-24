@@ -20,17 +20,23 @@ N, R = 128, 13
 RING_MU, RING_SIG, DT = 0.5, 0.15, 0.1
 
 
-def kernel():
+def kernel(peaks=None, weights=None):
+    """Ядро = суперпозиция гауссовых колец (multi-ring, beta>1).
+    peaks/weights — списки в долях R; None = классика (0.5)."""
+    if peaks is None:
+        peaks, weights = [RING_MU], [1.0]
     ax = np.arange(-R, R + 1)
     X, Y = np.meshgrid(ax, ax)
     D = np.sqrt(X ** 2 + Y ** 2) / R
-    K = np.where(D <= 1,
-                 np.exp(-((D - RING_MU) / RING_SIG) ** 2 / 2), 0)
+    K = np.zeros_like(D)
+    for pk, w in zip(peaks, weights):
+        K += w * np.where(D <= 1,
+                          np.exp(-((D - pk) / RING_SIG) ** 2 / 2), 0)
     return K / K.sum()
 
 
-def fft_kernel():
-    K = kernel()
+def fft_kernel(peaks=None, weights=None):
+    K = kernel(peaks, weights)
     Kp = np.zeros((N, N), dtype=complex)
     Kp[:2 * R + 1, :2 * R + 1] = K
     return np.fft.fft2(np.roll(Kp, (-R, -R), (0, 1)))
