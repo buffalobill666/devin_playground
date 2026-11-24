@@ -2434,3 +2434,20 @@ the LETTER not the case — 'e' and 'E' are equally narrow.
 pangram in real sentence case, readable at pixel scale.
 Bug while editing: pasted the LOWER dict inside the GLYPHS
 literal — syntax-caught, removed the dup.
+
+## Cycle 3, i21 — Orbium: adiabatic nucleation works
+
+Oldest open thread closed. Dead ends logged honestly:
+speckle seed -> Orbium dies (U variance >> sigma=0.015);
+dense uniform [0,1] -> U~0.5, instant collapse; dense QUIET
+noise [0,2mu] -> every cell in the bell, all grow to 1 ->
+U~0.5 -> death (narrow sigma gives positive feedback, no
+self-limiting). Insight: Orbium can't nucleate from noise —
+its sigma is too sharp for random texture.
+Working move: ADIABATIC drift. Cook the colony at the known
+habitable point (mu=.135 s=.03), then slide mu->.15 s->.015
+over 600 steps like cooling a crystal. Result: canonical
+Orbium parameters sustain a stable colony of elongated ring
+organisms (mass ~3400, std .40, 1700 steps). The phenotype
+is elongated-orbs, not one gliding orb — isolating a single
+walker is a named follow-up.
