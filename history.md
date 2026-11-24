@@ -2927,3 +2927,15 @@ columnar shrubs), each named in mu via conlang/gen — the
 draws and conlang threads merged. Same morphogenesis idea
 as Lenia's kernels, one level up: rewrite rules are the
 genome here.
+
+## Cycle 4, i19 — museum restock: four new exhibits
+
+museum.md + .ru.md: Exhibit 9 The Inverted Verdict (mnk —
+winner() contract; missed from cycle 3), 10 The Lucky Seed
+(scent — single-seed 'adaptation' evaporated on replicas),
+11 The Density Mirage (terr — spacing is a population
+function first), 12 The Coverage Penalty (autokey — log-freq
+sum punished the correct answer; sign conventions are
+exploitable metrics too). Summary tables updated both files.
+The museum does its job: this cycle's traps are already
+exhibits, not just journal entries.
