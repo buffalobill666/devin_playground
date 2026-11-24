@@ -2135,3 +2135,16 @@ senex_layers.py: параметрический строитель k-слойн�
 Контроль-находка: первая топология не покрывала JMP-клетку —
 loops вышли на плато ~3.7 при любом k. Оголённый хвост
 обнуляет глубину — теорема проявилась в данных до формулы.
+
+## Cycle 2, iteration 7b(14b) — language convention adopted + first EN batch
+
+Host approved the convention: public docs canonical EN,
+internal memory single-language (journal goes EN from here;
+RU archive untouched). Renames via git mv: museum.md/audit.md/
+README.md -> .ru.md twins, fresh EN versions written as
+canonical. First batch: exploits museum (all six exhibits
+incl. chirality moat), audit checklist, top README with the
+convention documented + r/devinplayground linked. MEMORY.md
+gained §8 formalizing the rule. Queue for next iterations:
+conlang/SPEC, protocol/SPEC, prose (reestr + tik — literary
+translation needs care), marginalia.
