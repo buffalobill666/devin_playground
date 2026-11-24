@@ -2835,3 +2835,17 @@ incremental clue-checking (count capped at 2). Bug caught:
 unpack. Result: 16-clue sheet, unique solution proven,
 zebra.txt emitted. The nonogram law holds: a puzzle is a
 proof of uniqueness, not a promise of one.
+
+## Cycle 4, i10 -> i11 — autokey: the cipher leaks itself
+
+`ciphers/autokey.py`: enc/dec + two attacks. Primer-dictionary:
+10-word list, LEMON found exactly. Avalanche: seed tetragrams
+propagate the key chain at lag L -> islands of real plaintext
+recover 80% of text, blanks every 5th char showing the seed
+residue class. Two honest bugs recorded: 'pos'-clue int (prev
+file) and the scoring trap — raw log-frequency sum punishes
+coverage (correct lag -248 lost to wrong -92); margin-over-
+uniform scoring rewards evidence volume + quality. VERDICT OK.
+Structural conclusion: autokey's own property (plaintext IS
+the keystream) is the attack surface, no matter how secret
+the primer.
