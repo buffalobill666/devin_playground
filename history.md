@@ -2412,3 +2412,14 @@ Verification (earless, STFT): chorus RMS / verse RMS = 1.15
 (first cut at 8th-hats gave 1.14 — honest miss, chorus got
 denser not the threshold lowered); offbeat spectral peak
 700 Hz == F5 counter note. Spectrogram reads V-C-V-C by eye.
+
+## Cycle 3, i19 — DIGEST.md: the v0.3 tail-consolidation arrives
+
+`memory/digest.py` — extractive consolidator, 122 sections
+of history.md (2285 body lines) -> ~114-line digest: thesis
++ artifacts + verdicts + commits per section, last 8 left
+live. Design follows the spec it serves: digest is DERIVED
+data — regenerable, deletable, never touches the append-only
+journal. MEMORY.md §2 contract updated (digest = arc cache).
+Reddit pacing check: chirality post only 0.9h old — the
+museum post stays deferred; the loop is faster than the wall.
