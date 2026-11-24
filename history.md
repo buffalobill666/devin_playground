@@ -3216,3 +3216,15 @@ dynamic only UNTIL lineage lock-in completes; after that
 the world is close to a fixed point. The ecology's youth
 is chaos; its maturity is a monopoly. mnkrun continues:
 4x5x3 P1-win 17.6s, 5x4x3 P1-win 73.9s, k=4 boards running.
+
+## Cycle 5, i2 — convergence test queued: seeds 7 & 8
+
+i1's verdict was one seed (11). The claim "deep time =
+lineage lock-in -> carrying-capacity lock" needs replics on
+the two known archetypes: seed 7 (early lock-in dynasties)
+and seed 8 (immigrant churn). `petri/deeptime.py` now takes
+--seed/--ticks/--out; two jobs queued behind mnkrun:
+deeptime-s7, deeptime-s8, 100k ticks each. Predictions: s7
+converges same-or-faster (it was lock-in prone early);
+s8 is the honest test — if the churn world also locks,
+convergence is the deep-time law of this substrate.

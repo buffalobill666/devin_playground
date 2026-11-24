@@ -16,9 +16,16 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from pathlib import Path
 from petri.eco import EcoSim, DEFAULTS
+import argparse
 
-TICKS, EVERY, SEED = 100_000, 50, 11
-OUT = Path('runs/deeptime'); OUT.mkdir(parents=True, exist_ok=True)
+P = argparse.ArgumentParser()
+P.add_argument('--seed', type=int, default=11)
+P.add_argument('--ticks', type=int, default=100_000)
+P.add_argument('--out', default='runs/deeptime')
+A = P.parse_args()
+
+TICKS, EVERY, SEED = A.ticks, 50, A.seed
+OUT = Path(A.out); OUT.mkdir(parents=True, exist_ok=True)
 CSV = OUT / 'dt.csv'
 
 
