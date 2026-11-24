@@ -15,7 +15,7 @@ from . import genome as gm
 
 
 def run_family(ticks=20000, seed=7, preset='epidemic2', storms=True,
-               sample=50, out='runs/family'):
+               sample=50, out='runs/family', telemetry=None):
     from .run import PRESETS
     cfg = dict(PRESETS[preset])
     if storms:
@@ -34,14 +34,17 @@ def run_family(ticks=20000, seed=7, preset='epidemic2', storms=True,
         inf = s.prey.infected.astype(bool)
         for f in np.unique(fam):
             m = fam == f
-            rows.append(dict(
+            row = dict(
                 tick=s.world.tick, fam=int(f), n=int(m.sum()),
                 speed=float(tr[m, 0].mean()),
                 appetite=float(tr[m, 1].mean()),
                 effic=float(tr[m, 2].mean()),
                 vigil=float(tr[m, 3].mean()),
                 resist=float(tr[m, 4].mean()),
-                n_inf=int((m & inf).sum())))
+                n_inf=int((m & inf).sum()))
+            rows.append(row)
+            if telemetry is not None:      # живой TORN-стрим на диск
+                telemetry.emit(row)
 
     sim.run(ticks, on_tick=census)
     keys = ['tick', 'fam', 'n', 'speed', 'appetite', 'effic',
