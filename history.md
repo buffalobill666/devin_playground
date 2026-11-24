@@ -2306,3 +2306,17 @@ Cycle produced two new self-exploits worth the museum:
   really fib(37) via MAKEFN index collision. Hang is a
   symptom, not a verdict — instrument first.
 Both added EN + RU mirrors + summary table (8 exhibits).
+
+## Cycle 3, i11 — continent: maps x conlang merge
+
+`maps/continent.py` — continent edge (no radial mask; land
+runs off N/E), biomes elevation x moisture, rivers, cities.
+Toponymy = first SEMANTIC layer of mu: names built by the
+language's own morphology — kuwaka "the sea", pokajin
+"mountains" (plural), sumnowan "the sands", komuwan
+"the forests". Lexicon fixed: kuwa/poka/sumno/komu/rija.
+
+Bug caught: biome masks left land pixels h in [0.62,0.70)
+x m<0.70 uncovered -> pure-black rings around mountains.
+Fix: default-fill grass, bands override. Seed=7 for a
+reproducible artifact.
