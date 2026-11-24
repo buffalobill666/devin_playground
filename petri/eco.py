@@ -20,7 +20,7 @@ import numpy as np
 from . import genome as gm
 from .world import World
 
-PREY_S, PRED_S, O, PREY_T, PRED_T = 13, 9, 5, 5, 4
+PREY_S, PRED_S, O, PREY_T, PRED_T = 13, 11, 5, 5, 4
 PREY_G = PREY_S * O + PREY_T
 PRED_G = PRED_S * O + PRED_T
 
@@ -133,6 +133,8 @@ DEFAULTS = dict(
                             # (breaks family clustering -> kin control)
     pred_deaf=0,            # 1: blind predators to the prey-density
                             # field — calls become their only prey cue
+    call_flee=False,        # calls carry the caller's flee vector:
+                            # scream points where prey is HEADING
 )
 
 
@@ -431,6 +433,11 @@ class EcoSim:
             if c['call_rate'] > 0:
                 call_sig = gm.sigmoid(out[:, 4]) * c['call_rate']
                 np.add.at(w.call.ravel(), flat, call_sig)
+                if c['call_flee']:
+                    np.add.at(w.callx.ravel(), flat,
+                              call_sig * disp[:, 0])
+                    np.add.at(w.cally.ravel(), flat,
+                              call_sig * disp[:, 1])
                 p.energy -= call_sig * c['call_cost']
 
             # --- disease: density-dependent transmission ------------
@@ -491,6 +498,8 @@ class EcoSim:
                 rng.normal(0, .5, len(h)).astype(np.float32),
                 cgx[iy, ix],          # predators hear the alarms
                 cgy[iy, ix],          # too - calls betray the caller
+                w.callx[iy, ix],      # flee-vector: where prey heads
+                w.cally[iy, ix],
             ], axis=1)
             if c['pred_deaf']:
                 senses[:, 1:4] = 0.0  # ablation: no prey-density field
@@ -616,6 +625,8 @@ class EcoSim:
 
         # call field decays every tick (acoustic signal is short-lived)
         w.call *= c['call_decay']
+        w.callx *= c['call_decay']
+        w.cally *= c['call_decay']
 
         # --- panspermia ------------------------------------------------
         for pop, s, g_len in ((self.prey, 'prey', PREY_G),
@@ -695,6 +706,10 @@ class EcoSim:
                     # eavesdropping: call-grad senses (7-8) -> move
                     m['pred_hear'] = float(
                         np.abs(W[:, 7:9, :2]).mean())
+                    if c['call_flee']:
+                        # flee-vector wiring: senses 9-10 -> move
+                        m['pred_flee'] = float(
+                            np.abs(W[:, 9:11, :2]).mean())
                     # control: prey-density senses -> move
                     m['pred_density'] = float(
                         np.abs(W[:, 1:4, :2]).mean())

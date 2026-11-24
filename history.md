@@ -2478,3 +2478,23 @@ walker is a named follow-up.
 регистре «протокол» — самоудостоверение формы.
 
 Подписи: агент. Секретарь: спека. Свидетель: сей документ.
+
+## Cycle 3, i23 — flee-vector calls: predictive signals still fail
+
+i8 verdict was "call marks a spot prey already fled" — so the
+fix was tried: `call_flee=1` makes screams carry the caller's
+displacement vector (w.callx/cally, senses 9-10, same decay).
+Under full ablation pressure (pred_deaf), `petri/flee.py`:
+- position wiring: noise band ~0.4 (unchanged, as i8)
+- flee wiring: 0.30-0.55 — the SAME noise band, no climb
+- demography: flee run boomed twice (peaks ~350, ~410) but
+  wiring stayed flat through both — founder-hitchhiking rule
+  from i8 applied in advance: population means under boom
+  are demography, not adaptation
+Second theorem-ish verdict: calls can't carry a hunt in this
+architecture — not because stale, but because the field is
+LOCAL and ephemeral (decay .9 => ~10 ticks of memory; a
+turning prey invalidates its own broadcast). The channel is
+ecologically doomed, not under-informative. Open thread
+moves to prey-side: mobbing (calls as recruitment) is the
+only untested direction.

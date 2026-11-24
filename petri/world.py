@@ -48,6 +48,8 @@ class World:
         if landmask is not None:
             self.food *= landmask
         self.call = np.zeros((size, size), np.float32)
+        self.callx = np.zeros((size, size), np.float32)
+        self.cally = np.zeros((size, size), np.float32)
         self.tick = 0
 
     def grow(self, rate_mult=1.0):
