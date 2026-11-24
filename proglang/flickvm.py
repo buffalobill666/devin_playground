@@ -13,7 +13,7 @@ ISA:
 Closure value: ('fn', params, code, captured_env).
 """
 
-from flick import tokenize, parse, BUILTINS, Env, _Ret
+from flick import tokenize, parse, BUILTINS, Env, _Ret, _expand
 
 
 def compile_ast(ast, funcs=None):
@@ -198,7 +198,7 @@ def run(code, funcs, env=None):
 
 
 def flickvm(src):
-    ast = parse(tokenize(src))
+    ast = _expand(parse(tokenize(src)))
     code, funcs = compile_ast(ast)
     return run(code, funcs)
 

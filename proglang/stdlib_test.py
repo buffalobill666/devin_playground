@@ -9,8 +9,8 @@ import os
 from flick import flick
 from flickvm import flickvm
 
-LIB = open(os.path.join(os.path.dirname(__file__), 'stdlib.flk'),
-           encoding='utf-8').read()
+LIB = 'use "' + os.path.join(os.path.dirname(__file__),
+                             'stdlib.flk') + '"\n'
 
 TEST = '''
 let xs = map(fn(x) { return x * x }, [1, 2, 3, 4])

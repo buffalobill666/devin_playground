@@ -16,7 +16,8 @@ if cond { stmts }, while cond { stmts },
 
 import re
 
-KEYWORDS = {'let', 'print', 'if', 'while', 'fn', 'return', 'for', 'in'}
+KEYWORDS = {'let', 'print', 'if', 'while', 'fn', 'return', 'for', 'in',
+            'use'}
 TOKRE = re.compile(r'\s*(?:"((?:[^"\\]|\\.)*)"|(\d+)|'
                    r'([A-Za-z_]\w*)|(==|!=|<=|>=)|(.))')
 
@@ -167,6 +168,9 @@ def parse(toks):
             kw = eat()[1]
             cond = expr()
             return (kw, cond, block())
+        if t[0] == 'kw' and t[1] == 'use':
+            eat()
+            return ('use', eat()[1])
         if t[0] == 'kw' and t[1] == 'for':
             eat()
             name = eat()[1]
@@ -308,9 +312,24 @@ def run(ast, env, out):
                 run(s[3], env, out)
 
 
+def _expand(ast, base='.'):
+    """use "f.flk" — вставить AST файла (рекурсивно, пути от
+    файла, который его вызвал)."""
+    import os
+    out = []
+    for s in ast:
+        if s[0] == 'use':
+            p = os.path.join(base, s[1])
+            sub = parse(tokenize(open(p, encoding='utf-8').read()))
+            out.extend(_expand(sub, os.path.dirname(p) or '.'))
+        else:
+            out.append(s)
+    return out
+
+
 def flick(src):
     env, out = Env(), []
-    run(parse(tokenize(src)), env, out)
+    run(_expand(parse(tokenize(src))), env, out)
     return out
 
 
