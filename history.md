@@ -2730,3 +2730,19 @@ vs big rings. Lenia's "species" really do live in kernel
 space, not parameter space. Next test named: isolate a
 triple-kernel ring and check solitary stability/glide —
 its shape is the closest to Chan's orbium morphology yet.
+
+## Cycle 4, i4 — solo: the glider does not exist here (bounded)
+
+`rd/solo.py` — isolated triple-kernel ring (the closest
+morphology to Chan's orbium) on empty field, same kernel:
+15 donor blobs -> 74 saturated colony, drift 0.4.
+Combined with i2/i3: all three kernels (single/double/
+triple) colonize every survivable point. The solitary
+glider is not hiding in kernel space either — this
+discretization family (beta-ring kernel, Euler dt=0.1,
+mu/sigma canonical band) hosts NO soliton regime, only
+the death/colonize bistability. Orbium arc BOUNDED CLOSED:
+the physics of this substrate doesn't contain the animal,
+full stop. What remains of Chan's orbium: likely a
+different growth/discretization regime — noted as a
+boundary-of-substrate finding, not a failure.
