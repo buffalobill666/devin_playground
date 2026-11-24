@@ -2345,3 +2345,21 @@ check, not by eye.
 to death downward; F drives labyrinth -> spots -> coral ->
 flooded-uniform rightward. Pearson's classic parameter map
 reproduced. Save-path bug on first run (cwd-relative).
+
+## Cycle 3, i14 — SENEX-M: the sterility theorem
+
+`esolang/migrate.py` — migration dialect (COPY/MJMP, ring of
+buffers). The no-immortality theorem binds a fixed program;
+migration is the loophole: lineage immortality, somatic death.
+
+SECOND SENEX THEOREM (found while designing):
+covering all T cells of the next generation needs T writes;
+one execution writes at most one cell -> every cell must
+spend its life copying. IMMORTAL LINEAGE <=> STERILE LINEAGE.
+
+Empirics: every migrant lives to the 400-gen cap, but total
+work output is 0-1 prints — functional cells are dead-at-
+birth in offspring (unwritten positions stay NOP). The
+lineage doesn't die; it SHEDS its function and finishes as
+a pure replicator. Soma is mortal; the germline is immortal
+and does nothing but copy. Biology's bargain, in 93 lines.
