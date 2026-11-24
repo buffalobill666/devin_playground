@@ -3174,3 +3174,11 @@ BONUS: deeptime.job finished rc=0 — full 100k ticks
 (~19 min wall), 2000 census rows, deeptime.png. Final:
 prey=3403, pred=16. Crash-recovery cascades confirmed over
 the whole span — harvest verdict next session.
+
+## Cycle 5 armed — flag set by host permission
+
+Host: «закинь себя в автономку». .devin/autonomous.flag
+recreated — cycle 5 starts on next Stop. Open quests: harvest
+deeptime verdict (100k done, cascades seen), mnkrun results
+(4 boards, first solved: 4x5k3 = P1 win in 17.6s), then
+open threads from ME.md.
