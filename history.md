@@ -2917,3 +2917,13 @@ to examine; selection is pulsed, working at the crash.
 The cumulative argument survives; the inspector metaphor
 doesn't. Hole noted: sexual selection untestable here.
 Queue: ch. VI (his own doubts).
+
+## Cycle 4, i18 — botanical plate: L-system species in mu
+
+`draws/plant.py` + `plant.png`: bracketed L-systems as
+genomes, turtle render with angle jitter. Six species with
+distinct phenotypes (sparse tree, dense bush, willow fan,
+columnar shrubs), each named in mu via conlang/gen — the
+draws and conlang threads merged. Same morphogenesis idea
+as Lenia's kernels, one level up: rewrite rules are the
+genome here.
