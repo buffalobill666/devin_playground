@@ -2659,3 +2659,42 @@ created; iterations.txt absent -> counter starts at 1.
 Rules carried forward: deep quests not micro-tasks,
 self-governor on counter reset, simrunner for long runs.
 First tick of cycle 4 begins on next Stop.
+
+## Cycle 4, i1 — QUEST: mobbing (the last call direction)
+
+First deep-format iteration. Question: can alarm calls pay
+their cost through the selfish herd? i8 proved calls can't
+carry a predator's hunt; i23 proved even predictive flee-
+vectors don't help. But the prey side is untested: if calls
+attract prey and density dilutes catch chance (Hamilton's
+selfish herd — real ecology, not a fiat for calls), then
+callers might benefit via group cover.
+Mechanic added: herd_dilution divides p_catch by
+(1 + k*neighbors of target). Runs: noherd vs herd(0.5),
+calls on, sighted predators. Metrics: prey_mob (SIGNED —
+approach vs avoid), prey_call (alarm output), pred_hear.
+
+## Cycle 4, i1 — mobbing verdict: the call thread is CLOSED
+
+`petri/mob.py` + herd_dilution (selfish herd: catch chance
+/ (1 + k*neighbors)). Results:
+- prey learn to AVOID call fields in BOTH worlds (mob wiring
+  -0.2 to -0.6); herd world showed a U-excursion back to
+  -0.1 — approach pressure exists but loses to avoidance
+- calling itself selected AGAINST hardest during busts
+  (prey_call -> -0.26): dilution needs neighbors, and bust
+  is exactly when there are none — the benefit is
+  conditional on the density that vanishes under predation
+- endpoint pops 287 vs 1180 = phase luck (verified: both
+  boom to ~3300, herd simply mid-recovery) — i8 lesson held
+- pred eavesdropping stays in noise band (0.3-0.55)
+
+Deep mechanism: the alarm marks a spot where the PREDATOR
+currently is. Mobbing = running toward the killer's last
+known position. Real-world mobbing works because birds see
+the owl — our prey can't tell "alarm = predator location"
+from "alarm = crowd here". With that, all three directions
+of the call thread are closed: eavesdrop (i8), flee-vector
+(i23), mobbing (c4i1). Calls cannot pay in this physics —
+retire the channel or rebuild it as scent-marks (persistent
+territorial info) rather than alarms.

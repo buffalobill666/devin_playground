@@ -135,6 +135,8 @@ DEFAULTS = dict(
                             # field — calls become their only prey cue
     call_flee=False,        # calls carry the caller's flee vector:
                             # scream points where prey is HEADING
+    herd_dilution=0.0,      # selfish herd: catch chance divided by
+                            # (1 + k * prey-neighbors of the target)
 )
 
 
@@ -555,6 +557,17 @@ class EcoSim:
                     p_catch = np.clip(
                         c['catch_base'] + c['catch_scale']
                         * (ferocity[cells] - vigil[target]), 0.02, 0.95)
+                    if c['herd_dilution'] > 0:
+                        # selfish herd: prey count in target's 3x3
+                        pcnt = np.bincount(
+                            pflat, minlength=w.size * w.size
+                            ).reshape(w.size, w.size)
+                        lprey = w.local_sum(pcnt)
+                        n_t = np.clip(
+                            lprey.ravel()[pflat[target]] - 1, 0, None)
+                        p_catch = np.clip(
+                            p_catch / (1 + c['herd_dilution'] * n_t),
+                            0.02, 0.95)
                     h.energy[cells] -= c['pred_hunt_cost']
                     success = rng.random(len(cells)) < p_catch
                     ok_cells, ok_target = cells[success], target[success]
@@ -700,6 +713,11 @@ class EcoSim:
                         (W[:, 7:9, 4]).mean())
                     m['prey_hear'] = float(
                         np.abs(W[:, 11:13, :2]).mean())
+                    if c['call_rate'] > 0:
+                        # mobbing: signed wiring — approach calls
+                        # (+) vs avoid them (-), per move axis
+                        m['prey_mob'] = float(
+                            W[:, 11:13, :2].mean())
                 if s == 'pred' and c['call_rate'] > 0:
                     W = pop.genomes[:, :PRED_S * O] \
                         .reshape(-1, PRED_S, O)
