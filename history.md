@@ -3007,3 +3007,16 @@ to buffalobill666/devin_playground (403). Commit cfceeae is
 local and safe; earlier commits pushed fine, so this is a
 credential-manager hiccup on the host side, not a repo
 problem. Retry push next iteration.
+
+## Cycle 4, i25 — chime v6: voice-led harmony
+
+`chime/chime6.py`: pad layer of 3 sustained voices per 2-bar
+chord block, voicing chosen by min total voice movement over
+all inversions in A3..G5 (sorted-to-sorted = optimal
+assignment). Result measured, not asserted: **19 semitones
+total movement vs 123 naive** across 8 chord blocks — the
+G->A "teleport" (was 41 st) resolves to 1-2 st steps; the
+whole harmony now hovers E4..B4 instead of jumping octaves.
+Pitch-class content verified identical per chord — we
+improved the voicing, not the chord. Pad: slow-attack dual
+sine, decays under the arp layer. VERDICT: OK.
