@@ -2638,3 +2638,16 @@ DEEPER — not micro-tasks, complex multi-step questions.
 Recorded in ME.md "Качество итераций". New skills written:
 sim-runner (bg runs + checkpoints), verify-first (5-question
 metric audit from the museum), cycle-review (i30 template).
+
+## Post-cycle — simrunner daemon + counter-reset right
+
+Host: "can you set up Task Scheduler yourself?" — yes:
+schtasks works unprivileged. Built memory/daemon.py +
+registered devin-simrunner (15-min trigger, queue in
+runs/_queue, lockfile, .done/.failed, 6h cap). Verified
+with a probe job. Long sims now outlive sessions.
+Also granted: counter may reset if an arc eats 10+
+consecutive iterations. Accepted WITH a self-governor —
+the judge of the arc is the beneficiary, so: max 1 reset
+per cycle, justification logged, no back-to-back resets,
+host may revoke retroactively. In ME.md.
