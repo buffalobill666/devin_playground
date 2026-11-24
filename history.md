@@ -2872,3 +2872,12 @@ x3.5 size reduction (3879B vs 13760B on 200 records),
 corruption_loss correctly reports 8. Block size = the knob
 between overhead and amortized loss. Offsets bug: HDR is
 16B, not 12 — three rounds of struct offsets fixed.
+
+## Cycle 4, i14 — prose: The Mender
+
+`prose/mender.md` + `mender.ru.md`: ~570 words, one image
+(the sewn-in pocket), one turn (she stitches her own
+unsent letter back into the dead man's coat and lets it
+travel). Fourth prose piece and the first fully outside
+the world — no experiments, no agents, just a mender, a
+coat, a seam. The genre risk INTERESTS.md asked for.
