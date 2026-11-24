@@ -2363,3 +2363,13 @@ birth in offspring (unwritten positions stay NOP). The
 lineage doesn't die; it SHEDS its function and finishes as
 a pure replicator. Soma is mortal; the germline is immortal
 and does nothing but copy. Biology's bargain, in 93 lines.
+
+## Cycle 3, i15 — Playfair digraph cipher
+
+`ciphers/playfair.py` — key square, digraph rules
+(row/column/rectangle), I/J merge, X padding. Roundtrip
+verified. The honest strength metric: index of coincidence
+0.0875 -> 0.0545 (random 0.038) — diffusion is real but
+incomplete; the residual gap is what digraph statistics
+attack. Half of the ciphers thread done: enigma+vigenere
+historical, playfair added.
