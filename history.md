@@ -2539,3 +2539,19 @@ pair from free letters; recovered the exact plugboard
 Turing's menu loops would have cut the 1M-config space by
 loop logic; the honest brute force still shows the
 structural weakness: a crib + part-plugboard = broken day.
+
+## Cycle 3, i27 — niche: no solitary cell in the (mu,sigma) grid
+
+`rd/niche.py` — 5x4 grid, same transplanted blob, 800 steps:
+every point COLONIZES (mass 2600-4100) or dies instantly
+(tight sigma above mu). No GLIDES, no static soliton.
+But the honest reading is subtler: the blob was GROWN in the
+colonial regime — it carries a spreader's shape. Solitary
+stability is a property of organism-form x params, not the
+parameter point alone. Also uncontrolled: dt=0.1 Euler and
+the beta=1 ring kernel are fixed here; Chan's orbium lives
+in a niche the grid doesn't reach along those axes.
+Closing verdict on the arc: adiabatic finds A life-point;
+the solitary glider wants a co-adapted organism, not just
+a coordinate. Left open: grow the blob natively inside a
+candidate niche instead of transplanting.
