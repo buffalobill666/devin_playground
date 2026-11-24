@@ -2225,3 +2225,18 @@ the reader now classifies losses — clean_deletion (seq gap,
 0 skipped bytes) vs corruption_loss (seq gap + garbage) vs
 head_loss vs link_broken. Demo verified all branches.
 Still a journal — chain is evidence, not an index.
+
+## Cycle 3, i6 — atlas of worlds (seal atlas)
+
+`draws/sealatlas.py` — discovers runs/family*/families.csv,
+lays every world's seal on one plate. Three new 20k-tick
+runs: seeds 9, 10, 11. Atlas now holds SIX worlds.
+
+Data findings beyond the picture:
+- survivorship range 4..22 (5x) across seeds — world
+  harshness is history-dependent, not rules-dependent
+- same seed 7 at 4k vs 20k ticks (family-torn vs family):
+  245->206 families, 18->9 survived, 5->19 crashes —
+  TIME itself is a selection filter
+- seed 10 = harshest world (178 fams, 4 survived, 19
+  crashes): few dynasties, constant extinction
