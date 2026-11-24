@@ -82,3 +82,18 @@ The reader classifies losses v0.1 cannot see:
 
 Still a journal: no index, no dedup, append-only. The chain
 is cheap tamper-evidence, not a database feature.
+
+## v0.3 — compression blocks (torn3.py)
+
+v0.2 pays 16B framing per record. v0.3 adds TYPE 0x03 BLOCK:
+N payloads packed as (uint32 LEN + bytes) sub-frames,
+zlib-compressed inside one record. SEQ = seq of the first
+inner payload; next record must carry seq+N — a destroyed
+block surfaces as a seq gap -> corruption_loss.
+
+The honest tradeoff, measured on 200 demo records:
+v3 = 3,879B vs v2 = 13,760B (x3.5 smaller); one byte-flip
+mid-file costs one block (8 records) instead of one record.
+Block size IS the loss granularity — the knob between
+overhead and amortized loss. Sub-frames carry no magic/CRC:
+the block's own CRC covers them wholesale.

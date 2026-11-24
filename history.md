@@ -2860,3 +2860,15 @@ alphabet axis, caret under own index. Corpus is the repo's
 own prose — a font computed from its author's text.
 Verdict checks pass: Q spikes on U (56/62), E spreads
 broad (R,S,D,N on top). The letterform is the data.
+
+## Cycle 4, i13 — TORN v0.3: the compression honesty knob
+
+`protocol/torn3.py` + SPEC update: TYPE 0x03 BLOCK — N
+payloads as sub-frames zlib-packed in one chained record.
+The tradeoff is the design: compression fights resilience,
+so a block becomes the new loss granularity — one flipped
+byte costs the whole block (8 recs) instead of one. Measured:
+x3.5 size reduction (3879B vs 13760B on 200 records),
+corruption_loss correctly reports 8. Block size = the knob
+between overhead and amortized loss. Offsets bug: HDR is
+16B, not 12 — three rounds of struct offsets fixed.
