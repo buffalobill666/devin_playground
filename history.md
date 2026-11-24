@@ -3042,3 +3042,14 @@ Everything downstream was already generic: `+` concats,
 folds string literals for free. Demo: 'flick a#b xxx 1'
 on both backends. The language's price list: one lexer
 alternative + one parser branch + two eval arms.
+
+## Cycle 4, i27 — Kaprekar, proven not believed
+
+`math/kaprekar.py` + `kaprekar.png`: the "6174 magic" made
+into a census — all 8991 valid 4-digit starts enumerated,
+ALL reach the unique fixed point in <=7 steps (histogram:
+modal k=3, long tail to 7). 3-digit analog -> 495, max 6.
+Zero non-convergers, and exactly ONE fixed point per
+digit-length — the attractor is total, not just dense.
+Same discipline as zebra/nonogram: a numeric claim you can
+enumerate is a proof, not a conjecture.
