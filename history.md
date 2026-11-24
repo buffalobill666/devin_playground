@@ -2950,3 +2950,18 @@ at the tree's branch nodes (napa, sompe). Faint landmass
 silhouette underlay keeps the schematic honest to its
 geography. Edge case accepted: nammi sits at the map's edge
 — the continent leaves the frame here too.
+
+## Cycle 4, i21 — the daemon gets real work
+
+Two jobs queued in runs/_queue (daemon takes one per ~15min
+pass, results land in a later iteration — async by design):
+1. deeptime.job -> `petri/deeptime.py`: 100k ticks, longest
+   run ever on this substrate. Checkpoint CSV every 2000
+   (kill loses last chunk only), progress every 5000.
+   Question: does the world do anything new past our
+   horizon — regime drift, late collapse, or stationarity?
+2. mnkrun.job -> `game/mnkrun.py --budget 1500`: boards
+   (4,5,3) (5,4,3) (4,5,4) (5,5,3), 25min each, per-solve
+   JSON checkpoint + memo size = how the frontier moves
+   with budget. Smoke-tested at 5s (170k memo nodes, all
+   unsolved — as expected).
