@@ -3282,3 +3282,14 @@ a dead channel is the first exhibit with NO exploiter —
 nobody exploits anything, the drift just costs nothing.
 New museum class: not "metric exploited" but "non-metric
 read as signal". Both .md and .ru.md updated; 13 vitrines.
+
+## Cycle 5, i7 — chime v7: swing
+
+`chime/chime7.py`: weak 16ths (s%4==2 — exactly where the
+hats already sit) delayed by swing*step/3 → triplet feel
+(67/33) at full swing; backbone (kick/snare/melody
+downbeats) stays on the grid. Verified by onset detection:
+measured hat delay 41.7ms vs expected 41.7ms exactly.
+The sequencer now plays loose on purpose — every prior
+version was metronome-straight. v5 FM, v6 voice-led pad,
+v7 swing: the stack is a player, not a sequencer.
