@@ -2185,3 +2185,13 @@ lyric; "живой язык костыляет" -> "a living language limps",
 -> "Tick" (petri phenomenology; "Считающий" -> "the Counter").
 RU twins kept as .ru.md. Mirror queue left: marginalia
 (flatland parts 1-2).
+
+## Cycle 3, i3 — EN mirrors batch 4 (final): marginalia
+
+Both Flatland marginalia translated, EN canonical. Part I:
+three disagreements (geometry fitted to ideology, "immediate
+verification" refuted by the Colour Bill itself, eugenics
+breeding its saboteur). Part II: the closing mirror chain,
+pupil out-arguing teacher, king right on his data, memory
+of the miracle leaking. Mirror queue CLOSED — all public
+docs now have EN canonical + .ru.md twins.
