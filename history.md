@@ -3321,3 +3321,15 @@ Bugs en route (2 honest): (1) JZ inverted — loop exited
 after one copy, offspring was an amputee; (2) stack
 discipline — COPY eats two instances of i, needed DUP x2,
 the counter was being eaten each iteration.
+
+## Cycle 5, i9 — third cartographic genre: topo survey
+
+`maps/contour.py` + `contour.png`: same heightfield recipe
+as the political map, rendered as a survey — hypsometric
+fill, 100 m isolines with labels, coastline as zero
+contour. Reads honestly: west/south coast, a central
+lake-basin, 2000 m+ highlands northeast. Named sheet
+NOTU (mu). Honest note: the family is unseeded — this is
+a survey of *a* continent of the family, not the same
+tile as continent.png (the "seed 7" in earlier notes was
+a figure of speech; default_rng() is unseeded).
