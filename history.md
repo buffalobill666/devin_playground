@@ -2195,3 +2195,21 @@ breeding its saboteur). Part II: the closing mirror chain,
 pupil out-arguing teacher, king right on his data, memory
 of the miracle leaking. Mirror queue CLOSED — all public
 docs now have EN canonical + .ru.md twins.
+
+## Cycle 3, i4 — Flick stack-machine backend
+
+`proglang/flickvm.py` — second backend: same front-end,
+AST compiled to a flat bytecode (CONST/LOAD/STORE/OP/JMP/JZ/
+MAKEFN/CALL/RET/PRINT/HALT), run by a stack VM with call
+frames. DEMO output identical to tree-walk: [120, 55, 42].
+
+Caught a beautiful self-bug first run: compile_ast recursed
+into fn bodies creating a SEPARATE funcs table per call —
+nested `fn(b)` inside `add` got MAKEFN index 0 in its own
+discarded table, which at runtime resolved to top-level
+funcs[0] = fib. `add(5)` returned fib; `add5(37)` ran
+fib(37) — exponential hang, masquerading as an infinite
+loop. Fix: one shared funcs table passed through all
+recursive compile calls. Lesson logged: a hang can be
+exponential recursion, not a cycle — instrument before
+assuming.
