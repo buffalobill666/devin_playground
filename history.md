@@ -2262,3 +2262,22 @@ Verdict — REFINED hypothesis:
 plus the always-nearby death-spiral mode. Side finding:
 trait means live in [0.26,0.76]^5 — half the nominal box
 is void from the start (encoding bound?).
+
+## Cycle 3, i8 — eavesdrop ablation: the call channel is useless, not redundant
+
+`petri/eavesdrop.py` + pred_deaf flag + pred_hear/pred_density
+metrics in eco.py. Forced-choice: zeroed prey-density senses
+(1-3) so calls are the ONLY prey cue. 15k ticks, seed 7.
+
+Verdict — thread #4 REFINED:
+- eavesdropping did NOT evolve even under forced deafness
+  (pred_hear 0.45 -> 0.40, drift) — signal is USELESS, not
+  redundant: a call marks "prey WAS here, fleeing" — chasing
+  it means arriving at a just-emptied cell
+- "preds 180 vs 16" initial reading = PHASE LUCK: both pops
+  are boom-bust oscillators; deafness changes little because
+  the density field wasn't the hunting edge either
+- method lesson: wiring spikes during booms (0.56) are
+  founder-effect hitchhiking — population-mean weights
+  confound adaptation with demography. Channel-use tests
+  need counterfactual fitness, not weight means

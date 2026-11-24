@@ -131,6 +131,8 @@ DEFAULTS = dict(
     call_cost=0.3,          # energy cost per tick while calling
     prey_disperse=0,        # 1: kids spawn at random cells
                             # (breaks family clustering -> kin control)
+    pred_deaf=0,            # 1: blind predators to the prey-density
+                            # field — calls become their only prey cue
 )
 
 
@@ -490,6 +492,8 @@ class EcoSim:
                 cgx[iy, ix],          # predators hear the alarms
                 cgy[iy, ix],          # too - calls betray the caller
             ], axis=1)
+            if c['pred_deaf']:
+                senses[:, 1:4] = 0.0  # ablation: no prey-density field
             out = np.einsum('ns,nso->no', senses,
                             h.genomes[:, :PRED_S * O].reshape(-1, PRED_S, O))
             move = np.tanh(out[:, :2])
@@ -685,6 +689,15 @@ class EcoSim:
                         (W[:, 7:9, 4]).mean())
                     m['prey_hear'] = float(
                         np.abs(W[:, 11:13, :2]).mean())
+                if s == 'pred' and c['call_rate'] > 0:
+                    W = pop.genomes[:, :PRED_S * O] \
+                        .reshape(-1, PRED_S, O)
+                    # eavesdropping: call-grad senses (7-8) -> move
+                    m['pred_hear'] = float(
+                        np.abs(W[:, 7:9, :2]).mean())
+                    # control: prey-density senses -> move
+                    m['pred_density'] = float(
+                        np.abs(W[:, 1:4, :2]).mean())
                 m[f'{s}_energy'] = float(pop.energy.mean())
                 m[f'{s}_age'] = float(pop.age.mean())
                 m[f'{s}_families'] = int(len(np.unique(pop.family)))
