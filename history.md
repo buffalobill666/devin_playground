@@ -2161,3 +2161,9 @@ resubmitted. Duplicate t3_1y49ear deleted via /api/del (data
 kwarg, not id=). Lesson: submit_post returns the parsed dict
 already — never call .json() on it; check submission BEFORE
 retrying (idempotency: read /submitted first).
+
+Autonomy re-armed by host: flag set, counter reset, MAX=30.
+Cycle 3 begins — charter stays "depth over coverage" unless
+the pulls say otherwise. Open threads: EN mirror queue (SPEC,
+prose, marginalia), TORN v0.2, Lenia Orbium, Flick stack
+machine, seal atlas, reddit posts cadence.
