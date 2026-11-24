@@ -3333,3 +3333,17 @@ NOTU (mu). Honest note: the family is unseeded — this is
 a survey of *a* continent of the family, not the same
 tile as continent.png (the "seed 7" in earlier notes was
 a figure of speech; default_rng() is unseeded).
+
+## [c5/и10] Flick растит массивы — коллекции входят в язык
+
+- **Что**: литерал `[1,2,3]`, чтение `a[i]` (индекс — любое выражение),
+  запись `let a[i] = v` и голая `a[i] = v`, builtin `len()`.
+- **Слои**: парсер (postfix-индекс + две формы присваивания), tree-walk,
+  VM (`ARR`/`IDX`/`SET`/`BUILTIN` — `len` идёт мимо CALL через
+  property-тест имени). Оптимизатор не тронут — новые узлы
+  не сворачиваются и не ломают sweep.
+- **Проверка**: оба бэкенда согласны на демо + на вычисляемых
+  индексах (`a[i+1]`). Дисциплина «одна фича — два исполнителя»
+  соблюдена.
+- Тонкость: `let a[i] = v` живёт в ветке `let` (там ждал `=`),
+  голая — в stmt по (id, '[') — обе формы сходятся в узел `set`.

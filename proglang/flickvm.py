@@ -13,7 +13,7 @@ ISA:
 Closure value: ('fn', params, code, captured_env).
 """
 
-from flick import tokenize, parse, Env, _Ret
+from flick import tokenize, parse, BUILTINS, Env, _Ret
 
 
 def compile_ast(ast, funcs=None):
@@ -33,6 +33,14 @@ def compile_ast(ast, funcs=None):
             emit('CONST', e[1])
         elif k == 'str':
             emit('CONST', e[1])
+        elif k == 'arr':
+            for x in e[1]:
+                expr(x)
+            emit('ARR', len(e[1]))
+        elif k == 'idx':
+            expr(e[1])
+            expr(e[2])
+            emit('IDX')
         elif k == 'var':
             emit('LOAD', e[1])
         elif k == 'neg':
@@ -46,16 +54,26 @@ def compile_ast(ast, funcs=None):
             funcs.append((e[1], compile_ast(e[2], funcs)[0]))
             emit('MAKEFN', len(funcs) - 1)
         elif k == 'call':
-            expr(e[1])
-            for a in e[2]:
-                expr(a)
-            emit('CALL', len(e[2]))
+            name = e[1][1] if e[1][0] == 'var' else ''
+            if name in BUILTINS:
+                for a in e[2]:
+                    expr(a)
+                emit('BUILTIN', name, len(e[2]))
+            else:
+                expr(e[1])
+                for a in e[2]:
+                    expr(a)
+                emit('CALL', len(e[2]))
 
     def stmt(s):
         k = s[0]
         if k == 'let':
             expr(s[2])
             emit('STORE', s[1])
+        elif k == 'set':
+            expr(s[2])
+            expr(s[3])
+            emit('SET', s[1])
         elif k == 'print':
             expr(s[1])
             emit('PRINT')
@@ -109,6 +127,17 @@ def run(code, funcs, env=None):
         elif ins == 'OP':
             b, a = stack.pop(), stack.pop()
             stack.append(BIN[arg[0]](a, b))
+        elif ins == 'ARR':
+            stack.append([stack.pop() for _ in range(arg[0])][::-1])
+        elif ins == 'IDX':
+            ix, a = stack.pop(), stack.pop()
+            stack.append(a[int(ix)])
+        elif ins == 'SET':
+            v, ix = stack.pop(), stack.pop()
+            env.lookup(arg[0])[int(ix)] = v
+        elif ins == 'BUILTIN':
+            args = [stack.pop() for _ in range(arg[1])][::-1]
+            stack.append(BUILTINS[arg[0]](*args))
         elif ins == 'PRINT':
             out.append(stack.pop())
         elif ins == 'JMP':
@@ -158,6 +187,11 @@ let add = fn(a) { return fn(b) { return a + b } }
 let add5 = add(5)
 print add5(37)
 print "fli" + "ck"
+let a = [10, 20, 30]
+print a[1]
+let a[0] = 99
+print a[0]
+print len(a)
 '''
 
 if __name__ == '__main__':

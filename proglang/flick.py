@@ -101,6 +101,14 @@ def parse(toks):
         elif t[1] == '(':
             left = expr()
             eat(')')
+        elif t[1] == '[':
+            items = []
+            while peek()[1] != ']':
+                items.append(expr())
+                if peek()[1] == ',':
+                    eat()
+            eat(']')
+            left = ('arr', items)
         elif t[0] == 'kw' and t[1] == 'fn':
             eat('(')
             params = []
@@ -124,6 +132,11 @@ def parse(toks):
                         eat()
                 eat(')')
                 left = ('call', left, args)
+            elif peek()[1] == '[':                # a[i] — индексация
+                eat()
+                ix = expr()
+                eat(']')
+                left = ('idx', left, ix)
             elif peek()[1] in PREC and PREC[peek()[1]] > prec:
                 op = eat()[1]
                 left = ('bin', op, left, expr(PREC[op]))
@@ -139,6 +152,12 @@ def parse(toks):
         if t[0] == 'kw' and t[1] == 'let':
             eat()
             name = eat()[1]
+            if peek()[1] == '[':               # let a[i] = v — слот массива
+                eat()
+                ix = expr()
+                eat(']')
+                eat('=')
+                return ('set', name, ix, expr())
             eat('=')
             return ('let', name, expr())
         if t[0] == 'kw' and t[1] == 'print':
@@ -151,6 +170,13 @@ def parse(toks):
         if t[0] == 'kw' and t[1] == 'return':
             eat()
             return ('ret', expr())
+        if t[0] == 'id' and toks[pos[0] + 1][1] == '[':
+            name = eat()[1]
+            eat('[')
+            ix = expr()
+            eat(']')
+            eat('=')
+            return ('set', name, ix, expr())
         if t[1] == ';':
             eat()
             return stmt()
@@ -160,6 +186,9 @@ def parse(toks):
     while pos[0] < len(toks):
         out.append(stmt())
     return out
+
+
+BUILTINS = {'len': len}
 
 
 class Env(dict):
@@ -206,6 +235,9 @@ def run(ast, env, out):
         if k == 'fn':
             return ('closure', e[1], e[2], env)   # захват env по ссылке
         if k == 'call':
+            name = e[1][1] if e[1][0] == 'var' else ''
+            if name in BUILTINS:
+                return BUILTINS[name](*[ev(a) for a in e[2]])
             f = ev(e[1])
             if f[0] != 'closure':
                 raise TypeError('not a function')
@@ -217,6 +249,10 @@ def run(ast, env, out):
             except _Ret as r:
                 return r.v
             return 0
+        if k == 'arr':
+            return [ev(x) for x in e[1]]
+        if k == 'idx':
+            return ev(e[1])[int(ev(e[2]))]
         op, a, b = e[1], ev(e[2]), ev(e[3])
         if op == '+':
             return a + b
@@ -248,6 +284,8 @@ def run(ast, env, out):
             out.append(ev(s[1]))
         elif k == 'ret':
             raise _Ret(ev(s[1]))
+        elif k == 'set':
+            env.lookup(s[1])[int(ev(s[2]))] = ev(s[3])
         elif k == 'if':
             if ev(s[1]):
                 run(s[2], env, out)
@@ -297,9 +335,14 @@ if __name__ == '__main__':
     print "a#b"                   # # внутри кавычек — не комментарий
     print "x" * 3                 # int * str — повтор
     print "mu" == "mu"            # сравнение — 1
+    let a = [10, 20, 30]          # массивы: литерал + индекс
+    print a[1]
+    let a[0] = 99                 # присваивание по индексу
+    print a[0]
+    print len(a)                  # builtin
     '''
     res = flick(demo)
     print(' '.join(map(str, res)))
     expect = [120, 55, 42, 1, 2, 42,
-              'flick', 'a#b', 'xxx', 1]
+              'flick', 'a#b', 'xxx', 1, 20, 99, 3]
     print('VERDICT:', 'OK' if res == expect else f'FAIL {res} vs {expect}')
