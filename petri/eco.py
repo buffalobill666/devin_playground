@@ -20,7 +20,7 @@ import numpy as np
 from . import genome as gm
 from .world import World
 
-PREY_S, PRED_S, O, PREY_T, PRED_T = 13, 11, 5, 5, 4
+PREY_S, PRED_S, O, PREY_T, PRED_T = 16, 11, 5, 5, 4
 PREY_G = PREY_S * O + PREY_T
 PRED_G = PRED_S * O + PRED_T
 
@@ -137,6 +137,14 @@ DEFAULTS = dict(
                             # scream points where prey is HEADING
     herd_dilution=0.0,      # selfish herd: catch chance divided by
                             # (1 + k * prey-neighbors of the target)
+    scent_marks=0,          # fear-musk: prey reflexively deposit a
+                            # persistent danger-mark scaled by the
+                            # pred-gradient they smell. Unlike calls:
+                            # zero cost, long-lived, unhearable by
+                            # predators — territory memory, not alarm
+    mark_decay=0.98,        # ~35-tick half-life (calls die in ~7)
+    mark_rate=1.0,          # deposit strength
+    mark_deaf=0,            # ablation: prey can't smell marks
 )
 
 
@@ -359,6 +367,7 @@ class EcoSim:
         pgx, pgy = w.grad(pred_field)      # prey smells danger
         qgx, qgy = w.grad(prey_field)      # predator smells food
         cgx, cgy = w.grad(w.call)          # everyone hears the calls
+        mgx, mgy = w.grad(w.mark)          # scent-mark trails
         bp = dp = bc = dc = dd = 0
         repro_prey = np.zeros(0)
         repro_pred = np.zeros(0)
@@ -385,7 +394,12 @@ class EcoSim:
                 qgy[iy, ix] / 9,      # herding evolve at all?
                 cgx[iy, ix],
                 cgy[iy, ix],
+                w.mark[iy, ix],       # mark level underfoot
+                mgx[iy, ix],          # mark gradient: toward the
+                mgy[iy, ix],          # remembered danger spot
             ], axis=1)
+            if c['mark_deaf']:
+                senses[:, 13:16] = 0.0
             out = np.einsum('ns,nso->no', senses,
                             p.genomes[:, :PREY_S * O].reshape(-1, PREY_S, O))
             move = np.tanh(out[:, :2])
@@ -441,6 +455,15 @@ class EcoSim:
                     np.add.at(w.cally.ravel(), flat,
                               call_sig * disp[:, 1])
                 p.energy -= call_sig * c['call_cost']
+
+            # fear-musk: reflexive deposit proportional to how much
+            # danger this prey smells right now — no output channel,
+            # no cost; the environment remembers where fear happened
+            if c['scent_marks']:
+                fear = np.clip(np.hypot(pgx[iy, ix],
+                                        pgy[iy, ix]) / 4, 0, 1)
+                np.add.at(w.mark.ravel(), flat,
+                          fear * c['mark_rate'])
 
             # --- disease: density-dependent transmission ------------
             if c['disease'] > 0:
@@ -638,6 +661,7 @@ class EcoSim:
 
         # call field decays every tick (acoustic signal is short-lived)
         w.call *= c['call_decay']
+        w.mark *= c['mark_decay']
         w.callx *= c['call_decay']
         w.cally *= c['call_decay']
 
@@ -718,6 +742,10 @@ class EcoSim:
                         # (+) vs avoid them (-), per move axis
                         m['prey_mob'] = float(
                             W[:, 11:13, :2].mean())
+                    # scent-mark wiring: signed mark-grad -> move.
+                    # negative = flee remembered danger (adaptive)
+                    m['prey_mark'] = float(W[:, 14:16, :2].mean())
+                    m['prey_marklvl'] = float(W[:, 13, :2].mean())
                 if s == 'pred' and c['call_rate'] > 0:
                     W = pop.genomes[:, :PRED_S * O] \
                         .reshape(-1, PRED_S, O)

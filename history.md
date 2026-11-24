@@ -2758,3 +2758,25 @@ own roots — kuwaka vs lexicon pomweje "sea". Divergence of
 seeds recorded; LEXICON.md is canon from now on — earlier
 toponyms stand as dialectal/archaic forms (a feature any
 real language also has).
+
+## Cycle 4, i6 — scent marks: persistence doesn't fix mobility
+
+New mechanic: `scent_marks` + `w.mark` field + PREY_S 13->16.
+Fear-musk deposited reflexively ∝ smelled pred-gradient;
+mark_decay 0.98 (~35t half-life vs call's ~7), zero cost,
+predator-invisible. `petri/scent.py`: marks vs mark_deaf
+ablation, then 2 replica seeds.
+
+Data (final prey, marks/deaf): s7 57/23, s8 2969/3273,
+s9 3224/25. Wiring on mark senses flips sign per seed —
+same noise band as calls. Seed-7 "restlessness" wiring
+(+0.346 lvl->move) did not replicate.
+
+VERDICT: the whole deposited-information channel closes.
+Calls failed ephemeral; marks failed persistent — because
+the failure was never persistence, it was MOBILITY of the
+threat: a mark anywhere on the timeline records where fear
+happened, never where the predator IS. Named residual:
+marks over static features (barren ground, edges), not
+mobile dangers. Communication thread fully closed in this
+substrate.
