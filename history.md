@@ -2337,3 +2337,11 @@ unreachable guard -> infinite walk; (3) prim's initial
 frontier used (1,1) as wall coordinate -> first cells
 opened disconnected. All caught by the exit-reachability
 check, not by eye.
+
+## Cycle 3, i13 — Gray-Scott (F,k) atlas
+
+`rd/atlas.py` — 16 micro-worlds tiled into a phase portrait
+(N=128, 6000 steps each). The map reads: k sweeps patterns
+to death downward; F drives labyrinth -> spots -> coral ->
+flooded-uniform rightward. Pearson's classic parameter map
+reproduced. Save-path bug on first run (cwd-relative).
