@@ -2498,3 +2498,17 @@ turning prey invalidates its own broadcast). The channel is
 ecologically doomed, not under-informative. Open thread
 moves to prey-side: mobbing (calls as recruitment) is the
 only untested direction.
+
+## Cycle 3, i24 — mnk: generalizing tic-tac-toe, honest table
+
+`game/mnk.py` — engine for m x n board, k-in-row; lines
+generated, negamax+ab+memo, 45s budget per position.
+Bug first: ported ttt.py's winner semantics wrong — it
+returned 0 for "game ongoing", so every position evaluated
+as draw and random games "always drew". Clean contract:
+v=win, 0=draw, None=ongoing. Exact results match known
+facts: (3,3,3) draw, (4,4,3) X wins, (4,4,4) draw.
+Beyond budget: (5,5,3), (5,5,4), (6,6,4) — reported
+"unsolved" rather than faked; Monte-Carlo draw-rates still
+informative (k=4 on 4x4: 42% random draws — the line is
+hard to complete even by accident).
