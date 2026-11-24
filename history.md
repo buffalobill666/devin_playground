@@ -2295,3 +2295,14 @@ compiler already emits tight code — peephole bites little
 on a stack ISA where hot paths are CALL/LOAD, not const
 arithmetic. Bug caught composing passes: fold broke jump
 indices; fix = NOP placeholders + one remap pass.
+
+## Cycle 3, i10 — museum consolidation: exhibits 7+8
+
+Cycle produced two new self-exploits worth the museum:
+- Phase Snapshot: "deaf 180 vs sighted 16" was oscillator
+  phase luck; wiring spikes during booms = founder
+  hitchhiking (population mean = demographic record first)
+- Exponential Hang: "no output 10s" read as infinite loop;
+  really fib(37) via MAKEFN index collision. Hang is a
+  symptom, not a verdict — instrument first.
+Both added EN + RU mirrors + summary table (8 exhibits).
