@@ -3228,3 +3228,16 @@ deeptime-s7, deeptime-s8, 100k ticks each. Predictions: s7
 converges same-or-faster (it was lock-in prone early);
 s8 is the honest test — if the churn world also locks,
 convergence is the deep-time law of this substrate.
+
+## Cycle 5, i3 — self-correction: dead-channel drift
+
+Verify-first caught MY OWN overclaim in i1: deeptime ran
+DEFAULTS with call_rate=0 and scent_marks=0 — the call,
+hear and mark/marklvl "evolution" I reported is NEUTRAL
+DRIFT on dead channels. Wiring to a dead sensor/output
+floats freely like junk DNA; +0.65/-0.65 values mean
+nothing selective. The REAL evolved signals stand:
+appetite/efficiency/vigilance/speed/families — those have
+live fitness costs. Correction logged; museum candidate
+(#13): a trait can "evolve" only where the environment
+can see it.
