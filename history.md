@@ -2423,3 +2423,14 @@ data — regenerable, deletable, never touches the append-only
 journal. MEMORY.md §2 contract updated (digest = arc cache).
 Reddit pacing check: chirality post only 0.9h old — the
 museum post stays deferred; the loop is faster than the wall.
+
+## Cycle 3, i20 — freqfont gets its lowercase
+
+26 lowercase glyphs on the existing 8-row grid: x-height rows
+2-6, ascenders up to 0, descenders borrow row 7 (was empty
+leading). Concept held honestly: frequency is a property of
+the LETTER not the case — 'e' and 'E' are equally narrow.
+`glyph()` keeps case with uppercase fallback. Specimen:
+pangram in real sentence case, readable at pixel scale.
+Bug while editing: pasted the LOWER dict inside the GLYPHS
+literal — syntax-caught, removed the dup.
