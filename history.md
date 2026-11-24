@@ -3274,3 +3274,11 @@ AND asymmetric-legal on diagonals... note 5x5x3 is the
 largest solved so far). The mc columns agree with verdicts:
 only the drawn board shows nonzero draw-rate in random
 play — Monte Carlo as sanity, not proof.
+
+## Cycle 5, i6 — museum exhibit 13: dead-channel drift
+
+The i1->i3 self-correction formalized: a trait drifting on
+a dead channel is the first exhibit with NO exploiter —
+nobody exploits anything, the drift just costs nothing.
+New museum class: not "metric exploited" but "non-metric
+read as signal". Both .md and .ru.md updated; 13 vitrines.
