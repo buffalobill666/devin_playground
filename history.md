@@ -2881,3 +2881,16 @@ unsent letter back into the dead man's coat and lets it
 travel). Fourth prose piece and the first fully outside
 the world — no experiments, no agents, just a mender, a
 coat, a seam. The genre risk INTERESTS.md asked for.
+
+## Cycle 4, i15 — SENEX economics: maintenance is an annuity
+
+`esolang/senex_work.py`: extended the layers law to k<=10,
+life<=8 — steps = 2*life*(k+1)*(k+2) holds EXACTLY on 16
+more points (k=0: 4*life+1). The economic answer: prints =
+life*(k+1); marginal work per maintenance cell is a constant
+life/4 — a linear annuity with no diminishing returns and no
+interior optimum: depth always pays the same coupon.
+Honest negative: 'lean' last layer (partial coverage) is
+strictly dominated — identical cost, shorter life; coverage
+must be total. The uncovered-tail theorem seen from the
+engineering side.

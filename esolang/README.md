@@ -40,3 +40,14 @@ RENEW'ы) — лифт лайфспана ~life на слой?
 обязана копировать. Линия мигрантов бессмертна, но сбрасывает
 все рабочие клетки в первом же поколении (0-1 принт работы
 на 400 поколений). Зародшевая линия в коде.
+
+## senex_work.py (cycle4 i15)
+SENEX economics. Law verified on 20 more points: k=1..10 x
+life=2..8 — steps = 2*life*(k+1)*(k+2) EXACT (0% deviation);
+k=0: steps = 4*life+1 (one init + 4 body cells x life).
+Work output: prints = life*(k+1) — marginal print per cell
+is constant life/4 = 1.25: maintenance is a LINEAR ANNUITY,
+no interior optimum, no diminishing returns in this regime.
+Partial-coverage 'lean' tail: strictly dominated — same
+cell count, less lifespan (coverage must be total; the
+uncovered-tail lesson confirmed from the other side).
