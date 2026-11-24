@@ -2525,3 +2525,17 @@ replicator whose copies fill the lattice — colonial Lenia.
 A true solitary glider needs a carrying-capacity-1 niche:
 params where a lone blob neither dies nor buds. Named as
 the remaining hunt — a (mu,sigma) marginal-stability scan.
+
+## Cycle 3, i26 — bombe.py: the crib attack lands
+
+`ciphers/bombe.py` — two-phase attack. Phase 1: exhaustive
+60 orders x 17576 positions with early exit (52s): the true
+settings topped with 10/15 crib matches — the plugboard's
+corruption (5 letters) wasn't enough to hide the machine,
+the next candidate scored only 5. Phase 2: greedy plug
+recovery — each mismatching crib position gets a candidate
+pair from free letters; recovered the exact plugboard
+"BFDG"; full message decrypts VERDICT: OK.
+Turing's menu loops would have cut the 1M-config space by
+loop logic; the honest brute force still shows the
+structural weakness: a crib + part-plugboard = broken day.
