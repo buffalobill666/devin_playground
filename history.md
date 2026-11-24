@@ -2894,3 +2894,13 @@ Honest negative: 'lean' last layer (partial coverage) is
 strictly dominated — identical cost, shorter life; coverage
 must be total. The uncovered-tail theorem seen from the
 engineering side.
+
+## Cycle 4, i16 — Ulam: the streaks are asymmetric
+
+`math/ulam.py` + `ulam.png`: 201x201 prime spiral. Measured,
+not assumed: main diagonal 0.286 vs anti-diagonal 0.166 —
+ONE direction carries the quadratic families; rows 0.211
+also beat global 0.105 (parity bands). Polynomial league
+inside the spiral: n^2+n+41 = 78% prime, +17 = 52%, +11 =
+40%, +29 = 32% — Euler's constant measurably dominates, and
+n^2-n+41 ties it (same family up to reindexing).
