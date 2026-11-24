@@ -145,6 +145,10 @@ DEFAULTS = dict(
     mark_decay=0.98,        # ~35-tick half-life (calls die in ~7)
     mark_rate=1.0,          # deposit strength
     mark_deaf=0,            # ablation: prey can't smell marks
+    mark_mode='fear',       # 'fear' = deposit ∝ smelled danger;
+                            # 'home' = constant trickle — territory
+                            # marks; own scent is indistinguishable
+                            # from others' (self-repulsion is real)
 )
 
 
@@ -460,10 +464,14 @@ class EcoSim:
             # danger this prey smells right now — no output channel,
             # no cost; the environment remembers where fear happened
             if c['scent_marks']:
-                fear = np.clip(np.hypot(pgx[iy, ix],
-                                        pgy[iy, ix]) / 4, 0, 1)
-                np.add.at(w.mark.ravel(), flat,
-                          fear * c['mark_rate'])
+                if c['mark_mode'] == 'home':
+                    dep = np.full(len(p), c['mark_rate'],
+                                  np.float32)
+                else:
+                    dep = np.clip(np.hypot(pgx[iy, ix],
+                                           pgy[iy, ix]) / 4,
+                                  0, 1) * c['mark_rate']
+                np.add.at(w.mark.ravel(), flat, dep)
 
             # --- disease: density-dependent transmission ------------
             if c['disease'] > 0:

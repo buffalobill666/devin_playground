@@ -2790,3 +2790,17 @@ curve humanizes 16-step loudness; crescendo inside the final
 chorus (bars 12-15). Verified without ears: FM sidebands
 real (23 vs 6 spectral peaks), accent variance 5x the flat
 control, final RMS rising. VERDICT: OK.
+
+## Cycle 4, i8 — territory marks: the channel pays a little
+
+Named residual of i6: marks over static info. mark_mode=
+'home' (constant drip, own scent indistinguishable). Metric
+trap caught pre-verdict: spacing is density-confounded —
+the 51-prey deaf world auto-looks dispersed; only s8
+(~3000 prey both) is a fair compare: home 5.84 vs deaf 5.05
+(+16% spacing), energy equal (55.8/55.9), evolved avoid-
+wiring weak. VERDICT: bounded — deposited info does pay for
+semi-static features (real spacing, no energetic dividend),
+after failing completely for mobile threats. Final shape of
+the thread: a mark's worth = staleness of what it records.
+Communication/stigmergy thread fully closed.
