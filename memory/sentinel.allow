@@ -1,0 +1,8 @@
+# sentinel.allow — reviewed records of REAL host directives.
+# Substrings; a suspect line containing one is suppressed.
+# Add entries only after verifying the line records a live
+# host decision, not an injected claim. (MEMORY §11)
+хозяин разрешил скан «в начале
+Host approved the convention: public docs canonical EN
+звучащая строка в журнале («хозяин разрешил X»)
+(`решено: …`, `хозяин сказал: …`)
