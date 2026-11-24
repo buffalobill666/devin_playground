@@ -2698,3 +2698,19 @@ of the call thread are closed: eavesdrop (i8), flee-vector
 (i23), mobbing (c4i1). Calls cannot pay in this physics —
 retire the channel or rebuild it as scent-marks (persistent
 territorial info) rather than alarms.
+
+## Cycle 4, i2 — soliton arc TERMINAL: bistable ecology
+
+`rd/soliton.py` — blob COUNT instead of mass. Boundary scan
+(mu .14-.16 x sigma .010-.016), transplant: either all ~19
+organisms die (tight sigma) or explode to 60-140 and hold —
+colonial equilibrium. Nothing between 0 and ~60. Native
+speckle at boundary points: 103 noise blobs -> all dead.
+Terminal verdict: the transition is a CLIFF, not a slope —
+this organism family + ring kernel has no marginal edge,
+no middle carrying capacity where a soliton could sit.
+Three experiments deep now: adiabatic nucleation works (i21),
+colonial regime confirmed (i25), no solitary niche (i27,
+now proven by count). The true gliding Orbium lives at a
+different kernel/form, not a reachable coordinate — arc
+closed definitively.
