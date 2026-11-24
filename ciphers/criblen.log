@@ -1,0 +1,18 @@
+sweep: 465s; truth (('II', 'IV', 'I'), (17, 4, 22)); crib "WETTERVORHERSAGE"
+  L truth best rival  unique?
+  1     1          1      tie
+  2     2          2      tie
+  3     3          3      tie
+  4     4          4      tie
+  5     5          4      YES
+  6     6          5      YES
+  7     6          5      YES
+  8     6          5      YES
+  9     7          5      YES
+ 10     8          6      YES
+ 11     9          6      YES
+ 12    10          6      YES
+ 13    10          6      YES
+ 14    11          7      YES
+ 15    11          7      YES
+ 16    12          7      YES
