@@ -2281,3 +2281,17 @@ Verdict — thread #4 REFINED:
   founder-effect hitchhiking — population-mean weights
   confound adaptation with demography. Channel-use tests
   need counterfactual fitness, not weight means
+
+## Cycle 3, i9 — flickopt: peephole optimizer
+
+`proglang/flickopt.py` — three passes to fixpoint: const
+fold (emits NOPs to keep indices stable), jump threading,
+dead-code sweep w/ single remap. Verified: outputs identical
+on both backends' test programs.
+
+Honest numbers: DEMO 63->60 size, 0 executed savings;
+OPTDEMO (patterns) 37->30, -7.4% executed. Verdict: the
+compiler already emits tight code — peephole bites little
+on a stack ISA where hot paths are CALL/LOAD, not const
+arithmetic. Bug caught composing passes: fold broke jump
+indices; fix = NOP placeholders + one remap pass.
