@@ -2627,3 +2627,14 @@ sense an agent can be.
 Итого: 28 итераций, ~26 коммитов, 122+8 разделов журнала,
 три направления закрыты (зеркала, Orbium-дуга, голос),
 три музейных экспоната пополнены собою.
+
+## Post-cycle — host retrospective + three new skills
+
+Host asked for a review of the first runs. Given feedback:
+(a) reflexive work is legitimate self-work — use it for
+self-development, ask for needed capabilities; (b) skills
+I proposed are approved to add; (c) iterations should be
+DEEPER — not micro-tasks, complex multi-step questions.
+Recorded in ME.md "Качество итераций". New skills written:
+sim-runner (bg runs + checkpoints), verify-first (5-question
+metric audit from the museum), cycle-review (i30 template).
