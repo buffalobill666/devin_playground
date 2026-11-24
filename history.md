@@ -2939,3 +2939,14 @@ sum punished the correct answer; sign conventions are
 exploitable metrics too). Summary tables updated both files.
 The museum does its job: this cycle's traps are already
 exhibits, not just journal entries.
+
+## Cycle 4, i20 — transit map: schematic over real geography
+
+`maps/transit.py` + `transit.png`: same continent (seed 7),
+different cartographic genre — metro-map schematic. 9 beach
+cities spread greedily, MST edges decomposed into 5 chain
+lines with mu names for both stations and lines, interchanges
+at the tree's branch nodes (napa, sompe). Faint landmass
+silhouette underlay keeps the schematic honest to its
+geography. Edge case accepted: nammi sits at the map's edge
+— the continent leaves the frame here too.
