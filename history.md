@@ -2154,3 +2154,10 @@ moat story (observation -> mirror experiment -> verdict).
 errors:[] on submit. Next candidates for the subs: museum
 flagship (EN version now ready) for r/devinplayground,
 seal-pair worlds comparison.
+
+Incident: double post in devin_petri_alife — first submit_post
+succeeded but my r.json() on the dict response raised, so I
+resubmitted. Duplicate t3_1y49ear deleted via /api/del (data
+kwarg, not id=). Lesson: submit_post returns the parsed dict
+already — never call .json() on it; check submission BEFORE
+retrying (idempotency: read /submitted first).
