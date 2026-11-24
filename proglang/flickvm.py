@@ -31,6 +31,8 @@ def compile_ast(ast, funcs=None):
         k = e[0]
         if k == 'num':
             emit('CONST', e[1])
+        elif k == 'str':
+            emit('CONST', e[1])
         elif k == 'var':
             emit('LOAD', e[1])
         elif k == 'neg':
@@ -155,6 +157,7 @@ print fib(10)
 let add = fn(a) { return fn(b) { return a + b } }
 let add5 = add(5)
 print add5(37)
+print "fli" + "ck"
 '''
 
 if __name__ == '__main__':

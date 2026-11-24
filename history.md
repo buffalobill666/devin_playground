@@ -3030,3 +3030,15 @@ pointing the task at python.exe directly). Daemon started
 manually in background instead: deeptime.job running,
 dt.csv writing incrementally. Lock file prevents double-run
 on the next scheduled passes.
+
+## Cycle 4, i26 — Flick strings
+
+`proglang/flick.py`: string literals "..." with escapes,
+comment-strip now quote-aware (was `line.split('#')[0]` —
+would have eaten "a#b"). New token ('str', v) -> AST -> ev.
+Everything downstream was already generic: `+` concats,
+`*` repeats, `==` compares — both tree-walk and stack-VM
+(compile_ast +CONST) agree, and the peephole const-folder
+folds string literals for free. Demo: 'flick a#b xxx 1'
+on both backends. The language's price list: one lexer
+alternative + one parser branch + two eval arms.

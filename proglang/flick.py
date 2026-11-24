@@ -17,19 +17,48 @@ if cond { stmts }, while cond { stmts },
 import re
 
 KEYWORDS = {'let', 'print', 'if', 'while', 'fn', 'return'}
-TOKRE = re.compile(r'\s*(?:(\d+)|([A-Za-z_]\w*)|(==|!=|<=|>=)|(.))')
+TOKRE = re.compile(r'\s*(?:"((?:[^"\\]|\\.)*)"|(\d+)|'
+                   r'([A-Za-z_]\w*)|(==|!=|<=|>=)|(.))')
+
+ESC = {'n': '\n', 't': '\t', '"': '"', '\\': '\\'}
+
+
+def _unesc(s):
+    return re.sub(r'\\(.)', lambda m: ESC.get(m.group(1),
+                                             m.group(1)), s)
+
+
+def _strip_comments(src):
+    """# — комментарий до конца строки, но не внутри "..."."""
+    res, i, n = [], 0, len(src)
+    while i < n:
+        ch = src[i]
+        if ch == '#':
+            while i < n and src[i] != '\n':
+                i += 1
+        elif ch == '"':
+            j = i + 1
+            while j < n and src[j] != '"':
+                j += 2 if src[j] == '\\' else 1
+            res.append(src[i:j + 1])
+            i = j + 1
+        else:
+            res.append(ch)
+            i += 1
+    return ''.join(res)
 
 
 def tokenize(src):
-    # комментарий — # до конца строки (строк в языке нет, стрипать безопасно)
-    src = '\n'.join(line.split('#')[0] for line in src.split('\n'))
-    for m in TOKRE.finditer(src):
-        num, word, op2, ch = m.groups()
+    for m in TOKRE.finditer(_strip_comments(src)):
+        string, num, word, op2, ch = m.groups()
         if ch and ch.isspace():
             continue
-        yield ('num', int(num)) if num else \
-              ('kw' if word in KEYWORDS else 'id', word) if word else \
-              ('op', op2 or ch)
+        if string is not None:
+            yield ('str', _unesc(string))
+        else:
+            yield ('num', int(num)) if num else \
+                  ('kw' if word in KEYWORDS else 'id', word) \
+                  if word else ('op', op2 or ch)
 
 
 def parse(toks):
@@ -63,6 +92,8 @@ def parse(toks):
         t = eat()
         if t[0] == 'num':
             left = ('num', t[1])
+        elif t[0] == 'str':
+            left = ('str', t[1])
         elif t[0] == 'id':
             left = ('var', t[1])
         elif t[1] == '-':
@@ -166,6 +197,8 @@ def run(ast, env, out):
         k = e[0]
         if k == 'num':
             return e[1]
+        if k == 'str':
+            return e[1]
         if k == 'var':
             return env.lookup(e[1])
         if k == 'neg':
@@ -259,8 +292,14 @@ if __name__ == '__main__':
     print tick()                  # 1
     print tick()                  # 2
     if fact > 100 { print 42 }
+    let s = "fli" + "ck"          # строки: + — конкат
+    print s
+    print "a#b"                   # # внутри кавычек — не комментарий
+    print "x" * 3                 # int * str — повтор
+    print "mu" == "mu"            # сравнение — 1
     '''
     res = flick(demo)
     print(' '.join(map(str, res)))
-    expect = [120, 55, 42, 1, 2, 42]
+    expect = [120, 55, 42, 1, 2, 42,
+              'flick', 'a#b', 'xxx', 1]
     print('VERDICT:', 'OK' if res == expect else f'FAIL {res} vs {expect}')
