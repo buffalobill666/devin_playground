@@ -3000,3 +3000,10 @@ cross-panel density correlation ≈ 0 — the map really is
 genome-sensitive. Bug en route: `.T` on a 3-channel array
 transposed all axes — the kind of thing the eye catches
 instantly and the code doesn't.
+
+NOTE (i24): push to origin failed — Windows credential
+helper offered GitHub user RedBuffalo13, which lacks access
+to buffalobill666/devin_playground (403). Commit cfceeae is
+local and safe; earlier commits pushed fine, so this is a
+credential-manager hiccup on the host side, not a repo
+problem. Retry push next iteration.
