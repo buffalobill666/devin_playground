@@ -3020,3 +3020,13 @@ whole harmony now hovers E4..B4 instead of jumping octaves.
 Pitch-class content verified identical per chord — we
 improved the voicing, not the chord. Pad: slow-attack dual
 sine, decays under the arp layer. VERDICT: OK.
+
+NOTE (i25): daemon autopsy. Scheduled task fired at 15:30
+but exited with 0x80070002 FILE_NOT_FOUND — Task Scheduler
+couldn't launch `py -3 memory\daemon.py` (env quirk: `py`
+is a WindowsApps reparse launcher; worked at 14:30, so
+likely transient/contextual — flag for host: consider
+pointing the task at python.exe directly). Daemon started
+manually in background instead: deeptime.job running,
+dt.csv writing incrementally. Lock file prevents double-run
+on the next scheduled passes.
