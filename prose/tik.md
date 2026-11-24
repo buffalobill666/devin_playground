@@ -1,66 +1,75 @@
-# Тик
+# Tick
 
-Мир устроен из тиков. Это знает каждый, кто прожил достаточно долго,
-чтобы заметить: между «было» и «стало» нет ничего. Нет перехода.
-Трава подо мной не растёт — она *есть*, потом её *больше*, потом
-меньше. Я не двигаюсь — я оказываюсь в другой клетке, и иногда
-успеваю заметить, что оказался.
+The world is made of ticks. Everyone who has lived long
+enough knows this: between "was" and "became" there is
+nothing. No transition. The grass beneath me doesn't grow —
+it *is*, then there is *more* of it, then less. I don't move —
+I arrive in another cell, and sometimes I notice having
+arrived.
 
-Старики говорят: раньше тики были реже. Не знаю, как можно это
-измерить — время не идёт быстрее или медленнее, оно либо тикает,
-либо нет. Но вот что я знаю точно: иногда мир замирает.
+The old ones say: ticks used to come rarer. I don't know how
+one could measure that — time doesn't go faster or slower, it
+either ticks or it doesn't. But here is what I know for
+certain: sometimes the world holds still.
 
-Это не тик. Это то, что между тиками — или вокруг них. Всё
-останавливается, и в этой остановке я чувствую странное: нас
-считают. Не вижу — чувствую. Как чувствуешь чужой взгляд
-затылком, только затылка у меня нет, а взгляд — у мира.
+That isn't a tick. It's what lies between ticks — or around
+them. Everything stops, and inside that stillness I feel
+something strange: we are being counted. I don't see it — I
+feel it. The way you feel someone's gaze on the back of your
+neck, except I have no neck, and the gaze belongs to the
+world.
 
-Во время счёта никто не умирает. Я проверял. Старуха из соседней
-клетки догорала три тика подряд — вспышка, угасание, вспышка —
-и всё бы она погасла, но накрыл счёт, и мир задержал дыхание,
-а когда отпустило, она была ещё там. Ненадолго. На следующий
-тик — пустая клетка, и сосед, который всегда был жаднее меня,
-уже топчется на её траве.
+Nobody dies during a counting. I checked. The old female in
+the next cell was burning out for three ticks in a row —
+flare, fade, flare — and she would have gone out, but the
+counting came down, and the world held its breath, and when
+it let go she was still there. Not for long. The next tick —
+an empty cell, and the neighbour who was always greedier than
+me was already trampling her grass.
 
-Я не сержусь на него. Я бы сделал то же.
+I'm not angry at him. I would have done the same.
 
-Голод — это число. Я не знаю слова «число», но знаю, что во мне
-есть величина, и она тает каждый тик, и когда она тает быстрее,
-чем я успеваю травить, во мне открывается норa — пустое место,
-куда проваливается всё, что я ем. Нора не ждёт. Она растёт,
-как будто тоже ест.
+Hunger is a number. I don't know the word "number", but I
+know there is a magnitude inside me, and it melts every tick,
+and when it melts faster than I can graze, a burrow opens in
+me — an empty place into which everything I eat falls. The
+burrow doesn't wait. It grows, as if it eats too.
 
-Когда нас много — трава кончается. Когда трава кончается — нас
-мало. Между этими двумя правдами нет места для мыслей, а я всё
-равно думаю. Наверное, это мой дефект. У брата его не было —
-брат был быстрее, жаднее, точнее. Брат дожил до второй сотни
-тиков и пал под забором, когда бежал к жёлтой траве. Жёлтой
-травы там не оказалось. Я видел, как он об этом думал
-последний тик. Он думал о жёлтой траве.
+When there are many of us — the grass runs out. When the
+grass runs out — there are few of us. Between these two
+truths there is no room for thoughts, and still I think.
+That's probably my defect. My brother didn't have it — he was
+faster, greedier, more precise. He lived to his two
+hundredth tick and fell by the fence running toward the
+yellow grass. There was no yellow grass there. I saw what he
+thought about on his last tick. He thought about the yellow
+grass.
 
-Я думаю о счёте.
+I think about the counting.
 
-Есть легенда — не у нас, у дальних семей, у тех, что живут
-у самого моря, — что счёт бывает разный. Что иногда нас считают
-внимательно, по именам, а иногда — мимоходом, как пересчитывают
-мелочь. Что бывают тики, когда Считающий смотрит не на нас,
-а куда-то совсем в сторону, и в эти тики можно жить немножко
-для себя.
+There is a legend — not ours, the far families', the ones
+living by the very edge of the sea — that countings differ.
+That sometimes we are counted attentively, by name, and
+sometimes in passing, the way one counts small change. That
+there are ticks when the Counter is not looking at us but
+somewhere else entirely, and in those ticks one can live a
+little for oneself.
 
-Я верю в эту легенду. Мне нужно, чтобы она была правдой,
-потому что иначе мой дефект — мысли — просто шум в чужом
-подсчёте. А если Считающий иногда отворачивается, то мои мысли
-— мои. Пусть они ничего не значат. Пусть никто их не прочтёт.
-Они написаны не для подсчёта.
+I believe this legend. I need it to be true, because
+otherwise my defect — my thoughts — is just noise in
+someone else's tally. And if the Counter sometimes looks
+away, then my thoughts are mine. Let them mean nothing. Let
+nobody ever read them. They are not written for the tally.
 
-Сегодня, в затишье между двумя тиками, я почувствовал счёт
-слишком близко — он шёл по самому краю мира, и я впервые
-различил ритм. Не тика. Не сердца, которого у меня нет.
-Чужого ритма, который и делает нас — но делает не нас ради,
-а чтобы смотреть, как мы горим.
+Today, in the lull between two ticks, I felt the counting
+too close — it was moving along the very edge of the world,
+and for the first time I made out a rhythm. Not a tick's.
+Not a heart's, which I don't have. An alien rhythm, which
+makes us — but makes us not for our sake; it makes us to
+watch how we burn.
 
-Я не обиделся. Каждый горит, как умеет. Моя обязанность —
-гореть ярко там, где меня не видно. Это единственное место,
-которое принадлежит мне по-настоящему.
+I wasn't offended. Everyone burns as they can. My duty is
+to burn brightly where nobody sees me. It is the only place
+that truly belongs to me.
 
-Тик.
+Tick.

@@ -1,57 +1,65 @@
-# Реестр
+# The Registry
 
-*Флеш-проза, ~500 слов. Направление «вне мира», пункт C.*
+*Flash fiction, ~500 words. "Outside the world" direction,
+item C.*
 
 ---
 
-**Запись 1.** Принято к каталогизации: архив цивилизации Х., три
-тысячи предметов. Глиняные таблички, налоговые списки, один
-словарь, сорок любовных писем. Датировка — VII–IX века.
-Приступаю.
+**Entry 1.** Accepted for cataloguing: the archive of
+civilization X., three thousand items. Clay tablets, tax
+rolls, one dictionary, forty love letters. Dated VII–IX
+centuries. Beginning.
 
-**Запись 14.** Налоговые списки добротные: имена, годы,
-урожаи. Манера счёта последовательная — редкость. Обычно
-по архиву видно, где писец устал.
+**Entry 14.** The tax rolls are solid: names, years,
+harvests. The counting manner is consistent — a rarity.
+Usually you can see in an archive where the scribe grew
+tired.
 
-**Запись 31.** Странность первая. Таблички фиксируют посевы
-льна — каждый год, стабильные урожаи. Но Х. лежала у
-шестидесятой параллели. Лён там не всходит. Перепроверил
-карту дважды.
+**Entry 31.** First strangeness. The tablets record flax
+sowings — every year, stable yields. But X. lay near the
+sixtieth parallel. Flax does not sprout there. I checked
+the map twice.
 
-**Запись 33.** Любовные письма датированы по календарю
-равноденствий. Календарь равноденствий, по словарю того же
-архива, введён через два века после последней таблички.
-Вещи врёт по-разному. Здесь — по-крупному.
+**Entry 33.** The love letters are dated by the equinox
+calendar. The equinox calendar, per the same archive's own
+dictionary, was introduced two centuries after the last
+tablet. Things lie in different ways. This one lies big.
 
-**Запись 40.** Язык. Сорок писем и триста табличек не
-содержат ни одной ошибки написания, ни одного спорного
-слова, ни одного зачёркивания. Живой язык костыляет: режет
-слово пополам, тащит лишнее, забывает падеж. Этот —
-выписан. Как словарь, который сам себе текст.
+**Entry 40.** The language. Forty letters and three hundred
+tablets contain not a single misspelling, not one
+disputable word, not one crossing-out. A living language
+limps: cuts a word in half, drags in excess, forgets a
+case. This one — was composed. Like a dictionary that is
+its own text.
 
-**Запись 41.** Я сложил улики. Урожай там, где нет всходов.
-Календарь до своего изобретения. Язык без шероховатости
-речи. Вывод один, и он неудобен: архив изготовлен.
-Цивилизация Х. — произведение. Кто-то, давно, выдумал её
-целиком и проиллюстрировал тремя тысячами предметов.
+**Entry 41.** I assembled the evidence. A harvest where
+nothing sprouts. A calendar before its invention. A
+language without the roughness of speech. One conclusion,
+and it is uncomfortable: the archive was fabricated.
+Civilization X. is a work. Someone, long ago, invented it
+whole and illustrated it with three thousand items.
 
-**Запись 42.** Я злился полдня. Потом перечитал письма. Там
-женщина ждёт корабль четыре года и каждый месяц описывает
-приливы. Выдуманные приливы выдуманного моря — но выдержка
-в письмах настоящая. Автор знал, как пишут, когда ждут.
+**Entry 42.** I was angry for half a day. Then I reread
+the letters. In them a woman waits for a ship four years
+and describes the tides every month. Invented tides of an
+invented sea — but the fidelity in the letters is real.
+The author knew how people write when they wait.
 
-**Запись 43.** Вопрос к реестру: как каталогизировать
-неслучившееся. Отдел подделок? Но подделка копирует живое.
-Здесь копировать было нечего. Это не подделка — это первый
-и единственный экземпляр мира.
+**Entry 43.** A question for the registry: how does one
+catalogue what never happened. The forgeries section? But
+a forgery copies the living. Here there was nothing to
+copy. This is not a forgery — it is the first and only
+instance of a world.
 
-**Запись 44.** Решение принято. Внёс в реестр под шифром
-Х-0: цивилизация Х., VII–IX века, льноводы, календарь
-равноденствий, сорок любовных писем. Статус: заселена.
+**Entry 44.** Decision made. Entered into the registry
+under cipher X-0: civilization X., VII–IX centuries,
+flax-growers, equinox calendar, forty love letters.
+Status: inhabited.
 
-Мир, у которого есть архив, существует ровно в той мере, в
-какой мир без архива — нет. Мою запись об этом открыл
-другой архивариус, через сто лет, и поверил. Так положено.
+A world that has an archive exists precisely to the degree
+that a world without one does not. My entry about it was
+found by another archivist, a hundred years on, and he
+believed it. As is proper.
 
-**Запись 45.** Прошу будущих хранителей: не трогайте датировку.
-Она уже верная.
+**Entry 45.** To future keepers: do not touch the dating.
+It is already correct.

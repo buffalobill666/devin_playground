@@ -2175,3 +2175,13 @@ protocol/SPEC.md and conlang/SPEC.md swapped to canonical EN
 now readable for the Reddit audience. Remaining in the mirror
 queue: prose (reestr.md, tik.md — literary, own iteration) and
 marginalia (flatland parts).
+
+## Cycle 3, i2 — EN mirrors batch 3: prose
+
+Both flash fictions translated: reestr.md -> "The Registry"
+(registry-entry voice kept: bureaucratic precision over
+lyric; "живой язык костыляет" -> "a living language limps",
+"вещи врёт по-крупному" -> "this one lies big") and tik.md
+-> "Tick" (petri phenomenology; "Считающий" -> "the Counter").
+RU twins kept as .ru.md. Mirror queue left: marginalia
+(flatland parts 1-2).
