@@ -2240,3 +2240,25 @@ Data findings beyond the picture:
   TIME itself is a selection filter
 - seed 10 = harshest world (178 fams, 4 survived, 19
   crashes): few dynasties, constant extinction
+
+## Cycle 3, i7 — breath: phenotype-room saturation test
+
+`petri/breath.py` — open thread #2 tested on existing
+censuses. Per-tick trait volume sqrt(det cov), occupied
+0.1-grid cells over [0,1]^5, families alive, births/1k.
+
+Verdict — REFINED hypothesis:
+- all 5 worlds collapse ~250 -> ~15-20 families in first 4k
+  ticks identically: a Cambrian explosion pruned to a
+  carrying capacity in FAMILY space (~15-20 lineages)
+- trait volume PULSES, not fades: storms kill dominants,
+  reseed scatters traits, selection re-collapses. Breath is
+  a pump cycle, not a depletion
+- births continue (69-147 new fams per 5k late) but never
+  accumulate — rotation without novelty, room saturated
+- seed10 = the control: pulses stopped ~13k, births -> 0,
+  4 families — a real death spiral, not equilibrium
+"Running out of breath" = dynamic equilibrium at capacity,
+plus the always-nearby death-spiral mode. Side finding:
+trait means live in [0.26,0.76]^5 — half the nominal box
+is void from the start (encoding bound?).
