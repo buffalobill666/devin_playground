@@ -1,18 +1,22 @@
-"""flick.py — Flick: маленький язык (~150 строк).
+"""flick.py — Flick: маленький язык (~190 строк).
 
 Спека: целые числа, let x = expr, print expr,
-if cond { stmts }, while cond { stmts }.
+if cond { stmts }, while cond { stmts },
+функции: let f = fn(a, b) { return expr } — замыкания,
+рекурсия (имя видно через внешний env).
 Комментарий: # до конца строки.
 
-    let x = 10
-    while x > 0 { print x; let x = x - 1 }
+    let fib = fn(n) {
+        if n < 2 { return n }
+        return fib(n - 1) + fib(n - 2)
+    }
 
 Лексер -> Pratt-парсер -> tree-walk интерпретатор.
 """
 
 import re
 
-KEYWORDS = {'let', 'print', 'if', 'while'}
+KEYWORDS = {'let', 'print', 'if', 'while', 'fn', 'return'}
 TOKRE = re.compile(r'\s*(?:(\d+)|([A-Za-z_]\w*)|(==|!=|<=|>=)|(.))')
 
 
@@ -42,18 +46,58 @@ def parse(toks):
             raise SyntaxError(f'expected {expect}, got {t}')
         return t
 
+    def block():
+        eat('{')
+        body = []
+        while peek()[1] != '}':
+            if peek()[1] == ';':
+                eat()
+                continue
+            body.append(stmt())
+            if peek()[1] == ';':
+                eat()
+        eat('}')
+        return body
+
     def expr(prec=0):
         t = eat()
-        left = ('num', t[1]) if t[0] == 'num' else \
-               ('var', t[1]) if t[0] == 'id' else \
-               ('neg', expr(9)) if t[1] == '-' else err(t)
+        if t[0] == 'num':
+            left = ('num', t[1])
+        elif t[0] == 'id':
+            left = ('var', t[1])
+        elif t[1] == '-':
+            left = ('neg', expr(9))
+        elif t[1] == '(':
+            left = expr()
+            eat(')')
+        elif t[0] == 'kw' and t[1] == 'fn':
+            eat('(')
+            params = []
+            while peek()[1] != ')':
+                params.append(eat()[1])
+                if peek()[1] == ',':
+                    eat()
+            eat(')')
+            left = ('fn', params, block())
+        else:
+            err(t)
         PREC = {'==': 1, '!=': 1, '<': 2, '>': 2, '<=': 2, '>=': 2,
                 '+': 3, '-': 3, '*': 4, '/': 4, '%': 4}
-        while peek()[1] in PREC and PREC[peek()[1]] > prec:
-            op = eat()[1]
-            left = ('bin', op, left, expr(PREC[op]))
-        if peek()[1] == ')':
-            pass
+        while True:
+            if peek()[1] == '(':                  # вызов, высший приоритет
+                eat()
+                args = []
+                while peek()[1] != ')':
+                    args.append(expr())
+                    if peek()[1] == ',':
+                        eat()
+                eat(')')
+                left = ('call', left, args)
+            elif peek()[1] in PREC and PREC[peek()[1]] > prec:
+                op = eat()[1]
+                left = ('bin', op, left, expr(PREC[op]))
+            else:
+                break
         return left
 
     def err(t):
@@ -72,17 +116,10 @@ def parse(toks):
         if t[0] == 'kw' and t[1] in ('if', 'while'):
             kw = eat()[1]
             cond = expr()
-            eat('{')
-            body = []
-            while peek()[1] != '}':
-                if peek()[1] == ';':
-                    eat()
-                    continue
-                body.append(stmt())
-                if peek()[1] == ';':
-                    eat()
-            eat('}')
-            return (kw, cond, body)
+            return (kw, cond, block())
+        if t[0] == 'kw' and t[1] == 'return':
+            eat()
+            return ('ret', expr())
         if t[1] == ';':
             eat()
             return stmt()
@@ -94,26 +131,90 @@ def parse(toks):
     return out
 
 
+class Env(dict):
+    """Окружение с родителем — лексический скоп замыканий."""
+
+    def __init__(self, parent=None):
+        self.parent = parent
+
+    def lookup(self, k):
+        e = self
+        while e is not None:
+            if k in e:
+                return e[k]
+            e = e.parent
+        return 0
+
+    def assign(self, k, v):
+        """let: обновить ближайшую привязку, иначе создать локальную."""
+        e = self
+        while e is not None:
+            if k in e:
+                e[k] = v
+                return
+            e = e.parent
+        self[k] = v
+
+
+class _Ret(Exception):
+    def __init__(self, v):
+        self.v = v
+
+
 def run(ast, env, out):
     def ev(e):
         k = e[0]
         if k == 'num':
             return e[1]
         if k == 'var':
-            return env.get(e[1], 0)
+            return env.lookup(e[1])
         if k == 'neg':
             return -ev(e[1])
+        if k == 'fn':
+            return ('closure', e[1], e[2], env)   # захват env по ссылке
+        if k == 'call':
+            f = ev(e[1])
+            if f[0] != 'closure':
+                raise TypeError('not a function')
+            local = Env(f[3])
+            for p, a in zip(f[1], e[2]):
+                local[p] = ev(a)
+            try:
+                run(f[2], local, out)
+            except _Ret as r:
+                return r.v
+            return 0
         op, a, b = e[1], ev(e[2]), ev(e[3])
-        return {'+': a + b, '-': a - b, '*': a * b, '/': int(a / b),
-                '%': a % b, '==': int(a == b), '!=': int(a != b),
-                '<': int(a < b), '>': int(a > b),
-                '<=': int(a <= b), '>=': int(a >= b)}[op]
+        if op == '+':
+            return a + b
+        if op == '-':
+            return a - b
+        if op == '*':
+            return a * b
+        if op == '/':
+            return int(a / b)
+        if op == '%':
+            return a % b
+        if op == '==':
+            return int(a == b)
+        if op == '!=':
+            return int(a != b)
+        if op == '<':
+            return int(a < b)
+        if op == '>':
+            return int(a > b)
+        if op == '<=':
+            return int(a <= b)
+        if op == '>=':
+            return int(a >= b)
     for s in ast:
         k = s[0]
         if k == 'let':
-            env[s[1]] = ev(s[2])
+            env.assign(s[1], ev(s[2]))
         elif k == 'print':
             out.append(ev(s[1]))
+        elif k == 'ret':
+            raise _Ret(ev(s[1]))
         elif k == 'if':
             if ev(s[1]):
                 run(s[2], env, out)
@@ -123,7 +224,7 @@ def run(ast, env, out):
 
 
 def flick(src):
-    env, out = {}, []
+    env, out = Env(), []
     run(parse(tokenize(src)), env, out)
     return out
 
@@ -137,19 +238,29 @@ if __name__ == '__main__':
         let n = n - 1
     }
     print fact                    # 120
-    let f0 = 0
-    let f1 = 1
-    let i = 0
-    while i < 8 {                 # ряд фибоначчи
-        print f1
-        let t = f0 + f1
-        let f0 = f1
-        let f1 = t
-        let i = i + 1
+    let fib = fn(n) {             # рекурсия + замыкание
+        if n < 2 { return n }
+        return fib(n - 1) + fib(n - 2)
     }
+    print fib(10)                 # 55
+    let add = fn(a) {             # каррирование
+        return fn(b) { return a + b }
+    }
+    let add5 = add(5)
+    print add5(37)                # 42
+    let counter = fn() {          # замыкание захватывает env
+        let c = 0
+        return fn() {
+            let c = c + 1
+            return c
+        }
+    }
+    let tick = counter()
+    print tick()                  # 1
+    print tick()                  # 2
     if fact > 100 { print 42 }
     '''
     res = flick(demo)
     print(' '.join(map(str, res)))
-    expect = [120, 1, 1, 2, 3, 5, 8, 13, 21, 42]
+    expect = [120, 55, 42, 1, 2, 42]
     print('VERDICT:', 'OK' if res == expect else f'FAIL {res} vs {expect}')
