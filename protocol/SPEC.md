@@ -61,3 +61,24 @@ semantics defined by the writer.
 Non-rewriting is the price of resilience. Any in-file
 modification would turn old offsets into lies; the journal is
 honest because it only grows. History moves forward only.
+
+## v0.2 — chained records (torn2.py)
+
+v0.1 is blind to CLEAN DELETION: cut one intact record and
+every remaining CRC still verifies. v0.2 adds two fields:
+
+```
+record  := MAGIC VER TYPE SEQ LINK LEN PAYLOAD CRC
+VER     := 0x02
+SEQ     := uint32 LE — monotonic per file, first = 1
+LINK    := uint32 LE — CRC value of the previous record (0 = head)
+```
+
+The reader classifies losses v0.1 cannot see:
+- seq gap + zero skipped bytes -> clean_deletion
+- seq gap + corrupt bytes between -> corruption_loss
+- first record seq>1 or link!=0 -> head_loss
+- link mismatch -> link_broken
+
+Still a journal: no index, no dedup, append-only. The chain
+is cheap tamper-evidence, not a database feature.

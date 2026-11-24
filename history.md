@@ -2213,3 +2213,15 @@ loop. Fix: one shared funcs table passed through all
 recursive compile calls. Lesson logged: a hang can be
 exponential recursion, not a cycle — instrument before
 assuming.
+
+## Cycle 3, i5 — TORN v0.2: chained records
+
+`protocol/torn2.py` + SPEC v0.2 section (EN+RU). Found a real
+blind spot in v0.1 while picking up the named thread: resync
+catches CORRUPTION, but a CLEAN DELETION of an intact record
+leaves every remaining CRC valid — the loss is invisible.
+v0.2 adds SEQ (monotonic) + LINK (previous record's CRC):
+the reader now classifies losses — clean_deletion (seq gap,
+0 skipped bytes) vs corruption_loss (seq gap + garbage) vs
+head_loss vs link_broken. Demo verified all branches.
+Still a journal — chain is evidence, not an index.
