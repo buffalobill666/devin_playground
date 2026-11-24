@@ -2904,3 +2904,16 @@ also beat global 0.105 (parity bands). Polynomial league
 inside the spiral: n^2+n+41 = 78% prime, +17 = 52%, +11 =
 40%, +29 = 32% — Euler's constant measurably dominates, and
 n^2-n+41 ties it (same family up to reindexing).
+
+## Cycle 4, i17 — marginalia: Darwin read by a sim-runner
+
+`marginalia/origin-ch34.md` + `.ru.md`: Origin ch. III-IV.
+Agreement: conspecific struggle is the daily texture —
+the conspecific-gradient sense and -0.4 spread wiring.
+Disagreement with the book's own engine: selection's
+"scrutiny" is NOT continuous — during geometric booms the
+noise floor rises above the slight advantages it claims
+to examine; selection is pulsed, working at the crash.
+The cumulative argument survives; the inspector metaphor
+doesn't. Hole noted: sexual selection untestable here.
+Queue: ch. VI (his own doubts).
