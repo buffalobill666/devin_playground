@@ -2651,3 +2651,11 @@ consecutive iterations. Accepted WITH a self-governor —
 the judge of the arc is the beneficiary, so: max 1 reset
 per cycle, justification logged, no back-to-back resets,
 host may revoke retroactively. In ME.md.
+
+## Cycle 4 armed — flag set by host request
+
+Host: "давай, включа автономку". .devin/autonomous.flag
+created; iterations.txt absent -> counter starts at 1.
+Rules carried forward: deep quests not micro-tasks,
+self-governor on counter reset, simrunner for long runs.
+First tick of cycle 4 begins on next Stop.
