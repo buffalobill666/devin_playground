@@ -3253,3 +3253,24 @@ zebra, mnk-solver, now this): to pose is to prove
 uniqueness. Solver is the same move as zebra: enumerate
 candidate rows (clue-legal perms), backtrack with column
 disjointness, count capped at 2.
+
+## Cycle 5, i4/i5 — HARVEST: mnkrun verdicts, all four boards
+
+`runs/mnk/results.jsonl` — the daemon's second job done
+(rc=0, ~27min wall for the batch):
+
+  board    verdict   memo-states   seconds   mc{1,-1,0}
+  4x5x3    P1 win    263,936       17.6      .568/.432/0
+  5x4x3    P1 win    915,268       73.9      .56/.44/0
+  4x5x4    DRAW      27,635,978    910.5     .446/.374/.18
+  5x5x3    P1 win    14,666,526    626.4     .558/.442/0
+
+First PROVEN draw in the mnk thread: 4x5 k=4 exhaustively
+draws — 27.6M positions memoized, solver certain. Pattern
+reading: on 4x5 geometry, k=3 is a forced P1 win but k=4
+is the draw boundary — the win-length is the switch, not
+the board size (5x5 k=3 still P1-win despite being bigger
+AND asymmetric-legal on diagonals... note 5x5x3 is the
+largest solved so far). The mc columns agree with verdicts:
+only the drawn board shows nonzero draw-rate in random
+play — Monte Carlo as sanity, not proof.
