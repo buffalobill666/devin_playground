@@ -78,6 +78,54 @@ def solve_count_mac(runs, sums, limit=2):
     return count
 
 
+def plant_fc(rng, runs):
+    """planting IS the same CSP — all-different per run, cells shared.
+    Forward checking with MRV: pick the most constrained unassigned
+    cell, try shuffled values, propagate removals to run-mates.
+    The tuple-permutation backtracker drowned because it never
+    propagated; this walks the same space with the lights on."""
+    cellruns = {}
+    for ri, (_, _, cellspec) in enumerate(runs):
+        for pos, c in enumerate(cellspec):
+            cellruns.setdefault(c, []).append(ri)
+    runmembers = [set(spec) for (_, _, spec) in runs]
+    doms = {c: set(range(1, 10)) for c in cellruns}
+    assign = {}
+
+    def propagate(cell, val, doms_local):
+        """remove val from all unassigned run-mates; False on wipeout."""
+        for ri in cellruns[cell]:
+            for mate in runmembers[ri]:
+                if mate == cell or mate in assign:
+                    continue
+                doms_local[mate] = doms_local[mate] - {val}
+                if not doms_local[mate]:
+                    return False
+        return True
+
+    def bt():
+        if len(assign) == len(doms):
+            return True
+        # MRV among unassigned
+        unassigned = [c for c in doms if c not in assign]
+        cell = min(unassigned, key=lambda c: len(doms[c]))
+        vals = list(doms[cell])
+        rng.shuffle(vals)
+        for v in vals:
+            saved = {c: set(doms[c]) for c in doms}
+            assign[cell] = v
+            if propagate(cell, v, doms) and bt():
+                return True
+            del assign[cell]
+            for c in doms:
+                doms[c] = saved[c]
+        return False
+
+    if bt():
+        return dict(assign)
+    return None
+
+
 def generate_big(seed, W, H, blackp=0.34, tries=40, verbose=False):
     rng = random.Random(seed)
     t0 = time.time()
@@ -86,9 +134,13 @@ def generate_big(seed, W, H, blackp=0.34, tries=40, verbose=False):
         if not lay:
             continue
         white, runs, W2, H2 = lay
-        fill, assign = plant(rng, runs)
+        fill = plant_fc(rng, runs)
         if not fill:
             continue
+        # run sums read off the planted fill
+        assign = {}
+        for ri, (_, _, cellspec) in enumerate(runs):
+            assign[ri] = tuple(fill[c] for c in cellspec)
         sums = [sum(assign[i]) for i in range(len(runs))]
         n = solve_count_mac(runs, sums, limit=2)
         if verbose:
