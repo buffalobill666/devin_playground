@@ -31,7 +31,8 @@ Demos:
   crystal  — uniform CPYR cells: the boring immortal
   worker   — interleaved payload prints while migrating
 """
-OPS = {'PUSH', 'ADD', 'SUB', 'PRINT', 'JMPR', 'JZR', 'CPYR', 'HALT'}
+OPS = {'PUSH', 'ADD', 'SUB', 'PRINT', 'JMPR', 'JZR', 'CPYR', 'HALT',
+       'CPY', 'DUP', 'DROP', 'SWAP', 'JNZR'}
 
 
 def assemble(src):
@@ -105,6 +106,23 @@ def run(tape, life=3, cap=20000, size=2000, trace_mig=False):
             if 0 <= src < len(cells) and 0 <= dst < len(cells):
                 o, x1, x2, _h = cells[src]
                 cells[dst] = [o, x1, x2, life]
+        elif op == 'CPY':
+            # stack-driven: pop dst_rel then src_rel (both relative
+            # to the executing cell) — the copy loop's workhorse
+            dr = stack.pop()
+            sr = stack.pop()
+            src, dst = cur + sr, cur + dr
+            if 0 <= src < len(cells) and 0 <= dst < len(cells):
+                o, x1, x2, _h = cells[src]
+                cells[dst] = [o, x1, x2, life]
+        elif op == 'DUP':
+            stack.append(stack[-1])
+        elif op == 'DROP':
+            stack.pop()
+        elif op == 'SWAP':
+            stack[-1], stack[-2] = stack[-2], stack[-1]
+        elif op == 'JNZR':
+            ip = cur + a1 if stack.pop() != 0 else ip
         elif op == 'HALT':
             break
         max_ip = max(max_ip, ip)
