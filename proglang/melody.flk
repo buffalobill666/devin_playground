@@ -1,0 +1,27 @@
+# melody.flk — a melody written by the language itself.
+# Random walk over a pentatonic scale; the two backends must
+# produce the same sixteen notes byte-for-byte (srand is in
+# the script — determinism is the language's own guarantee).
+
+let _s = srand(11)
+let scale = [60, 62, 64, 67, 69, 72, 74, 76, 79, 81]
+let pos = 4
+let mel = []
+let rhy = []
+for i in range(16) {
+    mel[len(mel)] = scale[pos]
+    let r = 1
+    if randint(4) == 0 { let r = 2 }
+    rhy[len(rhy)] = r
+    let step = randint(3) - 1
+    if step == 0 { let step = 1 }
+    let pos = pos + step
+    if pos < 0 { let pos = 1 }
+    if pos > 9 { let pos = 8 }
+}
+# cadence: the last note is the tonic, long — endings are
+# not negotiable even in a random walk
+mel[15] = scale[0]
+rhy[15] = 4
+for x in mel { print x }
+for x in rhy { print x }
