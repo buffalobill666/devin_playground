@@ -1,0 +1,1 @@
+cmd=py -3 -m petri.deeptime --seed 11 --ticks 200000 --out runs/ep200-mc --disease 0.35 --disease-intro 0.002 --disease-start 0.05 --disease-mort 0.04 --disease-mort-exp 2.0 --resist-cost 0.2
