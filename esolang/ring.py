@@ -31,20 +31,24 @@ OPL = ['PUSH', 'ADD', 'SUB', 'PRINT', 'JMPR', 'JNZR', 'JZR',
        'CPYR', 'DUP', 'DROP', 'HALT', 'NOP']
 
 
-def mutate_cell(cell, rng, mu):
+OPL_NOHALT = [o for o in OPL if o != 'HALT']
+
+
+def mutate_cell(cell, rng, mu, alphabet=None):
     op, a1, a2, hp = cell
     if rng.random() >= mu:
         return [op, a1, a2, hp]
+    alphabet = alphabet or OPL
     r = rng.random()
     if r < 0.5:
         return [op, a1 + rng.choice([-1, 1]), a2, hp]
     elif r < 0.8:
         return [op, a1, a2 + rng.choice([-1, 1]), hp]
-    return [rng.choice(OPL), a1, a2, hp]
+    return [rng.choice(alphabet), a1, a2, hp]
 
 
 def run_ring(seeds, life, cap_rounds, size=4000, mu=0.002, seed=0,
-             census_every=4000, snap_every=0):
+             census_every=4000, snap_every=0, alphabet=None):
     rng = random.Random(seed)
     snaps = []
     deaths = []
@@ -83,9 +87,10 @@ def run_ring(seeds, life, cap_rounds, size=4000, mu=0.002, seed=0,
             elif op == 'JZR':
                 if st: ctx['ip'] = cur + a1 if st.pop() == 0 else ctx['ip']
             elif op == 'CPYR':
+                ctx['copies'] = ctx.get('copies', 0) + 1
                 src = (cur + a1) % size
                 dst = (cur + a2) % size
-                nc = mutate_cell(cells[src], rng, mu)
+                nc = mutate_cell(cells[src], rng, mu, alphabet)
                 if nc[:3] != cells[src][:3]:
                     ctx['mutcells'] += 1
                 nc[3] = life
@@ -114,7 +119,7 @@ def run_ring(seeds, life, cap_rounds, size=4000, mu=0.002, seed=0,
             alive = sum(1 for c in ctxs if c['alive'])
             trav = [c['travel'] for c in ctxs]
             census.append((rnd, alive, list(trav),
-                           sum(c['mutcells'] for c in ctxs)))
+                           sum(c.get('copies', 0) for c in ctxs)))
     if snap_every:
         return cells, ctxs, census, snaps
     return cells, ctxs, census, deaths
