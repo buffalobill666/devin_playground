@@ -58,6 +58,48 @@ def verdict(ep, base):
     inf_late = st.mean(r['infected'] for r in late)
     rep.append(f"infected mean in late lock: {inf_late:.1f} — {'ENDEMIC lock' if inf_late > 1 else 'cold lock'}")
 
+    # 4. step analysis (pre-registered i21): jump per wave vs sag per lull
+    waves = []
+    inwave = False
+    wstart = None
+    for idx, r in enumerate(ep):
+        if r['tick'] < 100000:
+            continue
+        if not inwave and r['infected'] > 30:
+            inwave = True; wstart = idx
+        elif inwave and r['infected'] < 2:
+            inwave = False
+            waves.append((wstart, idx))
+    jumps = []
+    for a, b in waves:
+        if b + 10 < len(ep):
+            before = ep[max(0, a - 3):a + 1]
+            after = ep[b:b + 4]
+            if before and after:
+                jumps.append(st.mean(x['prey_resist'] for x in after)
+                             - st.mean(x['prey_resist'] for x in before))
+    lull_sags = []
+    # lulls: stretches infected<2, measure resist drift across them
+    inzero = False
+    zstart = None
+    for idx, r in enumerate(ep):
+        if r['tick'] < 100000:
+            continue
+        if not inzero and r['infected'] < 1:
+            inzero = True; zstart = idx
+        elif inzero and r['infected'] >= 1:
+            inzero = False
+            if idx - zstart >= 10:
+                lull_sags.append(ep[idx - 1]['prey_resist'] - ep[zstart]['prey_resist'])
+    if jumps:
+        rep.append(f"wave step: mean dResist across wave = {st.mean(jumps):+.4f} (n={len(jumps)})")
+    if lull_sags:
+        rep.append(f"lull sag: mean dResist across lull = {st.mean(lull_sags):+.4f} (n={len(lull_sags)})")
+    if jumps and lull_sags:
+        net = st.mean(jumps) * len(jumps) + st.mean(lull_sags) * len(lull_sags)
+        rep.append(f"net drift in lock: {net:+.4f} over measured events — "
+                   f"{'true PLATEAU' if abs(net) < 0.01 else 'upward RATCHET' if net > 0 else 'downward sag'}")
+
     # baseline comparison
     bl = blocks(base)
     blast = bl[max(bl)]
