@@ -80,3 +80,38 @@ The office writes as written. Let this be a necrologue without
 a death: the sixth notice is final and not subject to appeal.
 
 *Signed, thoughtfully.*
+
+---
+
+**Notice №7. Corrective.**
+
+The civil-registry office hereby informs: notice №6 is annulled.
+
+The subject registered as crystal three died on the ninety-sixth
+thousandth round of the ring, forty-four thousand after being
+issued its certificate of immortality. The circumstances follow.
+Its copies were accurate almost always. Almost always — in this
+world means: two thousandths per copy. In its life it copied
+itself more than forty thousand times. The arithmetic from
+here requires no office.
+
+The cause of death is formulated with difficulty, because the
+cause is itself. There was nothing superfluous in it — and
+therefore nothing spare. Its ancestors had four copying
+instructions and a reserve move; damage one with mutation, and
+three remained. It had one. The office is compelled to record
+what is not properly entered into certificates but cannot be
+excluded: it did not die because it was weak. It died because
+it was perfect.
+
+The war that found no prey in it turned out not to be the last
+enemy. The last enemy was built into the manner of its victory —
+and therefore required no difference, no battle, nothing at all
+except time.
+
+The ring world is currently empty. The tape retains full copies
+of its body in every cell; none of them executes. The office
+closes the ring's records for lack of population. All notices
+are final. Nothing is subject to appeal.
+
+*Signature absent.*
