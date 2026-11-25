@@ -22,6 +22,12 @@ P = argparse.ArgumentParser()
 P.add_argument('--seed', type=int, default=11)
 P.add_argument('--ticks', type=int, default=100_000)
 P.add_argument('--out', default='runs/deeptime')
+P.add_argument('--disease', type=float, default=0.0)
+P.add_argument('--disease-intro', type=float, default=0.0)
+P.add_argument('--disease-mort', type=float, default=0.02)
+P.add_argument('--disease-mort-exp', type=float, default=1.0)
+P.add_argument('--disease-start', type=float, default=0.0)
+P.add_argument('--resist-cost', type=float, default=0.0)
 A = P.parse_args()
 
 TICKS, EVERY, SEED = A.ticks, 50, A.seed
@@ -31,7 +37,12 @@ CSV = OUT / 'dt.csv'
 
 def main():
     c = dict(DEFAULTS)
-    c.update(seed=SEED, log_every=EVERY)
+    c.update(seed=SEED, log_every=EVERY,
+             disease=A.disease, disease_intro=A.disease_intro,
+             disease_start=A.disease_start,
+             disease_mort=A.disease_mort,
+             disease_mort_exp=A.disease_mort_exp,
+             disease_resist_cost=A.resist_cost)
     sim = EcoSim(c)
     first = not CSV.exists()
     f = open(CSV, 'a', newline='')

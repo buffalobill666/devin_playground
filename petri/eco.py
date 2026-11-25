@@ -112,6 +112,10 @@ DEFAULTS = dict(
     # density-dependent transmission inside prey, virulence mutates on
     # transmission, hosts can recover and evolve 'resist' (trait #5).
     disease=0.0,            # transmission scale (beta)
+    disease_resist_cost=0.0,  # per-tick energy drain x resist —
+                              # immune maintenance; makes resist a
+                              # real trait (benefit AND cost), not
+                              # a ratchet
     disease_start=0.0,      # fraction of founders infected at t0
     disease_intro=0.0,      # per-tick prob of spontaneous new case
     disease_cost=0.6,       # extra energy drain, x virulence
@@ -418,7 +422,8 @@ class EcoSim:
             smult = 1 + (storm_cost - 1) * (1 - w.shelter[iy, ix])
             p.energy -= ((c['prey_base_cost'] * smult
                           + c['prey_speed_cost'] * speed ** 2
-                          + c['prey_move_cost'] * moved)
+                          + c['prey_move_cost'] * moved
+                          + c['disease_resist_cost'] * tr[:, 4])
                          * (1.5 - eff)).astype(np.float32)
 
             flat = iy * w.size + ix
