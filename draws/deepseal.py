@@ -21,13 +21,14 @@ def main():
     runs = [
         ('deeptime/dt.csv', 'deeptime · seed 11'),
         ('deeptime-s7/dt.csv', 'deeptime · seed 7'),
+        ('deeptime-s8/dt.csv', 'deeptime · seed 8'),
     ]
     plate = Image.new('RGB', (len(runs) * (TILE + 40) + 20,
                               TILE + 120), (24, 24, 28))
     dr = ImageDraw.Draw(plate)
     dr.text((40, 30),
-            'deeptime 100k: same world, different seed — '
-            'do both seals end thin and even?',
+            'deeptime 100k x3: violent youths, one old age — '
+            'does the churn-seed seal rhyme too?',
             fill=(140, 140, 140))
     for col, (path, name) in enumerate(runs):
         img = seal(load(os.path.join(base, path)), name)
