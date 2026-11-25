@@ -47,6 +47,7 @@ def run_ring(seeds, life, cap_rounds, size=4000, mu=0.002, seed=0,
              census_every=4000, snap_every=0):
     rng = random.Random(seed)
     snaps = []
+    deaths = []
     cells = [['NOP', 0, 0, 0] for _ in range(size)]
     ctxs = []
     for pos, genome in seeds:
@@ -95,6 +96,14 @@ def run_ring(seeds, life, cap_rounds, size=4000, mu=0.002, seed=0,
                 if st: st.pop()
             elif op == 'HALT':
                 ctx['alive'] = False
+                deathsite = [(cells[(ip + k) % size][0],
+                              cells[(ip + k) % size][1],
+                              cells[(ip + k) % size][2])
+                             for k in range(-2, 4)]
+                deaths.append(dict(ctx=ctxs.index(ctx), rnd=rnd,
+                                   ip=ip, op=op, a1=a1, a2=a2,
+                                   site=deathsite,
+                                   travel=ctx['travel']))
             if len(st) > 64:
                 del st[:-64]
         if snap_every and rnd % snap_every == 0:
@@ -108,7 +117,7 @@ def run_ring(seeds, life, cap_rounds, size=4000, mu=0.002, seed=0,
                            sum(c['mutcells'] for c in ctxs)))
     if snap_every:
         return cells, ctxs, census, snaps
-    return cells, ctxs, census
+    return cells, ctxs, census, deaths
 
 
 if __name__ == '__main__':
