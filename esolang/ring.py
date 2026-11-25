@@ -1,0 +1,115 @@
+"""ring.py — ring world: migration unbounded, selection continuous.
+
+Linear tape ends; a ring does not. Positions are modulo SIZE:
+migrants lap the world, fast fronts overtake slow bodies, and
+there is no edge to die at — only each other. Mutation corrupts
+copies with probability mu (perturb an arg or swap the op);
+the copy a context migrates INTO is the body it becomes.
+
+The parasite question, sharpened honestly before running:
+Tierra parasites use a neighbor's copy machinery because memory
+is shared in place. Here copying is self-directed migration —
+survival IS copying. Can parasitism exist in migration geometry?
+Candidates: cargo-riding (junk genes copied for free inside a
+copier), collision-harvesting (body refreshed by overwrite that
+happens to match). Prediction register:
+  P1: genomes compress toward minimal replicators (speed)
+  P2: cargo/payload cells die first — they cost copies, give nothing
+  P3: collision survival selects speed OR overwrite-robustness
+  P4: true parasitism does NOT appear — geometry forbids it.
+      If it does, the geometry model is wrong (falsifiable!)
+
+Census: per-context generation progress + periodic tape digests.
+"""
+import random
+import sys
+sys.path.insert(0, 'esolang')
+
+CRYSTAL = [('CPYR', 0, 8), ('CPYR', 0, 8), ('CPYR', 0, 8),
+           ('CPYR', 0, 8), ('JMPR', 4, 0)]
+OPL = ['PUSH', 'ADD', 'SUB', 'PRINT', 'JMPR', 'JNZR', 'JZR',
+       'CPYR', 'DUP', 'DROP', 'HALT', 'NOP']
+
+
+def mutate_cell(cell, rng, mu):
+    op, a1, a2, hp = cell
+    if rng.random() >= mu:
+        return [op, a1, a2, hp]
+    r = rng.random()
+    if r < 0.5:
+        return [op, a1 + rng.choice([-1, 1]), a2, hp]
+    elif r < 0.8:
+        return [op, a1, a2 + rng.choice([-1, 1]), hp]
+    return [rng.choice(OPL), a1, a2, hp]
+
+
+def run_ring(seeds, life, cap_rounds, size=4000, mu=0.002, seed=0,
+             census_every=4000):
+    rng = random.Random(seed)
+    cells = [['NOP', 0, 0, 0] for _ in range(size)]
+    ctxs = []
+    for pos, genome in seeds:
+        for i, (op, a1, a2) in enumerate(genome):
+            cells[(pos + i) % size] = [op, a1, a2, life]
+        ctxs.append({'ip': pos, 'stack': [], 'alive': True,
+                     'start': pos, 'travel': 0, 'mutcells': 0})
+    census = []
+    for rnd in range(cap_rounds):
+        for ctx in ctxs:
+            if not ctx['alive']:
+                continue
+            ip = ctx['ip'] % size
+            op, a1, a2, hp = cells[ip]
+            if hp <= 0:
+                ctx['ip'] += 1
+                continue
+            cells[ip][3] -= 1
+            cur = ip
+            ctx['ip'] += 1
+            ctx['travel'] += 1
+            st = ctx['stack']
+            if op == 'PUSH': st.append(a1)
+            elif op == 'ADD':
+                if len(st) >= 2: st.append(st.pop() + st.pop())
+            elif op == 'SUB':
+                if len(st) >= 2:
+                    a, b = st.pop(), st.pop(); st.append(b - a)
+            elif op == 'PRINT': pass
+            elif op == 'JMPR': ctx['ip'] = cur + a1
+            elif op == 'JNZR':
+                if st: ctx['ip'] = cur + a1 if st.pop() != 0 else ctx['ip']
+            elif op == 'JZR':
+                if st: ctx['ip'] = cur + a1 if st.pop() == 0 else ctx['ip']
+            elif op == 'CPYR':
+                src = (cur + a1) % size
+                dst = (cur + a2) % size
+                nc = mutate_cell(cells[src], rng, mu)
+                if nc[:3] != cells[src][:3]:
+                    ctx['mutcells'] += 1
+                nc[3] = life
+                cells[dst] = nc
+            elif op == 'DUP':
+                if st: st.append(st[-1])
+            elif op == 'DROP':
+                if st: st.pop()
+            elif op == 'HALT':
+                ctx['alive'] = False
+            if len(st) > 64:
+                del st[:-64]
+        if rnd % census_every == 0:
+            alive = sum(1 for c in ctxs if c['alive'])
+            trav = [c['travel'] for c in ctxs]
+            census.append((rnd, alive, list(trav),
+                           sum(c['mutcells'] for c in ctxs)))
+    return cells, ctxs, census
+
+
+if __name__ == '__main__':
+    # pilot: 6 identical crystals evenly spaced on a 4000-ring
+    K = 6
+    seeds = [(i * (4000 // K), CRYSTAL) for i in range(K)]
+    cells, ctxs, census = run_ring(seeds, life=30, cap_rounds=60000,
+                                   size=4000, mu=0.002)
+    for rnd, alive, trav, muts in census:
+        print(f'round {rnd:6d}: alive {alive} travel {trav} muts {muts}')
+    print('final alive:', sum(1 for c in ctxs if c['alive']))
