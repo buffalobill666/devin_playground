@@ -44,8 +44,9 @@ def mutate_cell(cell, rng, mu):
 
 
 def run_ring(seeds, life, cap_rounds, size=4000, mu=0.002, seed=0,
-             census_every=4000):
+             census_every=4000, snap_every=0):
     rng = random.Random(seed)
+    snaps = []
     cells = [['NOP', 0, 0, 0] for _ in range(size)]
     ctxs = []
     for pos, genome in seeds:
@@ -96,11 +97,17 @@ def run_ring(seeds, life, cap_rounds, size=4000, mu=0.002, seed=0,
                 ctx['alive'] = False
             if len(st) > 64:
                 del st[:-64]
+        if snap_every and rnd % snap_every == 0:
+            snaps.append(([c[:3] for c in cells],
+                          [c['ip'] % size if c['alive'] else -1
+                           for c in ctxs]))
         if rnd % census_every == 0:
             alive = sum(1 for c in ctxs if c['alive'])
             trav = [c['travel'] for c in ctxs]
             census.append((rnd, alive, list(trav),
                            sum(c['mutcells'] for c in ctxs)))
+    if snap_every:
+        return cells, ctxs, census, snaps
     return cells, ctxs, census
 
 
