@@ -1,0 +1,72 @@
+# maze.flk — recursive-backtracker maze, flat arrays, fixed-cap stack.
+# Dogfood test: written in Flick itself, must render identically
+# on the tree-walk interpreter and the stack VM.
+
+let _s = srand(7)
+let CW = 14
+let CH = 9
+let GW = CW * 2 + 1
+let GH = CH * 2 + 1
+
+let g = []
+for i in range(GW * GH) { g[len(g)] = 1 }
+let vis = []
+for i in range(CW * CH) { vis[len(vis)] = 0 }
+
+# fixed-capacity stack + pointer (arrays do not pop)
+let st = []
+for i in range(CW * CH) { st[len(st)] = 0 }
+let sp = 0
+
+st[sp] = 0
+let sp = sp + 1
+vis[0] = 1
+g[GW + 1] = 0
+
+while sp > 0 {
+    let cur = st[sp - 1]
+    let cx = cur % CW
+    let cy = cur / CW
+    let nb = []
+    if cx + 1 < CW {
+        if vis[cur + 1] == 0 { nb[len(nb)] = 0 }
+    }
+    if cy + 1 < CH {
+        if vis[cur + CW] == 0 { nb[len(nb)] = 1 }
+    }
+    if cx > 0 {
+        if vis[cur - 1] == 0 { nb[len(nb)] = 2 }
+    }
+    if cy > 0 {
+        if vis[cur - CW] == 0 { nb[len(nb)] = 3 }
+    }
+    if len(nb) > 0 {
+        let d = nb[randint(len(nb))]
+        let nc = cur
+        if d == 0 { let nc = cur + 1 }
+        if d == 1 { let nc = cur + CW }
+        if d == 2 { let nc = cur - 1 }
+        if d == 3 { let nc = cur - CW }
+        let gx = cx * 2 + 1
+        let gy = cy * 2 + 1
+        let nx = (nc % CW) * 2 + 1
+        let ny = (nc / CW) * 2 + 1
+        g[ny * GW + nx] = 0
+        g[(gy + ny) / 2 * GW + (gx + nx) / 2] = 0
+        vis[nc] = 1
+        st[sp] = nc
+        let sp = sp + 1
+    }
+    if len(nb) == 0 {
+        let sp = sp - 1
+    }
+}
+
+for y in range(GH) {
+    let row = ""
+    for x in range(GW) {
+        if g[y * GW + x] == 1 { let row = row + "#" }
+        if g[y * GW + x] == 0 { let row = row + " " }
+    }
+    print row
+}

@@ -198,7 +198,27 @@ def parse(toks):
     return out
 
 
-BUILTINS = {'len': len, 'range': lambda n: list(range(int(n)))}
+def _srand(n):
+    _RNG['s'] = int(n) & 0xFFFFFFFF or 1
+    return 0
+
+
+def _rand():
+    x = _RNG['s']
+    x ^= (x << 13) & 0xFFFFFFFF
+    x ^= x >> 17
+    x ^= (x << 5) & 0xFFFFFFFF
+    _RNG['s'] = x & 0xFFFFFFFF
+    return x / 2 ** 32
+
+
+def _randint(n):
+    return int(_rand() * int(n))
+
+
+_RNG = {'s': 12345}
+BUILTINS = {'len': len, 'range': lambda n: list(range(int(n))),
+            'srand': _srand, 'rand': _rand, 'randint': _randint}
 
 
 class Env(dict):
