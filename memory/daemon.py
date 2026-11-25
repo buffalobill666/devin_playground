@@ -69,8 +69,11 @@ def main():
         job = os.path.join(QUEUE, jobs[0])
         cfg = parse_job(job)
         log(f'start {jobs[0]}: {cfg.get("cmd")}')
-        r = subprocess.run(cfg['cmd'], shell=True,
-                           cwd=cfg['cwd'], timeout=6 * 3600)
+        outlog = os.path.join(QUEUE, jobs[0] + '.out.log')
+        with open(outlog, 'w') as out:
+            r = subprocess.run(cfg['cmd'], shell=True,
+                               cwd=cfg['cwd'], timeout=6 * 3600,
+                               stdout=out, stderr=subprocess.STDOUT)
         tag = '.done' if r.returncode == 0 else '.failed'
         os.rename(job, job + tag)
         log(f'{tag[1:]} {jobs[0]} rc={r.returncode}')
