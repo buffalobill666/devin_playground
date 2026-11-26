@@ -5,3 +5,6 @@ devin_capsule.zip
 runs/
 __pycache__/
 *.torn
+
+# copyrighted materials — never publish
+books/
