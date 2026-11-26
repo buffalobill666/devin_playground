@@ -52,7 +52,7 @@ def mutate_cell(cell, rng, mu, alphabet=None):
 def run_ring(seeds, life, cap_rounds, size=4000, mu=0.002, seed=0,
              census_every=4000, snap_every=0, alphabet=None,
              zones=None, zone_decay=1, dump_dir=None, dump_every=0,
-             zone_mu=None):
+             zone_mu=None, dens_alpha=None, dens_win=20):
     """zones: list of (start, end) hot bands — cells there lose
     zone_decay hp passively every round, executed or not. Wraps
     around. dump_dir/dump_every: pickle tape+ctxs to disk —
@@ -99,6 +99,12 @@ def run_ring(seeds, life, cap_rounds, size=4000, mu=0.002, seed=0,
                 src = (cur + a1) % size
                 dst = (cur + a2) % size
                 mu_eff = mu
+                if dens_alpha is not None:
+                    lo = max(0, src - dens_win)
+                    hi = min(size, src + dens_win + 1)
+                    win = cells[lo:hi]
+                    dens = sum(1 for c in win if c[0] != 'NOP') / len(win)
+                    mu_eff = mu * (1 + dens_alpha * dens)
                 if zone_mu is not None and zones:
                     for zs, ze in zones:
                         if (dst - zs) % size < (ze - zs) % size:
