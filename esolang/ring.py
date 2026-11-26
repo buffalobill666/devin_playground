@@ -161,7 +161,8 @@ def run_ring(seeds, life, cap_rounds, size=4000, mu=0.002, seed=0,
             alive = sum(1 for c in ctxs if c['alive'])
             trav = [c['travel'] for c in ctxs]
             census.append((rnd, alive, list(trav),
-                           sum(c.get('copies', 0) for c in ctxs)))
+                           sum(c.get('copies', 0) for c in ctxs),
+                           sum(1 for c in cells if c[0] == 'HALT')))
     if snap_every:
         return cells, ctxs, census, snaps
     return cells, ctxs, census, deaths
