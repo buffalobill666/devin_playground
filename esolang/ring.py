@@ -30,7 +30,8 @@ sys.path.insert(0, 'esolang')
 CRYSTAL = [('CPYR', 0, 8), ('CPYR', 0, 8), ('CPYR', 0, 8),
            ('CPYR', 0, 8), ('JMPR', 4, 0)]
 OPL = ['PUSH', 'ADD', 'SUB', 'PRINT', 'JMPR', 'JNZR', 'JZR',
-       'CPYR', 'DUP', 'DROP', 'HALT', 'NOP']
+       'CPYR', 'DUP', 'DROP', 'HALT', 'NOP',
+       'REPRO']
 
 
 OPL_NOHALT = [o for o in OPL if o != 'HALT']
@@ -94,6 +95,12 @@ def run_ring(seeds, life, cap_rounds, size=4000, mu=0.002, seed=0,
                 if st: ctx['ip'] = cur + a1 if st.pop() != 0 else ctx['ip']
             elif op == 'JZR':
                 if st: ctx['ip'] = cur + a1 if st.pop() == 0 else ctx['ip']
+            elif op == 'REPRO':
+                if len(ctxs) < 48:
+                    ctxs.append({'ip': (cur + a1) % size, 'stack': [],
+                                 'alive': True, 'start': (cur + a1) % size,
+                                 'travel': 0, 'mutcells': 0,
+                                 'born': rnd})
             elif op == 'CPYR':
                 ctx['copies'] = ctx.get('copies', 0) + 1
                 src = (cur + a1) % size
