@@ -28,6 +28,7 @@ P.add_argument('--disease-mort', type=float, default=0.02)
 P.add_argument('--disease-mort-exp', type=float, default=1.0)
 P.add_argument('--disease-start', type=float, default=0.0)
 P.add_argument('--resist-cost', type=float, default=0.0)
+P.add_argument('--mutation', type=float, default=0.05)
 A = P.parse_args()
 
 TICKS, EVERY, SEED = A.ticks, 50, A.seed
@@ -42,7 +43,8 @@ def main():
              disease_start=A.disease_start,
              disease_mort=A.disease_mort,
              disease_mort_exp=A.disease_mort_exp,
-             disease_resist_cost=A.resist_cost)
+             disease_resist_cost=A.resist_cost,
+             mutation=A.mutation)
     sim = EcoSim(c)
     first = not CSV.exists()
     f = open(CSV, 'a', newline='')
