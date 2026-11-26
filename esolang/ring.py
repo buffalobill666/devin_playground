@@ -21,6 +21,8 @@ happens to match). Prediction register:
 
 Census: per-context generation progress + periodic tape digests.
 """
+import os
+import pickle
 import random
 import sys
 sys.path.insert(0, 'esolang')
@@ -48,7 +50,13 @@ def mutate_cell(cell, rng, mu, alphabet=None):
 
 
 def run_ring(seeds, life, cap_rounds, size=4000, mu=0.002, seed=0,
-             census_every=4000, snap_every=0, alphabet=None):
+             census_every=4000, snap_every=0, alphabet=None,
+             zones=None, zone_decay=1, dump_dir=None, dump_every=0,
+             zone_mu=None):
+    """zones: list of (start, end) hot bands — cells there lose
+    zone_decay hp passively every round, executed or not. Wraps
+    around. dump_dir/dump_every: pickle tape+ctxs to disk —
+    the fossil record."""
     rng = random.Random(seed)
     snaps = []
     deaths = []
@@ -90,7 +98,13 @@ def run_ring(seeds, life, cap_rounds, size=4000, mu=0.002, seed=0,
                 ctx['copies'] = ctx.get('copies', 0) + 1
                 src = (cur + a1) % size
                 dst = (cur + a2) % size
-                nc = mutate_cell(cells[src], rng, mu, alphabet)
+                mu_eff = mu
+                if zone_mu is not None and zones:
+                    for zs, ze in zones:
+                        if (dst - zs) % size < (ze - zs) % size:
+                            mu_eff = zone_mu
+                            break
+                nc = mutate_cell(cells[src], rng, mu_eff, alphabet)
                 if nc[:3] != cells[src][:3]:
                     ctx['mutcells'] += 1
                 nc[3] = life
@@ -111,6 +125,21 @@ def run_ring(seeds, life, cap_rounds, size=4000, mu=0.002, seed=0,
                                    travel=ctx['travel']))
             if len(st) > 64:
                 del st[:-64]
+        if zones:
+            for zs, ze in zones:
+                span = (ze - zs) % size
+                for k in range(span):
+                    c = cells[(zs + k) % size]
+                    if c[3] > 0:
+                        c[3] -= zone_decay
+        if dump_dir and dump_every and rnd % dump_every == 0:
+            os.makedirs(dump_dir, exist_ok=True)
+            with open(os.path.join(dump_dir,
+                                   f'tape-{rnd:07d}.pkl'), 'wb') as fh:
+                pickle.dump({'rnd': rnd, 'cells': cells,
+                             'ctxs': [{k: v for k, v in c.items()
+                                       if k != 'stack'} for c in ctxs]},
+                            fh)
         if snap_every and rnd % snap_every == 0:
             snaps.append(([c[:3] for c in cells],
                           [c['ip'] % size if c['alive'] else -1
