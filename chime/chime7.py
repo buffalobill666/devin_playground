@@ -33,12 +33,24 @@ from chime6 import pad, i2f, voice_lead
 STEPS, BARS = 16, 16
 
 
-def render(accents=True, swing=0.0):
+def render(accents=True, swing=0.0, jit_ms=0.0, jit_vel=0.0,
+             seed=None):
     step = SPB / 4
     mix = np.zeros(int(SR * step * STEPS * BARS) + SR)
+    jr = np.random.RandomState(seed if seed is not None else 0)
+
+    def jit(t, backbone):
+        if jit_ms and not backbone:
+            return t + jr.normal(0, jit_ms / 1000.0)
+        return t
+
+    def jvel():
+        return 1.0 + (jr.uniform(-jit_vel, jit_vel) if jit_vel else 0)
 
     def put(sig, at):
         i = int(SR * at)
+        if i < 0 or i >= len(mix):
+            return
         mix[i:i + len(sig)] += sig[:max(0, len(mix) - i)]
 
     prog = [tri for _, tri in
@@ -60,18 +72,18 @@ def render(accents=True, swing=0.0):
                 t += swing * step / 3
             a = ACCENT[s] if accents else 1.0
             if PAT_KICK[s] or (not v and s == 10):
-                put(kick(), t)
+                put(kick(), t)  # backbone
             if PAT_SNAR[s]:
-                put(snare() * a, t)
+                put(snare() * a * jvel(), t)  # backbone-ish
             if fill_bar(bar) and s >= 12:
                 put(snare(0.05) * 0.6, t)
             if PAT_HATS[s] or not v:
-                put(hat() * a, t)
+                put(hat() * a * jvel(), jit(t, False))
             if s % 4 == 0:
                 put(note(f2m(root + '2'), SPB * 0.9, 0.5), t)
             arp = triad[s % 3]
             put(note(f2m(arp), step * 0.9,
-                     (0.12 if v else 0.18) * a), t)
+                     (0.12 if v else 0.18) * a * jvel()), jit(t, False))
             if s in mel_steps:
                 mi = mel_steps.index(s)
                 if v:
