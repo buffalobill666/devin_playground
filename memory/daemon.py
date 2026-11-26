@@ -16,13 +16,14 @@ flush-прогресс — демон может умереть вместе с 
 import os
 import subprocess
 import sys
+import threading
 import time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 QUEUE = os.path.join(ROOT, 'runs', '_queue')
 LOCK = os.path.join(QUEUE, '.lock')
 LOG = os.path.join(QUEUE, 'daemon.log')
-MAX_LOCK_AGE = 24 * 3600
+MAX_LOCK_AGE = 3600  # heartbeat refreshes; 1h stale = dead
 
 
 def log(msg):
@@ -39,6 +40,8 @@ def acquire():
             log('stale lock -> breaking')
             os.remove(LOCK)
         else:
+            age_h = (time.time() - os.path.getmtime(LOCK)) / 3600
+            log(f'blocked by lock (age {age_h:.1f}h) — skipping')
             return False
     try:
         fd = os.open(LOCK, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
@@ -70,10 +73,25 @@ def main():
         cfg = parse_job(job)
         log(f'start {jobs[0]}: {cfg.get("cmd")}')
         outlog = os.path.join(QUEUE, jobs[0] + '.out.log')
-        with open(outlog, 'w') as out:
-            r = subprocess.run(cfg['cmd'], shell=True,
-                               cwd=cfg['cwd'], timeout=6 * 3600,
-                               stdout=out, stderr=subprocess.STDOUT)
+        stop_hb = threading.Event()
+
+        def heartbeat():
+            while not stop_hb.is_set():
+                try:
+                    os.utime(LOCK)
+                except OSError:
+                    pass
+                stop_hb.wait(60)
+
+        hb = threading.Thread(target=heartbeat, daemon=True)
+        hb.start()
+        try:
+            with open(outlog, 'w') as out:
+                r = subprocess.run(cfg['cmd'], shell=True,
+                                   cwd=cfg['cwd'], timeout=6 * 3600,
+                                   stdout=out, stderr=subprocess.STDOUT)
+        finally:
+            stop_hb.set()
         tag = '.done' if r.returncode == 0 else '.failed'
         os.rename(job, job + tag)
         log(f'{tag[1:]} {jobs[0]} rc={r.returncode}')
