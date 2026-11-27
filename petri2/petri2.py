@@ -12,7 +12,7 @@ METABOLISM = 1.0        # energy per tick, flat, non-genomic (2nd law)
 COPY_BASE = 60.0        # big fixed cost of reproduction
 COPY_PER_GENE = 2.0     # small per-gene surcharge
 SPOT_CAP = 200.0        # local energy spot capacity
-SPOT_REGEN = 1.5        # spot regeneration per tick
+SPOT_REGEN = 0.3        # spot regeneration per tick
 START_ENERGY = 80.0     # founder endowment — ONE free copy, no more
 
 GENE_TYPES = ("HARVEST", "MOVE", "REPRODUCE")
@@ -77,6 +77,7 @@ class World:
             c.energy += got - METABOLISM
             # movement: random walk biased by local gradient (v1: plain random)
             if rng.random() < c.move_bias * 0.3:
+                c.energy -= 0.2
                 c.x = (c.x + rng.choice((-1, 0, 1))) % self.size
                 c.y = (c.y + rng.choice((-1, 0, 1))) % self.size
             # reproduction: physics triggered by genome signal, price enforced
@@ -94,16 +95,46 @@ class World:
                 self.spots[y][x] = min(SPOT_CAP, self.spots[y][x] + SPOT_REGEN)
         self.tick += 1
 
-    def summary(self):
+    def census(self):
+        """living diversity — never fossils (museum trap 2)"""
         alive = [c for c in self.cells if c.alive]
+        if not alive:
+            return {"tick": self.tick, "alive": 0}
         ngenes = [len(c.genes) for c in alive]
+        has_harvest = sum(1 for c in alive if c.harvest_rate > 0.5)
+        has_repro = sum(1 for c in alive if c.repro_threshold is not None)
+        # degenerate signature: REPRODUCE present, HARVEST lost
+        degenerate = sum(1 for c in alive
+                         if c.repro_threshold is not None and c.harvest_rate <= 0.5)
         return {"tick": self.tick, "alive": len(alive),
-                "mean_genes": sum(ngenes) / len(ngenes) if ngenes else 0,
-                "max_genes": max(ngenes) if ngenes else 0}
+                "mean_genes": round(sum(ngenes) / len(ngenes), 2),
+                "max_genes": max(ngenes),
+                "harvesters": has_harvest, "reproducers": has_repro,
+                "degenerate": degenerate}
+
+    def summary(self):
+        return self.census()
 
 if __name__ == "__main__":
-    w = World(seed=8)
+    import sys, os
+    ticks = int(sys.argv[1]) if len(sys.argv) > 1 else 3000
+    seed = int(sys.argv[2]) if len(sys.argv) > 2 else 8
+    os.makedirs("runs", exist_ok=True)
+    out = open(f"runs/p2-s{seed}.csv", "w")
+    out.write("tick,alive,mean_genes,max_genes,harvesters,reproducers,degenerate" + chr(10))
+    w = World(seed=seed)
     w.seed_founders(6)
-    for _ in range(300):
+    for _ in range(ticks):
         w.step()
-    print(w.summary())
+        if w.tick % 200 == 0:
+            c = w.census()
+            row = [c.get(k, "") for k in
+                   ("tick", "alive", "mean_genes", "max_genes",
+                    "harvesters", "reproducers", "degenerate")]
+            out.write(",".join(str(x) for x in row) + chr(10))
+            out.flush()
+        if not any(c.alive for c in w.cells):
+            print(f"EXTINCT at tick {w.tick}")
+            break
+    out.close()
+    print("final:", w.census())
