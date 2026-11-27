@@ -130,11 +130,22 @@ class World:
         # degenerate signature: REPRODUCE present, HARVEST lost
         degenerate = sum(1 for c in alive
                          if c.repro_threshold is not None and c.harvest_rate <= 0.5)
+        def cellaff(c):
+            num = sum(p * a for p, a in c.harvests); den = sum(p for p, a in c.harvests)
+            return num / den if den else 0.5
+        west = [cellaff(c) for c in alive if c.x < self.size // 3]
+        east = [cellaff(c) for c in alive if c.x >= 2 * self.size // 3]
+        silent = sum(1 for c in alive for g in c.genes if g.get("expr", 1.0) < 0.3)
+        total = sum(len(c.genes) for c in alive)
+        import statistics as st
         return {"tick": self.tick, "alive": len(alive),
                 "mean_genes": round(sum(ngenes) / len(ngenes), 2),
                 "max_genes": max(ngenes),
                 "harvesters": has_harvest, "reproducers": has_repro,
-                "degenerate": degenerate}
+                "degenerate": degenerate,
+                "west_aff": round(st.mean(west), 3) if west else -1,
+                "east_aff": round(st.mean(east), 3) if east else -1,
+                "silenced": silent, "total_genes": total}
 
     def summary(self):
         return self.census()
@@ -145,16 +156,16 @@ if __name__ == "__main__":
     seed = int(sys.argv[2]) if len(sys.argv) > 2 else 8
     os.makedirs("runs", exist_ok=True)
     out = open(f"runs/p2-s{seed}.csv", "w")
-    out.write("tick,alive,mean_genes,max_genes,harvesters,reproducers,degenerate" + chr(10))
+    out.write("tick,alive,mean_genes,max_genes,harvesters,reproducers,degenerate,west_aff,east_aff,silenced,total_genes" + chr(10))
     w = World(seed=seed)
     w.seed_founders(6)
     for _ in range(ticks):
         w.step()
-        if w.tick % 200 == 0:
+        if w.tick % 250 == 0:
             c = w.census()
             row = [c.get(k, "") for k in
-                   ("tick", "alive", "mean_genes", "max_genes",
-                    "harvesters", "reproducers", "degenerate")]
+                   ("tick", "alive", "mean_genes", "max_genes", "harvesters", "reproducers",
+                    "degenerate", "west_aff", "east_aff", "silenced", "total_genes")]
             out.write(",".join(str(x) for x in row) + chr(10))
             out.flush()
         if not any(c.alive for c in w.cells):
