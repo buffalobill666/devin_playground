@@ -102,8 +102,9 @@ class World:
         # spots regenerate — but capped; local depletion guaranteed
         for y in range(self.size):
             for x in range(self.size):
-                self.spots[y][x][0] = min(SPOT_CAP, self.spots[y][x][0] + SPOT_REGEN)
-                self.spots[y][x][1] = min(SPOT_CAP, self.spots[y][x][1] + SPOT_REGEN)
+                green_share = 1.0 - x / self.size   # west green-rich, east blue-rich
+                self.spots[y][x][0] = min(SPOT_CAP, self.spots[y][x][0] + SPOT_REGEN * green_share)
+                self.spots[y][x][1] = min(SPOT_CAP, self.spots[y][x][1] + SPOT_REGEN * (1.0 - green_share))
         self.tick += 1
 
     def census(self):
