@@ -90,10 +90,18 @@ class World:
                     got += take
             c.energy += got - METABOLISM
             # movement: random walk biased by local gradient (v1: plain random)
-            if rng.random() < c.move_bias * 0.3:
+            if rng.random() < min(1.0, c.move_bias * 0.3):
                 c.energy -= 0.8
-                c.x = (c.x + rng.choice((-1, 0, 1))) % self.size
-                c.y = (c.y + rng.choice((-1, 0, 1))) % self.size
+                # taxis: sense neighbors, prefer richer spot for own affinity profile
+                best, bestv = (c.x, c.y), -1.0
+                meanaff = (sum(p * a for p, a in c.harvests) / sum(p for p, a in c.harvests)) if c.harvests else 0.5
+                for dx, dy in ((0, 0), (1, 0), (-1, 0), (0, 1), (0, -1)):
+                    nx, ny = (c.x + dx) % self.size, (c.y + dy) % self.size
+                    sp = self.spots[ny][nx]
+                    v = sp[0] * (1.0 - meanaff) + sp[1] * meanaff + rng.random() * 5.0
+                    if v > bestv:
+                        bestv, best = v, (nx, ny)
+                c.x, c.y = best
             # reproduction: physics triggered by genome signal, price enforced
             if c.repro_threshold is not None and c.energy >= c.repro_threshold + COPY_BASE + COPY_PER_GENE * len(c.genes):
                 cost = COPY_BASE + COPY_PER_GENE * len(c.genes)
