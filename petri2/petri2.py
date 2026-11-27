@@ -12,7 +12,8 @@ METABOLISM = 1.0        # energy per tick, flat, non-genomic (2nd law)
 COPY_BASE = 60.0        # big fixed cost of reproduction
 COPY_PER_GENE = 2.0     # small per-gene surcharge
 SPOT_CAP = 200.0        # local energy spot capacity
-SPOT_REGEN = 0.3        # spot regeneration per tick
+SPOT_REGEN = 0.3
+MAX_EXTRACT = 3.0   # saturation cap per channel per tick        # spot regeneration per tick
 START_ENERGY = 80.0     # founder endowment — ONE free copy, no more
 
 GENE_TYPES = ("HARVEST", "MOVE", "REPRODUCE")
@@ -79,12 +80,13 @@ class World:
             # harvest: local spot is depletable — expansion driver
             spot = self.spots[c.y][c.x]
             got = 0.0
+            chan_got = [0.0, 0.0]
             for rate, aff in c.harvests:
-                # affinity 0..1 splits extraction across green/blue channels
                 for ch, w in ((0, 1.0 - aff), (1, aff)):
                     want = rate * w
-                    take = min(want, spot[ch])
+                    take = min(want, spot[ch], max(0.0, MAX_EXTRACT - chan_got[ch]))
                     spot[ch] -= take
+                    chan_got[ch] += take
                     got += take
             c.energy += got - METABOLISM
             # movement: random walk biased by local gradient (v1: plain random)
