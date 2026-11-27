@@ -8,3 +8,7 @@ __pycache__/
 
 # copyrighted materials — never publish
 books/
+
+# Извлечённый полный текст книги — производная копирайт-копии,
+# рабочий файл чтения, никогда не публикуется
+marginalia/dick-androids.txt

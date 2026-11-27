@@ -18,7 +18,7 @@ import sys
 BASE = os.path.dirname(os.path.abspath(__file__))
 FLAG = os.path.join(BASE, 'autonomous.flag')
 COUNT = os.path.join(BASE, 'iterations.txt')
-MAX = 30
+MAX = 50
 
 
 if not os.path.exists(FLAG):
