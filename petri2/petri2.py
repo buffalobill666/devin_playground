@@ -65,7 +65,7 @@ class World:
 
     def seed_founders(self, n=6):
         for _ in range(n):
-            g = [dict(make_gene("HARVEST", 2.0), aff=0.5), make_gene("MOVE", 1.0),
+            g = [dict(make_gene("HARVEST", 4.0), aff=0.5), make_gene("MOVE", 1.0),
                  make_gene("REPRODUCE", 100.0)]
             self.cells.append(Cell(g, START_ENERGY,
                                    self.rng.randrange(self.size),
@@ -83,7 +83,7 @@ class World:
             chan_got = [0.0, 0.0]
             for rate, aff in c.harvests:
                 for ch, w in ((0, 1.0 - aff), (1, aff)):
-                    want = rate * w
+                    want = rate * w * w   # convex: commitment amplifies, breadth costs
                     take = min(want, spot[ch], max(0.0, MAX_EXTRACT - chan_got[ch]))
                     spot[ch] -= take
                     chan_got[ch] += take
