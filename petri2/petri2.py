@@ -28,7 +28,9 @@ class Cell:
         self.alive = True
         self.age = 0
         # phenotype is DERIVED, cached per birth — stable in life
-        self.harvest_rate = sum(g["param"] for g in genes if g["type"] == "HARVEST")
+        # harvest: rate x affinity per channel; affinity drifts with mutation
+        self.harvests = [(g["param"], g.get("aff", 0.5)) for g in genes if g["type"] == "HARVEST"]
+        self.harvest_rate = sum(p for p, a in self.harvests)
         self.move_bias = sum(g["param"] for g in genes if g["type"] == "MOVE")
         self.repro_threshold = min(
             (g["param"] for g in genes if g["type"] == "REPRODUCE"),
@@ -41,6 +43,8 @@ def mutate(genes, rng, p_point=0.05, p_del=0.02, p_dup=0.02):
         ng = dict(g)
         if rng.random() < p_point:
             ng["param"] = max(0.1, ng["param"] + rng.gauss(0, 0.5))
+        if ng["type"] == "HARVEST" and rng.random() < p_point:
+            ng["aff"] = min(1.0, max(0.0, ng.get("aff", 0.5) + rng.gauss(0, 0.2)))
         out.append(ng)
         if rng.random() < p_dup:
             out.append(dict(ng))     # duplication: innovation engine
@@ -52,13 +56,13 @@ class World:
     def __init__(self, size=32, seed=0):
         self.rng = random.Random(seed)
         self.size = size
-        self.spots = [[SPOT_CAP for _ in range(size)] for _ in range(size)]
+        self.spots = [[[SPOT_CAP, SPOT_CAP] for _ in range(size)] for _ in range(size)]
         self.cells = []
         self.tick = 0
 
     def seed_founders(self, n=6):
         for _ in range(n):
-            g = [make_gene("HARVEST", 2.0), make_gene("MOVE", 1.0),
+            g = [dict(make_gene("HARVEST", 2.0), aff=0.5), make_gene("MOVE", 1.0),
                  make_gene("REPRODUCE", 100.0)]
             self.cells.append(Cell(g, START_ENERGY,
                                    self.rng.randrange(self.size),
@@ -72,8 +76,14 @@ class World:
             c.age += 1
             # harvest: local spot is depletable — expansion driver
             spot = self.spots[c.y][c.x]
-            got = min(c.harvest_rate, spot)
-            self.spots[c.y][c.x] = max(0.0, spot - got)
+            got = 0.0
+            for rate, aff in c.harvests:
+                # affinity 0..1 splits extraction across green/blue channels
+                for ch, w in ((0, 1.0 - aff), (1, aff)):
+                    want = rate * w
+                    take = min(want, spot[ch])
+                    spot[ch] -= take
+                    got += take
             c.energy += got - METABOLISM
             # movement: random walk biased by local gradient (v1: plain random)
             if rng.random() < c.move_bias * 0.3:
@@ -92,7 +102,8 @@ class World:
         # spots regenerate — but capped; local depletion guaranteed
         for y in range(self.size):
             for x in range(self.size):
-                self.spots[y][x] = min(SPOT_CAP, self.spots[y][x] + SPOT_REGEN)
+                self.spots[y][x][0] = min(SPOT_CAP, self.spots[y][x][0] + SPOT_REGEN)
+                self.spots[y][x][1] = min(SPOT_CAP, self.spots[y][x][1] + SPOT_REGEN)
         self.tick += 1
 
     def census(self):
