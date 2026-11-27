@@ -18,7 +18,7 @@ START_ENERGY = 80.0     # founder endowment — ONE free copy, no more
 GENE_TYPES = ("HARVEST", "MOVE", "REPRODUCE")
 
 def make_gene(gtype, param):
-    return {"type": gtype, "param": param}
+    return {"type": gtype, "param": param, "expr": 1.0}
 
 class Cell:
     def __init__(self, genes, energy, x, y):
@@ -29,9 +29,9 @@ class Cell:
         self.age = 0
         # phenotype is DERIVED, cached per birth — stable in life
         # harvest: rate x affinity per channel; affinity drifts with mutation
-        self.harvests = [(g["param"], g.get("aff", 0.5)) for g in genes if g["type"] == "HARVEST"]
+        self.harvests = [(g["param"] * g.get("expr", 1.0), g.get("aff", 0.5)) for g in genes if g["type"] == "HARVEST"]
         self.harvest_rate = sum(p for p, a in self.harvests)
-        self.move_bias = sum(g["param"] for g in genes if g["type"] == "MOVE")
+        self.move_bias = sum(g["param"] * g.get("expr", 1.0) for g in genes if g["type"] == "MOVE")
         self.repro_threshold = min(
             (g["param"] for g in genes if g["type"] == "REPRODUCE"),
             default=None)  # no REPRODUCE gene = sterile
@@ -45,6 +45,8 @@ def mutate(genes, rng, p_point=0.05, p_del=0.02, p_dup=0.02):
             ng["param"] = max(0.1, ng["param"] + rng.gauss(0, 0.5))
         if ng["type"] == "HARVEST" and rng.random() < p_point:
             ng["aff"] = min(1.0, max(0.0, ng.get("aff", 0.5) + rng.gauss(0, 0.2)))
+        if rng.random() < p_point:
+            ng["expr"] = min(1.0, max(0.0, ng.get("expr", 1.0) + rng.gauss(0, 0.25)))
         out.append(ng)
         if rng.random() < p_dup:
             out.append(dict(ng))     # duplication: innovation engine
@@ -87,7 +89,7 @@ class World:
             c.energy += got - METABOLISM
             # movement: random walk biased by local gradient (v1: plain random)
             if rng.random() < c.move_bias * 0.3:
-                c.energy -= 0.2
+                c.energy -= 0.8
                 c.x = (c.x + rng.choice((-1, 0, 1))) % self.size
                 c.y = (c.y + rng.choice((-1, 0, 1))) % self.size
             # reproduction: physics triggered by genome signal, price enforced
